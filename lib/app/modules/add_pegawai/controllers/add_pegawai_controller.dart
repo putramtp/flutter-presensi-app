@@ -10,6 +10,7 @@ class AddPegawaiController extends GetxController {
   RxBool isLoadingAddPegawai = false.obs;
   TextEditingController nameC = TextEditingController();
   TextEditingController nipC = TextEditingController();
+  TextEditingController jabatanC = TextEditingController();
   TextEditingController emailC = TextEditingController();
   TextEditingController passAdminC = TextEditingController();
 
@@ -37,6 +38,7 @@ class AddPegawaiController extends GetxController {
            await firestore.collection("pegawai").doc(uid).set({
              "nip": nipC.text,
              "name": nameC.text,
+             "job" : jabatanC.text,
              "email": emailC.text,
              "uid": uid,
              "role" : "pegawai",
@@ -84,7 +86,7 @@ class AddPegawaiController extends GetxController {
   }
 
   Future <void> addPegawai() async {
-    if (nameC.text.isNotEmpty && nipC.text.isNotEmpty && emailC.text.isNotEmpty) {
+    if (nameC.text.isNotEmpty && jabatanC.text.isNotEmpty && nipC.text.isNotEmpty && emailC.text.isNotEmpty) {
       isLoading.value = true;
       Get.defaultDialog(
         title: "Validasi Admin",
@@ -126,7 +128,7 @@ class AddPegawaiController extends GetxController {
         ],
       );
     } else {
-      Get.snackbar("Terjadi Kesalahan", "NIP, Nama dan Email harus diisi");
+      Get.snackbar("Terjadi Kesalahan", "NIP, Nama, Jabatan dan Email harus diisi");
     }
   }
 }

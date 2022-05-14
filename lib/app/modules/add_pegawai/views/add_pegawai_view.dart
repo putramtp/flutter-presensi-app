@@ -39,6 +39,17 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
           ),
           TextField(
             autocorrect: false,
+            controller: controller.nameC,
+            decoration: InputDecoration(
+              labelText: "Jabatan",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          SizedBox(
+            height : 10,
+          ),
+          TextField(
+            autocorrect: false,
             controller: controller.emailC,
             decoration: InputDecoration(
               labelText: "Email",
