@@ -63,7 +63,7 @@ class HomeView extends GetView<HomeController> {
                         height: 2,
                       ),
                       Text(
-                        "Belum Ada Lokasi",
+                        user['position'] != null ? "${user['position']}" : "Belum ada lokasi",
                         style: TextStyle(
                           fontSize: 12,
                         ),)
