@@ -39,7 +39,7 @@ class AddPegawaiView extends GetView<AddPegawaiController> {
           ),
           TextField(
             autocorrect: false,
-            controller: controller.nameC,
+            controller: controller.jabatanC,
             decoration: InputDecoration(
               labelText: "Jabatan",
               border: OutlineInputBorder(),
