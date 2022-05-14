@@ -26,9 +26,11 @@ class PageIndexController extends GetxController {
           String alamat = "${placemarks[0].street} , ${placemarks[0].subLocality} , ${placemarks[0].locality} , ${placemarks[0].subAdministrativeArea}";
           await updatePosition(position, alamat);
 
+          //cek distance between 2 koordinat / 2 posisi
+          double distance =  Geolocator.distanceBetween(-7.3068061, 108.2011595, position.latitude, position.longitude);
 
           //absen
-          await presensi(position, alamat);
+          await presensi(position, alamat, distance);
 
           Get.snackbar("Berhasil", "Anda berhasil mengisi daftar hadir");
 
@@ -47,7 +49,7 @@ class PageIndexController extends GetxController {
     }
   }
 
-  Future <void> presensi(Position position, String alamat) async {
+  Future <void> presensi(Position position, String alamat, double distance) async {
     String uid = await auth.currentUser!.uid;
 
     CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("pegawai").doc(uid).collection("presence");
@@ -57,7 +59,12 @@ class PageIndexController extends GetxController {
     //print(snapPresence.docs.length);
     DateTime now = DateTime.now();
     String todayDocID = DateFormat.yMd().format(now).replaceAll("/", "-");
-    print(todayDocID);
+
+    String status = "Di Luar Area";
+
+    if(distance <= 200){
+      status = "Di dalam Area";
+    } 
 
     if (snapPresence.docs.length == 0){
       //belum pernah absen & set absen datang
@@ -69,12 +76,51 @@ class PageIndexController extends GetxController {
           "lat" : position.latitude,
           "long" : position.longitude,
           "alamat" : alamat,
-          "status" : "Didalam Area",
+          "status" : status,
+          "distance" : distance,
         }
       });
 
     } else {
       //sudah pernah absen, cek hari ini udah absen datang atau keluar udah belum?
+      DocumentSnapshot<Map<String, dynamic>> todayDoc = await colPresence.doc(todayDocID).get();
+
+      // print(todayDoc.exists);
+
+      if(todayDoc.exists == true){
+        // tinggal absen pulang atau sudah 2-2nya 
+        Map<String, dynamic>? dataPresenceToday =  todayDoc.data();
+        if (dataPresenceToday?["pulang"] != null){
+          // sudah absen datang dan pulang
+          Get.snackbar("Sukses", "Anda telah presensi Datang dan Pulang hari ini.");
+        } else {
+          // absen pulang
+          await colPresence.doc(todayDocID).update({
+        "pulang" : {
+          "date" : now.toIso8601String(),
+          "lat" : position.latitude,
+          "long" : position.longitude,
+          "alamat" : alamat,
+          "status" : status,
+          "distance" : distance,
+        },
+        });
+      } 
+      } else {
+        print("DIJALANKAN");
+        // absen masuk
+        await colPresence.doc(todayDocID).set({
+        "date" : now.toIso8601String(),
+        "datang" : {
+          "date" : now.toIso8601String(),
+          "lat" : position.latitude,
+          "long" : position.longitude,
+          "alamat" : alamat,
+          "status" : status,
+          "distance" : distance,
+        }
+      });
+      }
     }
   }
 

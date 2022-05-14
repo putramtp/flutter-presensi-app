@@ -178,63 +178,83 @@ class HomeView extends GetView<HomeController> {
               SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Material(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(15),
-                      child: InkWell(
-                        onTap: ()=> Get.toNamed(Routes.DETAIL_PRESENSI),
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: controller.streamLastPresence(),
+                builder: (context, snapPresence) {
+                  if (snapPresence.connectionState == ConnectionState.waiting){
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapPresence.data?.docs.length == 0 || snapPresence.data?.docs.length == null){
+                    return SizedBox(
+                      height: 60,
+                      child: Center(
+                        child: Text("Belum ada data"),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapPresence.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> data = snapPresence.data!.docs.reversed.toList()[index].data();
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Material(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(15),
+                          child: InkWell(
+                            onTap: ()=> Get.toNamed(Routes.DETAIL_PRESENSI),
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              padding: EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Datang",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      Text(
+                                        "${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(data['datang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}" ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Text(
-                                    "Datang",
+                                    "Pulang",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold
                                     ),
                                   ),
-                                  Text(
-                                    "${DateFormat.yMMMEd().format(DateTime.now())}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold
-                                    ),
-                                  ),
+                                  Text(data['pulang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}"),
                                 ],
                               ),
-                              Text("${DateFormat.jms().format(DateTime.now())}"),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Pulang",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              Text("${DateFormat.jms().format(DateTime.now())}"),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  );
+                      );
+                    }
+                    );
                 }
-                ),
+              ),
             ],
           );
         } else {
