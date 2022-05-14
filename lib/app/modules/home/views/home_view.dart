@@ -122,27 +122,38 @@ class HomeView extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.grey[200],
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
+                child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                  stream: controller.streamTodayPresence(),
+                  builder: (context, snapToday) {
+                    if (snapToday.connectionState == ConnectionState.waiting){
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    Map<String, dynamic>? dataToday = snapToday.data?.data();
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("Datang"),
-                        Text("-")
+                        Column(
+                          children: [
+                            Text("Datang"),
+                            Text(dataToday?["datang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['datang']['date']))}"),
+                          ],
+                        ),
+                        Container(
+                          width: 2,
+                          height: 25,
+                          color: Colors.grey[400],
+                        ),
+                        Column(
+                          children: [
+                            Text("Pulang"),
+                            Text(dataToday?["pulang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['pulang']['date']))}"),
+                          ],
+                        )
                       ],
-                    ),
-                    Container(
-                      width: 2,
-                      height: 25,
-                      color: Colors.grey[400],
-                    ),
-                    Column(
-                      children: [
-                        Text("Pulang"),
-                        Text("-")
-                      ],
-                    )
-                  ],
+                    );
+                  }
                 ),
               ),
               SizedBox(
@@ -199,7 +210,7 @@ class HomeView extends GetView<HomeController> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: snapPresence.data!.docs.length,
                     itemBuilder: (context, index) {
-                      Map<String, dynamic> data = snapPresence.data!.docs.reversed.toList()[index].data();
+                      Map<String, dynamic> data = snapPresence.data!.docs[index].data();
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 20),
@@ -207,7 +218,10 @@ class HomeView extends GetView<HomeController> {
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(15),
                           child: InkWell(
-                            onTap: ()=> Get.toNamed(Routes.DETAIL_PRESENSI),
+                            onTap: ()=> Get.toNamed(
+                              Routes.DETAIL_PRESENSI, 
+                              arguments: data
+                              ),
                             borderRadius: BorderRadius.circular(15),
                             child: Container(
                               padding: EdgeInsets.all(20),
