@@ -17,6 +17,7 @@ dependencies:
   intl: 0.17.0
   geolocator: 8.2.1
   geocoding: 2.0.4
+  syncfusion_flutter_datepicker: 20.1.55
   flutter: 
     sdk: flutter
 
