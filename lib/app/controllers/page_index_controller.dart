@@ -28,7 +28,7 @@ class PageIndexController extends GetxController {
           await updatePosition(position, alamat);
 
           //cek distance between 2 koordinat / 2 posisi
-          double distance =  Geolocator.distanceBetween(-7.3068061, 108.2011595, position.latitude, position.longitude);
+          double distance =  Geolocator.distanceBetween(-6.1751321, 106.7897935, position.latitude, position.longitude);
 
           //absen
           await presensi(position, alamat, distance);
@@ -63,7 +63,7 @@ class PageIndexController extends GetxController {
 
     String status = "Di Luar Area";
 
-    if(distance <= 200){
+    if(distance <= 50){
       status = "Di dalam Area";
     } 
 
@@ -235,7 +235,9 @@ class PageIndexController extends GetxController {
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
-  Position position =  await Geolocator.getCurrentPosition();
+  Position position =  await Geolocator.getCurrentPosition(
+    desiredAccuracy: LocationAccuracy.high,
+  );
   return {
     "position" : position,
     "message" : "Berhasil mendapatkan posisi device Anda",
