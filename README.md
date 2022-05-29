@@ -1,6 +1,8 @@
 # presensi
 
-A new Flutter project.
+This is my Presence App Project using Flutter Dart.
+
+In this project, I use GetX framework and Geolocator to select user location when user want Presence somewhere using Latitude and Longitude of that place. If the user is not within this radius, the user cannot have access to Presence.
 
 ## Getting Started
 
