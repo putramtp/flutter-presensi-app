@@ -6,6 +6,8 @@ import '../modules/all_presensi/bindings/all_presensi_binding.dart';
 import '../modules/all_presensi/views/all_presensi_view.dart';
 import '../modules/detail_presensi/bindings/detail_presensi_binding.dart';
 import '../modules/detail_presensi/views/detail_presensi_view.dart';
+import '../modules/dinasluar/bindings/dinasluar_binding.dart';
+import '../modules/dinasluar/views/dinasluar_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -20,6 +22,8 @@ import '../modules/update_password/bindings/update_password_binding.dart';
 import '../modules/update_password/views/update_password_view.dart';
 import '../modules/update_profile/bindings/update_profile_binding.dart';
 import '../modules/update_profile/views/update_profile_view.dart';
+import '../modules/workfromhome/bindings/workfromhome_binding.dart';
+import '../modules/workfromhome/views/workfromhome_view.dart';
 
 part 'app_routes.dart';
 
@@ -80,6 +84,18 @@ class AppPages {
       name: _Paths.ALL_PRESENSI,
       page: () => AllPresensiView(),
       binding: AllPresensiBinding(),
+    ),
+    GetPage(
+      name: _Paths.WORKFROMHOME,
+      page: () => WorkfromhomeView(),
+      binding: WorkfromhomeBinding(),
+      transition: Transition.fadeIn
+    ),
+    GetPage(
+      name: _Paths.DINASLUAR,
+      page: () => DinasluarView(),
+      binding: DinasluarBinding(),
+      transition: Transition.fadeIn
     ),
   ];
 }

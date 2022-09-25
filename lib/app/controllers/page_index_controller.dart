@@ -16,7 +16,7 @@ class PageIndexController extends GetxController {
   void changePage(int i) async {
     pageIndex.value = i;
     switch (i) {
-      case 1 :
+      case 2 :
         print("ABSENSI");
         Map<String, dynamic> dataResponse = await determinePosition();
         if (dataResponse["error"] != true){
@@ -28,7 +28,7 @@ class PageIndexController extends GetxController {
           await updatePosition(position, alamat);
 
           //cek distance between 2 koordinat / 2 posisi
-          double distance =  Geolocator.distanceBetween(-6.1751321, 106.7897935, position.latitude, position.longitude);
+          double distance =  Geolocator.distanceBetween(-7.361053, 108.1127393, position.latitude, position.longitude);
 
           //absen
           await presensi(position, alamat, distance);
@@ -40,7 +40,15 @@ class PageIndexController extends GetxController {
           Get.snackbar("Terjadi Kesalahan", dataResponse["message"]);
         }
         break;
-      case 2 : 
+      case 1 : 
+        pageIndex.value = i;
+        Get.offAllNamed(Routes.WORKFROMHOME);
+        break;
+      case 3 : 
+        pageIndex.value = i;
+        Get.offAllNamed(Routes.DINASLUAR);
+        break;
+      case 4 : 
         pageIndex.value = i;
         Get.offAllNamed(Routes.PROFILE);
         break;
@@ -63,7 +71,7 @@ class PageIndexController extends GetxController {
 
     String status = "Di Luar Area";
 
-    if(distance <= 50){
+    if(distance <= 200){
       status = "Di dalam Area";
     } 
 

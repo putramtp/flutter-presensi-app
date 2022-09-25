@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:presensi/app/controllers/page_index_controller.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';
-
 import 'app/routes/app_pages.dart';
 
 void main() async {
@@ -32,7 +31,8 @@ void main() async {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Application",
-          initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
+          initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN, 
+          // snapshot.data != null ? Routes.HOME : Routes.LOGIN,
           getPages: AppPages.routes,
         );
       }

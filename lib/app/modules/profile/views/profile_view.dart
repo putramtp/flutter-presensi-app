@@ -3,6 +3,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:presensi/app/routes/app_pages.dart';
 
 import '../controllers/profile_controller.dart';
@@ -14,7 +15,15 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profil'),
+        title: Text(
+          'Profil',
+          style: GoogleFonts.poppins(
+            color: Color(0xff333333),
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+          ),
+        backgroundColor: Color(0xffFFC107),
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -118,10 +127,13 @@ class ProfileView extends GetView<ProfileController> {
         },
       ),
         bottomNavigationBar: ConvexAppBar(
+          backgroundColor: Color(0xffFFC107),
           style: TabStyle.fixedCircle,
           items: [
             TabItem(icon: Icons.home, title: 'Home'),
+            TabItem(icon: Icons.home_work, title: 'WFH'),
             TabItem(icon: Icons.fingerprint, title: 'Add'),
+            TabItem(icon: Icons.flight, title: 'Dns. Luar'),
             TabItem(icon: Icons.people, title: 'Profile'),
           ],
           initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
