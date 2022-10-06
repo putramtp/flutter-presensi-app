@@ -7,10 +7,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LoginView extends GetView<LoginController> {
 
   // TextEditingController nipC = TextEditingController();
+
+  void getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+    print(position.latitude);
+    print(position.longitude);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +146,7 @@ class LoginView extends GetView<LoginController> {
                       filled: true,
                       hintText: "Lat",
                       hintStyle: GoogleFonts.poppins(
-                      color: Color(0xff575757),
+                      color: Color.fromARGB(255, 165, 165, 165),
                         fontSize: 8,
                         fontWeight: FontWeight.w400,
                     ),
@@ -163,7 +170,7 @@ class LoginView extends GetView<LoginController> {
                   filled: true,
                   hintText: "Long",
                   hintStyle: GoogleFonts.poppins(
-                  color: Color(0xff575757),
+                  color: Color.fromARGB(255, 165, 165, 165),
                     fontSize: 8,
                     fontWeight: FontWeight.w400,
                 ),
@@ -219,7 +226,7 @@ class LoginView extends GetView<LoginController> {
                   ///////////////////////////////////////////////////////////////////////////////////////////////////////
                 
                   if (controller.isLoading.isFalse){
-                    await controller.sinkronisasi();
+                    await controller.login();
                   }
                 }, 
                 child: Text(

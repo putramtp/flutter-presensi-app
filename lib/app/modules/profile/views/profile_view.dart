@@ -34,7 +34,7 @@ class ProfileView extends GetView<ProfileController> {
           }
           if (snap.hasData){
             Map<String, dynamic> user = snap.data!.data()!;
-            String defaultImage = "https://ui-avatars.com/api/?name=${user['name']}";
+            String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
           return ListView(
             padding: EdgeInsets.all(20),
             children: [
@@ -56,7 +56,7 @@ class ProfileView extends GetView<ProfileController> {
               SizedBox(
                 height: 10,
               ),
-              Text("${user['name'].toString().toUpperCase()}", 
+              Text("${user['nama_pegawai'].toString().toUpperCase()}", 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -64,7 +64,7 @@ class ProfileView extends GetView<ProfileController> {
                   SizedBox(
                 height: 5,
               ),
-              Text("${user['email']}", 
+              Text("${user['nomenklatur_jabatan']}", 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
@@ -73,7 +73,7 @@ class ProfileView extends GetView<ProfileController> {
                 SizedBox(
                   height: 10,
                 ),
-              Text("status : ${user["role"]}",
+              Text("${user["nomenklatur_pada"]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 10,

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:presensi/app/routes/app_pages.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PageIndexController extends GetxController {
   RxInt pageIndex = 0.obs;
@@ -61,7 +62,7 @@ class PageIndexController extends GetxController {
   Future <void> presensi(Position position, String alamat, double distance) async {
     String uid = await auth.currentUser!.uid;
 
-    CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("pegawai").doc(uid).collection("presence");
+    CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("user").doc(uid).collection("presence");
 
     QuerySnapshot<Map<String, dynamic>> snapPresence =  await colPresence.get();
 
@@ -78,16 +79,35 @@ class PageIndexController extends GetxController {
 
     if (snapPresence.docs.length == 0){
       //belum pernah absen & set absen datang
-
+      SizedBox(
+        height: 5,
+      );
       await Get.defaultDialog(
         title: "Validasi Presensi",
+          titleStyle: GoogleFonts.poppins(
+          fontSize: 18,
+          fontWeight: FontWeight.w600
+        ),
         middleText: "Apakah Anda yakin ingin mengisi Presensi Datang sekarang?",
+        middleTextStyle: GoogleFonts.poppins(
+          fontSize: 13,
+          fontWeight: FontWeight.w400
+        ),
         actions: [
           OutlinedButton(
             onPressed: ()=> Get.back(), 
-          child: Text("Batalkan")
+          child: Text(
+            "Batalkan",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+            ),
+            )
           ),
           ElevatedButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Color(0xffFFC107),
+            ),
             onPressed: () async {
               await colPresence.doc(todayDocID).set({
               "date" : now.toIso8601String(),
@@ -103,7 +123,14 @@ class PageIndexController extends GetxController {
           Get.back();
           Get.snackbar("Berhasil", "Anda berhasil mengisi Presensi Datang");
             }, 
-          child: Text("Presensi")
+          child: Text(
+            "Presensi",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+              fontWeight: FontWeight.w500
+            ),
+            ),
           ),
         ]
       );
@@ -124,13 +151,30 @@ class PageIndexController extends GetxController {
           /////////////////////////////////// absen pulang ////////////////////////////////////////
           await Get.defaultDialog(
         title: "Validasi Presensi",
+        titleStyle: GoogleFonts.poppins(
+          fontSize: 18,
+          fontWeight: FontWeight.w600
+        ),
         middleText: "Apakah Anda yakin ingin mengisi Presensi Pulang sekarang?",
+        middleTextStyle: GoogleFonts.poppins(
+          fontSize : 13,
+          fontWeight: FontWeight.w400
+        ),
         actions: [
           OutlinedButton(
             onPressed: ()=> Get.back(), 
-          child: Text("Batalkan")
+          child: Text(
+            "Batalkan",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+            )
+            )
           ),
           ElevatedButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Color(0xffFFC107)
+            ),
             onPressed: () async {
               await colPresence.doc(todayDocID).update({
               "pulang" : {
@@ -145,7 +189,14 @@ class PageIndexController extends GetxController {
           Get.back();
           Get.snackbar("Berhasil", "Anda berhasil mengisi Presensi Pulang");
             }, 
-          child: Text("Presensi")
+          child: Text(
+            "Presensi",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+              fontWeight: FontWeight.w500
+            ),
+            )
           ),
         ]
       );
@@ -187,7 +238,7 @@ class PageIndexController extends GetxController {
   Future <void> updatePosition(Position position, String alamat) async {
     String uid = await auth.currentUser!.uid;
 
-    firestore.collection("pegawai").doc(uid).update({
+    firestore.collection("user").doc(uid).update({
       "position" : {
         "lat" : position.latitude,
         "long" : position.longitude,

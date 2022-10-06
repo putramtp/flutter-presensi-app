@@ -10,7 +10,7 @@ class ProfileController extends GetxController {
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
     String uid = await auth.currentUser!.uid;
 
-    yield* firestore.collection("pegawai").doc(uid).snapshots();
+    yield* firestore.collection("user").doc(uid).snapshots();
   }
 
   void logout() async {
