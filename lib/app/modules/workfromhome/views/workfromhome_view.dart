@@ -28,8 +28,12 @@ class WorkfromhomeView extends GetView<WorkfromhomeController> {
       ),
       body: Center(
         child: Text(
-          'WorkfromHome View is working',
-          style: TextStyle(fontSize: 20),
+          'Work From Home\ntidak tersedia',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.poppins(
+            color: Color(0xff333333),
+            fontSize: 14,
+          ),
         ),
       ),
     );

@@ -207,24 +207,7 @@ class LoginView extends GetView<LoginController> {
                       borderRadius: BorderRadius.circular(30)
                     )
                   ),
-                onPressed: () async {
-
-                // var myResponse = await http.post(
-                //     Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/mobile"),
-                //         headers: {
-                //               HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                //        },
-                //         body: {
-                //             "nip" : nipC.text,
-                //         }
-                //     );
-
-                //    Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
-
-                //   print(myResponse.body);
-
-                  ///////////////////////////////////////////////////////////////////////////////////////////////////////
-                
+                onPressed: () async {               
                   if (controller.isLoading.isFalse){
                     await controller.login();
                   }

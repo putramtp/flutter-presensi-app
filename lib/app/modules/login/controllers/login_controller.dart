@@ -51,7 +51,7 @@ class LoginController extends GetxController {
             var myResponse = await http.post(
                   Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/mobile"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer censored',
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                   },
                   body: {
                     "nip" : nipC.text, //199109102019031003
@@ -64,7 +64,7 @@ class LoginController extends GetxController {
                 var postHome = await http.post(
                   Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/pegawai"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer censored',
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                   },
                   body: {
                     "nip" : nipC.text,
