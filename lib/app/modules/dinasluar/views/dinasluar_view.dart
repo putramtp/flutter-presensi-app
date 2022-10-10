@@ -7,27 +7,11 @@ import 'package:geolocator/geolocator.dart';
 import '../controllers/dinasluar_controller.dart';
 
 class DinasluarView extends GetView<DinasluarController> {
-  TextEditingController suratTugas = TextEditingController();
-  TextEditingController dateInput = TextEditingController();
-  TextEditingController maksudTujuan = TextEditingController();
-  TextEditingController lokasiTujuan = TextEditingController();
+  // TextEditingController suratTugas = TextEditingController();
+  // TextEditingController dateInput = TextEditingController();
+  // TextEditingController maksudTujuan = TextEditingController();
+  // TextEditingController lokasiTujuan = TextEditingController();
 
-  var locationMessage = "";
-  var latitude = "";
-  var longitude = "";
-  // variabel untuk menampung koordinat lokasi
-
-  void getCurrentLocation() async {
-    var position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    var lastPosition = await Geolocator.getLastKnownPosition();
-    print(lastPosition);
-    latitude = position.latitude.toString();
-    longitude = position.longitude.toString();  
-    
-    locationMessage = "$position";
-    print(latitude);
-    print(longitude);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +40,7 @@ class DinasluarView extends GetView<DinasluarController> {
               height: 4,
             ),
             TextField(
+              controller: controller.suratTugas,
               decoration: new InputDecoration(
                 hintText: "Masukkan No. Surat Tugas",
                 hintStyle: GoogleFonts.poppins(
@@ -88,7 +73,7 @@ class DinasluarView extends GetView<DinasluarController> {
               height: 14
             ),
             TextField(
-              controller: dateInput,
+              controller: controller.dateInput,
               decoration: new InputDecoration(
                 hintText: DateFormat("yyyy-MM-dd").format(controller.selectedDate.value),
                 hintStyle: TextStyle(
@@ -130,7 +115,7 @@ class DinasluarView extends GetView<DinasluarController> {
             TextField(
               keyboardType: TextInputType.multiline,
               maxLines: 4,
-              controller: maksudTujuan,
+              controller: controller.maksudTujuan,
               decoration: new InputDecoration(
                 alignLabelWithHint : true,
                 hintText: "Masukkan Maksud Tujuan",
@@ -166,7 +151,7 @@ class DinasluarView extends GetView<DinasluarController> {
             TextField(
               keyboardType: TextInputType.multiline,
               maxLines: 4,
-              controller: lokasiTujuan,
+              controller: controller.lokasiTujuan,
               decoration: new InputDecoration(
                 alignLabelWithHint: true,
                 hintText: "Masukkan Lokasi Tujuan",
@@ -253,7 +238,7 @@ class DinasluarView extends GetView<DinasluarController> {
               enableInteractiveSelection: false,
               focusNode: FocusNode(),
               decoration: new InputDecoration(
-                  labelText: latitude,
+                  labelText: controller.latitude,
                   labelStyle: TextStyle(
                     color: Color(0xffBDBDBD),
                   ),
@@ -270,7 +255,7 @@ class DinasluarView extends GetView<DinasluarController> {
               readOnly: true,
               // jika true, user tidak akan bisa edit textfield
               onTap: () {
-                  getCurrentLocation();
+                  controller.getCurrentLocation();
               }
             ),
                 ),
@@ -304,7 +289,7 @@ class DinasluarView extends GetView<DinasluarController> {
                 readOnly: true,
                 // jika true, user tidak akan bisa edit textfield
                 onTap: () {
-                    getCurrentLocation();
+                    controller.getCurrentLocation();
                 }
             ),
                   ),
@@ -323,7 +308,7 @@ class DinasluarView extends GetView<DinasluarController> {
               enableInteractiveSelection: false,
               focusNode: FocusNode(),
               decoration: new InputDecoration(
-                  labelText: longitude,
+                  labelText: controller.longitude,
                   labelStyle: TextStyle(
                     color: Color(0xffBDBDBD),
                   ),
@@ -340,7 +325,7 @@ class DinasluarView extends GetView<DinasluarController> {
               readOnly: true,
               // jika true, user tidak akan bisa edit textfield
               onTap: () {
-                  getCurrentLocation();
+                  controller.getCurrentLocation();
               }
             ),
                 ),
@@ -374,7 +359,7 @@ class DinasluarView extends GetView<DinasluarController> {
                 readOnly: true,
                 // jika true, user tidak akan bisa edit textfield
                 onTap: () {
-                    getCurrentLocation();
+                    controller.getCurrentLocation();
                 }
             ),
                   ),
@@ -415,9 +400,13 @@ class DinasluarView extends GetView<DinasluarController> {
                       borderRadius: BorderRadius.circular(30)
                     )
                   ),
-                onPressed: () {}, 
+                onPressed: () async {
+                  if(controller.isLoading.isFalse){
+                    await controller.addDinasLuar();
+                  }
+                }, 
                 child: Text(
-                  "Submit",
+                  controller.isLoading.isFalse? "Submit" : "LOADING...",
                   style: GoogleFonts.poppins(
                     color: Color(0xff333333),
                     fontWeight: FontWeight.w600,

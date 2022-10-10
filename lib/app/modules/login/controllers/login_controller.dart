@@ -124,6 +124,8 @@ class LoginController extends GetxController {
                           "lat" : data['data']['lat'],
                           "long" : data['data']['long'],
                           "uid" : uid,
+                          "j2" : data['data']['j2'],
+                          "j3" : data['data']['j3'],
                           "role" : "pegawai",
                           "createdAt" : DateTime.now().toIso8601String(),
                           
