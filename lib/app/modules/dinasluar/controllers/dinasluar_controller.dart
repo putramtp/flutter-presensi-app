@@ -44,11 +44,21 @@ class DinasluarController extends GetxController {
       context: Get.context!, 
       initialDate: selectedDate.value, 
       firstDate: DateTime(1990), 
-      lastDate: DateTime(2030)
+      lastDate: DateTime(2030),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light(). copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xffFFC107)
+            ),
+          ), child: child!,
+        );
+      }
       );
 
       if (pickedDate != null && pickedDate != selectedDate.value){
         selectedDate.value = pickedDate;
+        dateInput.text = DateFormat('yyyy-MM-dd').format(selectedDate.value).toString();
       }
       print(pickedDate);
   }
@@ -58,6 +68,8 @@ class DinasluarController extends GetxController {
     final User user = auth.currentUser!;
     final uid = user.uid;
 
+    final nipSession = await firestore.collection("user").doc(uid).get();
+
     if (suratTugas.text.isNotEmpty && maksudTujuan.text.isNotEmpty && lokasiTujuan.text.isNotEmpty ) {
       Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
             var myResponse = await http.post(
@@ -66,12 +78,12 @@ class DinasluarController extends GetxController {
                     HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                   },
                   body: {
-                    "nip" : uid.toString(),
+                    "nip" : nipSession['nip'],
                     "no_st" : suratTugas.text, //199109102019031003
-                    "tgl_st" : DateFormat('yyyy-MM-dd KK:mm:ss').format(DateTime.now()),
+                    "tgl_st" : DateFormat("yyyy-MM-dd").format(selectedDate.value),
                     "maksud" : maksudTujuan.text,
                     "tujuan" : lokasiTujuan.text,
-                    "tgl" : DateFormat('yyyy-MM-dd KK:mm:ss').format(DateTime.now()),
+                    "tgl" : DateFormat("yyyy-MM-dd KK:mm:ss").format(DateTime.now()),
                     "lat" : latitude,
                     "long" : longitude,
                     "status" : "menunggu",

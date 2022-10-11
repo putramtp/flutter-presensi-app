@@ -128,7 +128,7 @@ class HomeView extends GetView<HomeController> {
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color(0xffFFC107),
+                  color: Color.fromARGB(255, 255, 206, 59),
                 ),
                 child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   stream: controller.streamTodayPresence(),
@@ -151,7 +151,7 @@ class HomeView extends GetView<HomeController> {
                         Container(
                           width: 2,
                           height: 25,
-                          color: Color(0xffFAD461),
+                          color: Color.fromARGB(255, 255, 225, 134),
                         ),
                         Column(
                           children: [

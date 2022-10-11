@@ -72,7 +72,8 @@ class DinasluarView extends GetView<DinasluarController> {
             SizedBox(
               height: 14
             ),
-            TextField(
+            Obx(
+              ()=> TextField(
               controller: controller.dateInput,
               decoration: new InputDecoration(
                 hintText: DateFormat("yyyy-MM-dd").format(controller.selectedDate.value),
@@ -108,6 +109,7 @@ class DinasluarView extends GetView<DinasluarController> {
               onTap: () {
                 controller.chooseDate();
               }
+            ),
             ),
             SizedBox(
               height: 14,
@@ -264,7 +266,7 @@ class DinasluarView extends GetView<DinasluarController> {
                 child: Container(
                   width: 105,
                     child: TextField(
-                // enabled: false,
+                enabled: false,
                 enableInteractiveSelection: false,
                 focusNode: FocusNode(),
                 decoration: new InputDecoration(
@@ -278,7 +280,7 @@ class DinasluarView extends GetView<DinasluarController> {
                     ),
                     filled: true,
                     fillColor: Color(0xffF8F8F8),
-                    enabledBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
                         color: Color(0xffe0e0e0),
@@ -304,7 +306,7 @@ class DinasluarView extends GetView<DinasluarController> {
                 Container(
                   width: 220,
                   child: TextField(
-              // enabled: false,
+              enabled: false,
               enableInteractiveSelection: false,
               focusNode: FocusNode(),
               decoration: new InputDecoration(
@@ -314,7 +316,7 @@ class DinasluarView extends GetView<DinasluarController> {
                   ),
                   filled: true,
                   fillColor: Color(0xffF2F2F2),
-                  enabledBorder: OutlineInputBorder(
+                  disabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(
                       color: Color(0xffe0e0e0),
@@ -334,7 +336,7 @@ class DinasluarView extends GetView<DinasluarController> {
                 child: Container(
                   width: 105,
                     child: TextField(
-                // enabled: false,
+                enabled: false,
                 enableInteractiveSelection: false,
                 focusNode: FocusNode(),
                 decoration: new InputDecoration(
@@ -348,7 +350,7 @@ class DinasluarView extends GetView<DinasluarController> {
                     ),
                     filled: true,
                     fillColor: Color(0xffF8F8F8),
-                    enabledBorder: OutlineInputBorder(
+                    disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
                         color: Color(0xffe0e0e0),
@@ -370,7 +372,7 @@ class DinasluarView extends GetView<DinasluarController> {
               height: 10,
             ),
             Text(
-              "note : Jika posisi masih kosong, tekan icon \"Lat\" atau \"Long\" sebanyak 2 kali",
+              "note : Jika posisi masih kosong, tekan form \"Lat\" atau \"Long\" berulang kali hingga muncul",
               style: GoogleFonts.poppins(
                 color: Color.fromARGB(255, 182, 182, 182),
                 fontSize: 6,
