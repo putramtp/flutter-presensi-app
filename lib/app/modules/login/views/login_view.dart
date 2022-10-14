@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:trust_location/trust_location.dart';
 
 class LoginView extends GetView<LoginController> {
 
@@ -22,6 +23,7 @@ class LoginView extends GetView<LoginController> {
   String? latitude_tl;
   String? longitude_tl;
   String? isMock;
+
 
   @override
   Widget build(BuildContext context) {

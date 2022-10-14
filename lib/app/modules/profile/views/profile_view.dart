@@ -130,11 +130,11 @@ class ProfileView extends GetView<ProfileController> {
           backgroundColor: Color(0xffFFC107),
           style: TabStyle.fixedCircle,
           items: [
-            TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.home_work, title: 'WFH'),
+            TabItem(icon: Icons.home_outlined, title: 'Home'),
+            TabItem(icon: Icons.leave_bags_at_home_outlined, title: 'Cuti'),
             TabItem(icon: Icons.fingerprint, title: 'Add'),
-            TabItem(icon: Icons.flight, title: 'Dns. Luar'),
-            TabItem(icon: Icons.people, title: 'Profile'),
+            TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
+            TabItem(icon: Icons.people_outline, title: 'Profil'),
           ],
           initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
           onTap: (int i) => pageC.changePage(i),

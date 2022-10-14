@@ -16,7 +16,7 @@ class WorkfromhomeView extends GetView<WorkfromhomeController> {
         color: Color(0xff333333),
         ),
         title: Text(
-          'Work From Home',
+          'Cuti',
           style: GoogleFonts.poppins(
             color: Color(0xff333333),
             fontSize: 16,
@@ -28,7 +28,7 @@ class WorkfromhomeView extends GetView<WorkfromhomeController> {
       ),
       body: Center(
         child: Text(
-          'Work From Home\ntidak tersedia',
+          'Cuti tidak tersedia',
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
             color: Color(0xff333333),
