@@ -15,6 +15,7 @@ abstract class Routes {
   static const ALL_PRESENSI = _Paths.ALL_PRESENSI;
   static const WORKFROMHOME = _Paths.WORKFROMHOME;
   static const DINASLUAR = _Paths.DINASLUAR;
+  static const CHECK_STATUS = _Paths.CHECK_STATUS;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const ALL_PRESENSI = '/all-presensi';
   static const WORKFROMHOME = '/workfromhome';
   static const DINASLUAR = '/dinasluar';
+  static const CHECK_STATUS = '/check-status';
 }

@@ -4,6 +4,8 @@ import '../modules/add_pegawai/bindings/add_pegawai_binding.dart';
 import '../modules/add_pegawai/views/add_pegawai_view.dart';
 import '../modules/all_presensi/bindings/all_presensi_binding.dart';
 import '../modules/all_presensi/views/all_presensi_view.dart';
+import '../modules/check_status/bindings/check_status_binding.dart';
+import '../modules/check_status/views/check_status_view.dart';
 import '../modules/detail_presensi/bindings/detail_presensi_binding.dart';
 import '../modules/detail_presensi/views/detail_presensi_view.dart';
 import '../modules/dinasluar/bindings/dinasluar_binding.dart';
@@ -86,16 +88,19 @@ class AppPages {
       binding: AllPresensiBinding(),
     ),
     GetPage(
-      name: _Paths.WORKFROMHOME,
-      page: () => WorkfromhomeView(),
-      binding: WorkfromhomeBinding(),
-      transition: Transition.fadeIn
-    ),
+        name: _Paths.WORKFROMHOME,
+        page: () => WorkfromhomeView(),
+        binding: WorkfromhomeBinding(),
+        transition: Transition.fadeIn),
     GetPage(
-      name: _Paths.DINASLUAR,
-      page: () => DinasluarView(),
-      binding: DinasluarBinding(),
-      transition: Transition.fadeIn
+        name: _Paths.DINASLUAR,
+        page: () => DinasluarView(),
+        binding: DinasluarBinding(),
+        transition: Transition.fadeIn),
+    GetPage(
+      name: _Paths.CHECK_STATUS,
+      page: () => CheckStatusView(),
+      binding: CheckStatusBinding(),
     ),
   ];
 }

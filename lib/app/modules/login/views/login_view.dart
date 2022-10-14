@@ -19,6 +19,10 @@ class LoginView extends GetView<LoginController> {
     print(position.longitude);
   }
 
+  String? latitude_tl;
+  String? longitude_tl;
+  String? isMock;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
