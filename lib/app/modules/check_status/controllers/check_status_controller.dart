@@ -34,20 +34,22 @@ class CheckStatusController extends GetxController {
     DocumentSnapshot<Map<String, dynamic>> todayDoc = await colPresence.doc(todayDocID).get();
     Map<String, dynamic>? dataPresenceToday =  todayDoc.data();
 
-    DateTime datangPresence = dataPresenceToday?['datang']['date'];
-    DateTime pulangPresence = dataPresenceToday?['pulang']['date'];
+    String datangPresence = dataPresenceToday?['datang']['date']; //Interpolasi dari Firestore
+    String pulangPresence = dataPresenceToday?['pulang']['date']; //Interpolasi dari Firestore
 
-    print(datangPresence);
-    print(pulangPresence);
+    var parsedDatangPresence = DateTime.parse(datangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
+    var parsedPulangPresence = DateTime.parse(pulangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
 
-    // CollectionReference<Map<String, dynamic>> colPresence = firestore.collection("user").doc(uid).collection("presence");
+    print(parsedDatangPresence);
+    print(parsedPulangPresence);
 
     // int timestamp = j1.millisecondsSinceEpoch;
     // print(timestamp);
 
-    //get data dari firebase
+    // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase //
     String j2 = nipSession['j2'];
     String j3 = nipSession['j3'];
+    // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase - end //
   
     // String sekarang = DateFormat("EEE").format(DateTime(2022, 10, 15));
     String sekarang = DateFormat("EEE").format(DateTime.now());
@@ -70,28 +72,35 @@ class CheckStatusController extends GetxController {
 
     String jam2 = arr[0];
     String menit2 = arr[1];
-    // String jamFB = presenceDate['datang']['date'];
-
-    // print(jamFB);
     
+    // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI //
 
-    // DateTime jam = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 15, 1); //////
-    DateTime jam = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 15, 1);
-    DateTime jj1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 45, 0);
+    // Inputan Presensi //
+    DateTime jamDatangC = parsedDatangPresence;
+    DateTime jamPulangC = parsedPulangPresence;
+    // Inputen Presensi - End//
 
-    DateTime jam1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 15, 46, 0); ///////
-    DateTime jj2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, int.parse(jam2), int.parse(menit2), 0);
+    DateTime jam = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 15, 1); // test
+    DateTime PJ1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 45, 0); // Patokan jam masuk //
+
+    DateTime jam1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 15, 46, 0); // test
+    DateTime PJ2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
     
-    
-    int datang = jj1.millisecondsSinceEpoch;
-    int pulang = jj2.millisecondsSinceEpoch;
+    // strtotime - Convert DateTime to millisecond //
+    int jamDatangStr = jamDatangC.millisecondsSinceEpoch;
+    int jamPulangStr = jamPulangC.millisecondsSinceEpoch;
+    int datang = PJ1.millisecondsSinceEpoch;
+    int pulang = PJ2.millisecondsSinceEpoch;
+    // strtotime - Convert DateTime to millisecond - end //
 
-    int jamd = jam.millisecondsSinceEpoch; 
-    double hasil = (jamd - datang)/60000;
+    int jamd = jam.millisecondsSinceEpoch; // test //
+
+    // Logic Status Jam //
+    double hasil = (jamDatangStr - datang)/60000;
     int ddat = hasil.ceil();
 
     int jamp = jam1.millisecondsSinceEpoch;
-    double hasil2 = (pulang - jamp)/60000;
+    double hasil2 = (pulang - jamPulangStr)/60000;
     int dpul = hasil2.ceil();
 
     // print(ddat);
@@ -100,24 +109,43 @@ class CheckStatusController extends GetxController {
     // print(hasil);
     // // print(dpul);
 
-cekstatus(int a) {
-  String status;
-    if (a <= 0) {
-      return status = "Tepat Waktu";
-    } else if (a >= 1 && a <= 30){
-      return status = "TL1";
-    } else if (a >= 31 && a <= 60){
-      return status = "TL2";
-    } else if (a >= 61 && a <= 90){
-      return status = "TL3";
-    } else if (a >= 91){
-      return status = "TL4";
-    }
-  }
-    // print(cekstatus(ddat));
+    cekStatusDatang(int d) {
+      String statusd;
+        if (d <= 0) {
+          return statusd = "Tepat Waktu";
+        } else if (d >= 1 && d <= 30){
+          return statusd = "TL1";
+        } else if (d >= 31 && d <= 60){
+          return statusd = "TL2";
+        } else if (d >= 61 && d <= 90){
+          return statusd = "TL3";
+        } else if (d >= 91){
+          return statusd = "TL4";
+        }
+      }
 
-    String? sd = cekstatus(ddat);
-    print(sd);
-  }
+      cekStatusPulang(int p) {
+        String statusp;
+        if (p < 1) {
+          return statusp = "Sesuai Waktu";
+        } else if (p >= 1 && p <= 30){
+          return statusp = "PSW1";
+        } else if (p >= 31 && p <= 60){
+          return statusp = "PSW2";
+        } else if (p >= 61 && p <= 90){
+          return statusp = "PSW3";
+        } else if (p >= 91){
+          return statusp = "PSW4";
+        }
+      }
+        // Cetak Status Datang //
+        String? statusDatang = cekStatusDatang(ddat);
+        print(statusDatang);
+
+
+        // Cetak Status Pulang //
+        String? statusPulang = cekStatusPulang(dpul);
+        print(statusPulang);
+      }
 
 }
