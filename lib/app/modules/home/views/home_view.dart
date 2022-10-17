@@ -62,21 +62,21 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       Text(
                         "Selamat Datang di SADASBOR",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 4,
                       ),
                       Container(
                         width: 200,
                         child: Text(
                           user['alamat'] != null ? "${user['alamat']}" : "Belum ada lokasi",
                           textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 12,
+                          style: GoogleFonts.poppins(
+                            fontSize: 11,
                           ),),
                       )
                     ],
@@ -97,8 +97,8 @@ class HomeView extends GetView<HomeController> {
                   children: [
                     Text(
                       "${user['nomenklatur_jabatan']}",
-                        style: TextStyle(
-                          fontSize: 14,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
                           fontWeight: FontWeight.w400
                         ),
                       ),
@@ -107,7 +107,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                     Text(
                       "${user['nip']}",
-                      style: TextStyle(
+                      style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.bold
                       ),
@@ -117,6 +117,9 @@ class HomeView extends GetView<HomeController> {
                     ),
                     Text(
                       "${user['nama_pegawai']}, ${user['gelar_belakang']}",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500
+                      ),
                       )
                   ],
                 ),
@@ -128,7 +131,7 @@ class HomeView extends GetView<HomeController> {
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 255, 206, 59),
+                  color: Color(0xffFFC107),
                 ),
                 child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   stream: controller.streamTodayPresence(),
@@ -144,19 +147,41 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         Column(
                           children: [
-                            Text("Datang"),
-                            Text(dataToday?["datang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['datang']['date']))}"),
+                            Text(
+                              "Datang",
+                              style: GoogleFonts.poppins(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700
+                              ),
+                              ),
+                              SizedBox(
+                                height: 2,
+                              ),
+                            Text(dataToday?["datang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['datang']['date']))}",
+                            style: GoogleFonts.poppins(),
+                            ),
                           ],
                         ),
                         Container(
                           width: 2,
                           height: 25,
-                          color: Color.fromARGB(255, 255, 225, 134),
+                          color: Color.fromARGB(255, 206, 156, 6),
                         ),
                         Column(
                           children: [
-                            Text("Pulang"),
-                            Text(dataToday?["pulang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['pulang']['date']))}"),
+                            Text(
+                              "Pulang",
+                              style: GoogleFonts.poppins(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700
+                              ),
+                              ),
+                              SizedBox(
+                                height: 2,
+                              ),
+                            Text(dataToday?["pulang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['pulang']['date']))}",
+                            style: GoogleFonts.poppins(),
+                            ),
                           ],
                         )
                       ],
@@ -178,7 +203,7 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   Text(
                     "Presensi 5 hari terakhir",
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -200,7 +225,10 @@ class HomeView extends GetView<HomeController> {
                     return SizedBox(
                       height: 60,
                       child: Center(
-                        child: Text("Belum ada data"),
+                        child: Text(
+                          "Belum ada data",
+                          style: GoogleFonts.poppins(),
+                          ),
                       ),
                     );
                   }
@@ -235,29 +263,42 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Text(
                                         "Datang",
-                                        style: TextStyle(
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
                                           fontWeight: FontWeight.bold
                                         ),
                                       ),
                                       Text(
                                         "${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}",
-                                        style: TextStyle(
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
                                           fontWeight: FontWeight.bold
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Text(data['datang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}" ),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(data['datang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}",
+                                    style: GoogleFonts.poppins(),
+                                  ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Text(
                                     "Pulang",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold
                                     ),
                                   ),
-                                  Text(data['pulang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}"),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(data['pulang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}",
+                                    style: GoogleFonts.poppins(),
+                                  ),
                                 ],
                               ),
                             ),

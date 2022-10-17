@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 class PageIndexController extends GetxController {
   RxInt pageIndex = 0.obs;
   RxBool isLoading = false.obs;
-  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseAuth auth = FirebaseAuth.instance; 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void changePage(int i) async {

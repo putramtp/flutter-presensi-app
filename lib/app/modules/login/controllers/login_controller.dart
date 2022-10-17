@@ -117,6 +117,7 @@ class LoginController extends GetxController {
                           "nama_unor" : dataPegawai['data']['nama_unor'],
                           "nik" : dataPegawai['data']['nik'],
                           "status" : dataPegawai['data']['pns'],
+                          "file_dokumen" : dataPegawai['data']['file_dokumen'],
                           "id_jabatan" : data['data']['id_jabatan'],
                           "password" : data['data']['password'],
                           "level" : data['data']['level'],
