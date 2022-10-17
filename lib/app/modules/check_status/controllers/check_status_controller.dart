@@ -22,10 +22,24 @@ class CheckStatusController extends GetxController {
     final User user = auth.currentUser!;
     final uid = user.uid;
 
-    String todayID = DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
+    CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("user").doc(uid).collection("presence");
+    QuerySnapshot<Map<String, dynamic>> snapPresence =  await colPresence.get();
+    print(snapPresence.docs.length);
+
+    DateTime now = DateTime.now();
+    String todayDocID = DateFormat.yMd().format(now).replaceAll("/", "-");
 
     final nipSession = await firestore.collection("user").doc(uid).get();
-    final presenceDate = firestore.collection("user").doc(uid).collection("presence").doc(todayID).snapshots();
+
+    DocumentSnapshot<Map<String, dynamic>> todayDoc = await colPresence.doc(todayDocID).get();
+    Map<String, dynamic>? dataPresenceToday =  todayDoc.data();
+
+    DateTime datangPresence = dataPresenceToday?['datang']['date'];
+    DateTime pulangPresence = dataPresenceToday?['pulang']['date'];
+
+    print(datangPresence);
+    print(pulangPresence);
+
     // CollectionReference<Map<String, dynamic>> colPresence = firestore.collection("user").doc(uid).collection("presence");
 
     // int timestamp = j1.millisecondsSinceEpoch;
