@@ -52,20 +52,20 @@ class CheckStatusController extends GetxController {
     // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase - end //
   
     // String sekarang = DateFormat("EEE").format(DateTime(2022, 10, 15));
-    String sekarang = DateFormat("EEE").format(DateTime.now());
-    print(sekarang);
+    String hariSekarang = DateFormat("EEE").format(now);
+    print(hariSekarang);
 
-  cekHari(String hari) {
-    String b;
-    if (hari == 'Fri') {
-      return b = j3;
-    } else {
-      return b = j2;
-    }
-  }
-      String jp =  cekHari(sekarang);
-      
-      final arr = jp.split(':');
+      cekHari(String hari) {
+        String b;
+        if (hari == 'Fri') {
+          return b = j3;
+        } else {
+          return b = j2;
+        }
+      }
+          String jp =  cekHari(hariSekarang);
+          
+          final arr = jp.split(':');
     
     // print(arr[0]);
     // print(arr[1]);
@@ -79,6 +79,12 @@ class CheckStatusController extends GetxController {
     DateTime jamDatangC = parsedDatangPresence;
     DateTime jamPulangC = parsedPulangPresence;
     // Inputen Presensi - End//
+    
+    String jamd = DateFormat.Hms().format(jamDatangC);
+    String jamp = DateFormat.Hms().format(jamPulangC);
+
+    print(jamd);
+    print(jamp);
 
     DateTime jam = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 15, 1); // test
     DateTime PJ1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 45, 0); // Patokan jam masuk //
@@ -93,13 +99,11 @@ class CheckStatusController extends GetxController {
     int pulang = PJ2.millisecondsSinceEpoch;
     // strtotime - Convert DateTime to millisecond - end //
 
-    int jamd = jam.millisecondsSinceEpoch; // test //
 
     // Logic Status Jam //
     double hasil = (jamDatangStr - datang)/60000;
     int ddat = hasil.ceil();
 
-    int jamp = jam1.millisecondsSinceEpoch;
     double hasil2 = (pulang - jamPulangStr)/60000;
     int dpul = hasil2.ceil();
 
@@ -139,13 +143,13 @@ class CheckStatusController extends GetxController {
         }
       }
         // Cetak Status Datang //
-        String? statusDatang = cekStatusDatang(ddat);
-        print(statusDatang);
+        String? sd = cekStatusDatang(ddat);
+        print(sd);
 
 
         // Cetak Status Pulang //
-        String? statusPulang = cekStatusPulang(dpul);
-        print(statusPulang);
+        String? sp = cekStatusPulang(dpul);
+        print(sp);
       }
 
 }
