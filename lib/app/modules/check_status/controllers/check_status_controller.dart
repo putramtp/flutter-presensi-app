@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:safe_device/safe_device.dart';
 
 class CheckStatusController extends GetxController {
 
@@ -16,6 +17,16 @@ class CheckStatusController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   
   DateTime today = new DateTime.now();
+
+  Future <void> safeDevice() async {
+    // bool isRealDevice = await SafeDevice.isRealDevice;
+    bool canMockLocation = await SafeDevice.canMockLocation;
+    // bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
+
+    // print(isRealDevice);
+    print(canMockLocation);
+    // print(isDevelopmentModeEnable);
+  }
 
 
   Future <void> checkStatus() async {

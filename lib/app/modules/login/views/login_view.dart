@@ -9,21 +9,11 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:trust_location/trust_location.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoginView extends GetView<LoginController> {
 
   // TextEditingController nipC = TextEditingController();
-
-  void getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-    print(position.latitude);
-    print(position.longitude);
-  }
-
-  String? latitude_tl;
-  String? longitude_tl;
-  String? isMock;
-
 
   @override
   Widget build(BuildContext context) {

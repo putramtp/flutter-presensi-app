@@ -12,13 +12,14 @@ class DinasluarView extends GetView<DinasluarController> {
   // TextEditingController maksudTujuan = TextEditingController();
   // TextEditingController lokasiTujuan = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: ()=> Get.toNamed(Routes.HOME), 
-        icon: Icon(Icons.arrow_back_ios_new),
+        icon: Icon(Icons.arrow_back_ios_new,
+          size: 14,
+          ),
         color: Color(0xff333333),
         ),
         title: Text(
@@ -436,7 +437,7 @@ class DinasluarView extends GetView<DinasluarController> {
                 ),
                 child: Text(
                   "Reset",
-                style: GoogleFonts.poppins(
+                  style: GoogleFonts.poppins(
                   color: Color(0xffFFC107),
                   fontSize: 14,
                   fontWeight : FontWeight.w600,

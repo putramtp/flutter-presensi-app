@@ -9,6 +9,9 @@ import 'package:get/get.dart';
 import 'package:presensi/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:safe_device/safe_device.dart';
+import 'package:trust_location/trust_location.dart';
 
 class LoginController extends GetxController {
   RxBool isLoading = false.obs;
@@ -19,6 +22,14 @@ class LoginController extends GetxController {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future <void> safeDevice() async {
+    bool isRealDevice = await SafeDevice.isRealDevice;
+    bool canMockLocation = await SafeDevice.canMockLocation;
+
+    print(isRealDevice);
+    print(canMockLocation);
+  }
 
   Future <void> login() async {
     if(nipC.text.isNotEmpty && passC.text.isNotEmpty){
@@ -167,3 +178,53 @@ class LoginController extends GetxController {
     }
   }
 }
+
+  // class MockLocation extends StatefulWidget {
+  //   const MockLocation({Key? key}) : super(key: key);
+  //   @override
+  //   _MockLocationState createState() => _MockLocationState();
+  // }
+
+  // class _MockLocationState extends State<MockLocation> {
+  //     String? latitude_tl;
+  //     String? longitude_tl;
+  //     bool? isMock;
+  //     bool showText = false;
+
+  //     @override
+  //     void initState(){
+  //       requestPermission();
+  //       super.initState();
+  //     }
+
+  //     void requestPermission() async {
+  //       final permission = await Permission.location.request();
+
+  //       if (permission == PermissionStatus.denied) {
+  //         TrustLocation.start(10);
+  //         getLocation();
+  //       } else if (permission == PermissionStatus.denied) {
+  //         await Permission.location.request();
+  //       }
+  //     }
+
+  //     void getLocation() async {
+  //       try {
+  //         TrustLocation.onChange.listen((result) {
+  //           setState(() {
+  //             latitude_tl = result.latitude;
+  //             longitude_tl = result.longitude;
+  //             isMock = result.isMockLocation;
+  //             showText = true;
+  //           });
+  //         });
+  //       } catch (e) {
+  //         print("Trust Location Error");
+  //       }
+  //     }
+
+  //     @override
+  //     Widget build(BuildContext context) {
+  //       return Scaffold();
+  //     }
+  // }

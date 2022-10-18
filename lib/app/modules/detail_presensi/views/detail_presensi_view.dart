@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../controllers/detail_presensi_controller.dart';
@@ -12,7 +13,15 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
     print(data);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Presensi'),
+        title: Text(
+          'Detail Presensi',
+          style: GoogleFonts.poppins(
+            color: Color(0xff333333),
+            fontSize: 16,
+            fontWeight: FontWeight.w600
+          ),
+          ),
+        backgroundColor: Color(0xffFFC107),
         centerTitle: true,
       ),
       body: ListView(
@@ -25,7 +34,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
             children: [
               Center(
                 child: Text("${DateFormat.yMMMMEEEEd().format(DateTime.parse(data['date']))}",
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),
@@ -36,24 +45,94 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
               ),
               Text(
                 "Datang",
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                 ),
                 ),
-              Text(
-                "Jam : ${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}"
+              Row(
+                children: [
+                  Text("Jam",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 37,
+                    ),
+                  Text(":     ${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Posisi",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                  Text(":     ${data['datang']!['lat']} , ${data['datang']!['long']}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Status",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 26,
+                    ),
+                  Text(":     ${data['datang']!['status']}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Alamat",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  Expanded(
+                    child: FittedBox(
+                      child: Text(":     ${data['datang']!['alamat']}",
+                            style: GoogleFonts.poppins(
+                              fontSize: 12
+                            ),
+                        ),
+                    ),
+                  ),
+                ],
+              ),
+              Text("Distance : ${data['datang']!['distance'].toString().split(".").first} meter",
+                    style: GoogleFonts.poppins(
+                      fontSize: 12
+                    ),
                 ),
-              Text("Posisi : ${data['datang']!['lat']} , ${data['datang']!['long']}"),
-              Text("Status : ${data['datang']!['status']}"),
-              Text("Alamat : ${data['datang']!['alamat']}"),
-              Text("Distance : ${data['datang']!['distance'].toString().split(".").first} meter"),
               SizedBox(
                 height: 10,
               ),
               Text(
                 "Pulang",
-                style: TextStyle(
+                style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                 ),

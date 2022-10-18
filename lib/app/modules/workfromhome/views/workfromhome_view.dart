@@ -12,7 +12,9 @@ class WorkfromhomeView extends GetView<WorkfromhomeController> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: ()=> Get.toNamed(Routes.HOME),
-        icon: const Icon(Icons.arrow_back_ios_new),
+        icon: const Icon(Icons.arrow_back_ios_new,
+          size: 14,
+          ),
         color: Color(0xff333333),
         ),
         title: Text(

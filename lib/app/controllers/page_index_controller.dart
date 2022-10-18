@@ -350,7 +350,7 @@ class PageIndexController extends GetxController {
           Get.back();
           Get.snackbar("Berhasil", "Anda berhasil mengisi Presensi Pulang");
 
-          String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
+      String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       // String pulangPresence = dataPresenceToday?['pulang']['date']; //Interpolasi dari Firestore
 
