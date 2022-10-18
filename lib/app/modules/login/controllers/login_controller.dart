@@ -37,7 +37,7 @@ class LoginController extends GetxController {
                 if(userCredential.user != null){
                   
                   Get.offAllNamed(Routes.HOME);
-                  Get.snackbar("Login Berhasil", "Selamat menggunakan SADASBOR");
+                  // Get.snackbar("Login Berhasil", "Selamat menggunakan SADASBOR");
                 } else {
                   isLoading.value = false;
                   Get.snackbar("Terjadi Kesalahan", "Tidak dapat login");
@@ -143,7 +143,7 @@ class LoginController extends GetxController {
 
                         Get.back();
                         Get.back();
-                        Get.snackbar("Sinkronisasi Berhasil", "Selamat menggunakan SADASBOR!");
+                        Get.snackbar("Login & Sinkronisasi Berhasil", "Selamat menggunakan layanan SADASBOR!");
                         login(); //jika berhasil sinkron, auto login dengan inputan nip dan password tersebut
                         isLoadingAddPegawai.value = false;
                     } else {
