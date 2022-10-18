@@ -27,12 +27,15 @@ class WorkfromhomeView extends GetView<WorkfromhomeController> {
         backgroundColor: Color(0xffFFC107),
       ),
       body: Center(
-        child: Text(
-          'Cuti tidak tersedia',
-          textAlign: TextAlign.center,
-          style: GoogleFonts.poppins(
-            color: Color(0xff333333),
-            fontSize: 14,
+        child: Container(
+          padding: EdgeInsets.all(40),
+          child: Text(
+            'Menu Pengajuan Cuti sedang dalam proses integrasi dengan\nSistem Informasi Kepegawaian (SIMPEG)',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 14,
+            ),
           ),
         ),
       ),

@@ -56,17 +56,18 @@ class ProfileView extends GetView<ProfileController> {
               SizedBox(
                 height: 10,
               ),
-              Text("${user['nama_pegawai'].toString().toUpperCase()}", 
+              Text("${user['nama_pegawai'].toString().toUpperCase()}, ${user['gelar_belakang']}", 
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600
                   ),),
                   SizedBox(
                 height: 5,
               ),
               Text("${user['nomenklatur_jabatan']}", 
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 12,
                   ),
                 ),
@@ -75,11 +76,11 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               Text("${user["nomenklatur_pada"]}",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 10,
+                style: GoogleFonts.poppins(
+                  fontSize: 8,
                 ),),
                 SizedBox(
-                  height: 10,
+                  height: 40,
                 ),
               if (user["role"] == "admin")
               ListTile(
@@ -90,30 +91,44 @@ class ProfileView extends GetView<ProfileController> {
                     fontSize: 14,
                   ),),
               ),
-              ListTile(
-                onTap: ()=> Get.toNamed(Routes.UPDATE_PROFILE, 
-                arguments: user
+              Container(
+                height: 48,
+                child: ListTile(
+                  onTap: ()=> Get.toNamed(Routes.UPDATE_PROFILE, 
+                  arguments: user
+                  ),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Color.fromARGB(255, 199, 199, 199)
+                    ),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  leading: Icon(Icons.people_outline,
+                  color: Color(0xffFFC107),
+                  ),
+                  title: Text(
+                    "Perbaharui Profil",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                    ),
+                    ),
                 ),
-                leading: Icon(Icons.person),
-                title: Text("Perbaharui Profil",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),),
               ),
               ListTile(
                 onTap: ()=> Get.toNamed(Routes.UPDATE_PASSWORD),
                 leading: Icon(Icons.vpn_key),
                 title: Text("Ganti Password",
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
                   ),),
               ),
               ListTile(
                 onTap: ()=> controller.logout(),
                 leading: Icon(Icons.logout),
                 title: Text("Logout",
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
                   ),),
               ),
             ],
