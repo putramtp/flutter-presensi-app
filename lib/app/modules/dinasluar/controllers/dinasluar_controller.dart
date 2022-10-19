@@ -83,7 +83,7 @@ class DinasluarController extends GetxController {
                     "tgl_st" : DateFormat("yyyy-MM-dd").format(selectedDate.value),
                     "maksud" : maksudTujuan.text,
                     "tujuan" : lokasiTujuan.text,
-                    "tgl" : DateFormat("yyyy-MM-dd KK:mm:ss").format(DateTime.now()),
+                    "tgl" : DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
                     "lat" : latitude,
                     "long" : longitude,
                     "status" : "menunggu",
@@ -95,7 +95,9 @@ class DinasluarController extends GetxController {
 
                 Get.back();
                 Get.back();
-                Get.snackbar("Berhasil", "Data Dinas Luar Anda sudah diproses!");
+                Get.snackbar("Berhasil", "Data Dinas Luar Anda sudah diproses!",
+                  duration: const Duration(seconds: 6),
+                );
                 Get.offAllNamed(Routes.DINASLUAR);
                 isLoading.value = false;
     } else {

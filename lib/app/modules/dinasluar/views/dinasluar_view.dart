@@ -109,6 +109,7 @@ class DinasluarView extends GetView<DinasluarController> {
               // jika true, user tidak akan bisa edit textfield
               onTap: () {
                 controller.chooseDate();
+                controller.getCurrentLocation();
               }
             ),
             ),
@@ -184,202 +185,202 @@ class DinasluarView extends GetView<DinasluarController> {
                 )
               ),
             ),
-            SizedBox(
-              height: 18,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                "Tanggal dan Waktu",
-                style: GoogleFonts.poppins(
-                  color: Color(0xff828282),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            TextField(
-              enabled: false,
-              enableInteractiveSelection: false,
-              focusNode: FocusNode(),
-              decoration: new InputDecoration(
-                filled: true,
-                fillColor: Color(0xffF2F2F2),
-                suffixIcon: Icon(Icons.date_range_outlined,
-                color: FocusScope.of(context).isFirstFocus ? Color(0xffBDBDBD) : Color(0xffFFC107),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Color(0xffe0e0e0),
-                    width: 1.0
-                  ),
-                ),
-                labelText: DateFormat("yyyy-MM-dd").format(controller.selectedDate.value),
-                labelStyle: TextStyle(
-                  color: Color(0xffBDBDBD),
-                ),
-              ),
-              readOnly: true,
-              // jika true, user tidak akan bisa edit textfield
-              onTap: () {
-                controller.chooseDate();
-              }
-            ),
-            SizedBox(
-              height: 14,
-            ),
-            Stack(
-              children: [
-                Container(
-                  width: 220,
-                  child: TextField(
-              // enabled: false,
-              enableInteractiveSelection: false,
-              focusNode: FocusNode(),
-              decoration: new InputDecoration(
-                  labelText: controller.latitude,
-                  labelStyle: TextStyle(
-                    color: Color(0xffBDBDBD),
-                  ),
-                  filled: true,
-                  fillColor: Color(0xffF2F2F2),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Color(0xffe0e0e0),
-                      width: 1.0
-                    ),
-                  ),
-              ),
-              readOnly: true,
-              // jika true, user tidak akan bisa edit textfield
-              onTap: () {
-                  controller.getCurrentLocation();
-              }
-            ),
-                ),
-              Positioned(
-                right: 70,
-                child: Container(
-                  width: 105,
-                    child: TextField(
-                enabled: false,
-                enableInteractiveSelection: false,
-                focusNode: FocusNode(),
-                decoration: new InputDecoration(
-                  prefixIcon: Icon(Icons.location_on_outlined,
-                  color: Color(0xff828282),
-                  ),
-                    labelText: "Lat",
-                    labelStyle: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 12,
-                    ),
-                    filled: true,
-                    fillColor: Color(0xffF8F8F8),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Color(0xffe0e0e0),
-                        width: 1.0
-                      ),
-                    ),
-                ),
-                readOnly: true,
-                // jika true, user tidak akan bisa edit textfield
-                onTap: () {
-                    controller.getCurrentLocation();
-                }
-            ),
-                  ),
-              ),
-              ],
-            ),
-            SizedBox(
-              height: 14,
-            ),
-            Stack(
-              children: [
-                Container(
-                  width: 220,
-                  child: TextField(
-              enabled: false,
-              enableInteractiveSelection: false,
-              focusNode: FocusNode(),
-              decoration: new InputDecoration(
-                  labelText: controller.longitude,
-                  labelStyle: TextStyle(
-                    color: Color(0xffBDBDBD),
-                  ),
-                  filled: true,
-                  fillColor: Color(0xffF2F2F2),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Color(0xffe0e0e0),
-                      width: 1.0
-                    ),
-                  ),
-              ),
-              readOnly: true,
-              // jika true, user tidak akan bisa edit textfield
-              onTap: () {
-                  controller.getCurrentLocation();
-              }
-            ),
-                ),
-              Positioned(
-                right: 70,
-                child: Container(
-                  width: 105,
-                    child: TextField(
-                enabled: false,
-                enableInteractiveSelection: false,
-                focusNode: FocusNode(),
-                decoration: new InputDecoration(
-                  prefixIcon: Icon(Icons.location_on_outlined,
-                  color: Color(0xff828282),
-                  ),
-                    labelText: "Long",
-                    labelStyle: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 12,
-                    ),
-                    filled: true,
-                    fillColor: Color(0xffF8F8F8),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Color(0xffe0e0e0),
-                        width: 1.0
-                      ),
-                    ),
-                ),
-                readOnly: true,
-                // jika true, user tidak akan bisa edit textfield
-                onTap: () {
-                    controller.getCurrentLocation();
-                }
-            ),
-                  ),
-              ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "note : Jika posisi masih kosong, tekan form \"Lat\" atau \"Long\" berulang kali hingga muncul",
-              style: GoogleFonts.poppins(
-                color: Color.fromARGB(255, 182, 182, 182),
-                fontSize: 6,
-                fontWeight: FontWeight.w400
-              ),
-            ),
+            // SizedBox(
+            //   height: 18,
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 8),
+            //   child: Text(
+            //     "Tanggal dan Waktu",
+            //     style: GoogleFonts.poppins(
+            //       color: Color(0xff828282),
+            //       fontSize: 10,
+            //       fontWeight: FontWeight.w500,
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            // TextField(
+            //   enabled: false,
+            //   enableInteractiveSelection: false,
+            //   focusNode: FocusNode(),
+            //   decoration: new InputDecoration(
+            //     filled: true,
+            //     fillColor: Color(0xffF2F2F2),
+            //     suffixIcon: Icon(Icons.date_range_outlined,
+            //     color: FocusScope.of(context).isFirstFocus ? Color(0xffBDBDBD) : Color(0xffFFC107),
+            //     ),
+            //     disabledBorder: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //       borderSide: BorderSide(
+            //         color: Color(0xffe0e0e0),
+            //         width: 1.0
+            //       ),
+            //     ),
+            //     labelText: DateFormat("yyyy-MM-dd").format(controller.selectedDate.value),
+            //     labelStyle: TextStyle(
+            //       color: Color(0xffBDBDBD),
+            //     ),
+            //   ),
+            //   readOnly: true,
+            //   // jika true, user tidak akan bisa edit textfield
+            //   onTap: () {
+            //     controller.chooseDate();
+            //   }
+            // ),
+            // SizedBox(
+            //   height: 14,
+            // ),
+            // Stack(
+            //   children: [
+            //     Container(
+            //       width: 220,
+            //       child: TextField(
+            //   // enabled: false,
+            //   enableInteractiveSelection: false,
+            //   focusNode: FocusNode(),
+            //   decoration: new InputDecoration(
+            //       labelText: controller.latitude,
+            //       labelStyle: TextStyle(
+            //         color: Color(0xffBDBDBD),
+            //       ),
+            //       filled: true,
+            //       fillColor: Color(0xffF2F2F2),
+            //       enabledBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(10),
+            //         borderSide: BorderSide(
+            //           color: Color(0xffe0e0e0),
+            //           width: 1.0
+            //         ),
+            //       ),
+            //   ),
+            //   readOnly: true,
+            //   // jika true, user tidak akan bisa edit textfield
+            //   onTap: () {
+            //       controller.getCurrentLocation();
+            //   }
+            // ),
+            //     ),
+            //   Positioned(
+            //     right: 70,
+            //     child: Container(
+            //       width: 105,
+            //         child: TextField(
+            //     enabled: false,
+            //     enableInteractiveSelection: false,
+            //     focusNode: FocusNode(),
+            //     decoration: new InputDecoration(
+            //       prefixIcon: Icon(Icons.location_on_outlined,
+            //       color: Color(0xff828282),
+            //       ),
+            //         labelText: "Lat",
+            //         labelStyle: GoogleFonts.poppins(
+            //           color: Color(0xff828282),
+            //           fontSize: 12,
+            //         ),
+            //         filled: true,
+            //         fillColor: Color(0xffF8F8F8),
+            //         disabledBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(10),
+            //           borderSide: BorderSide(
+            //             color: Color(0xffe0e0e0),
+            //             width: 1.0
+            //           ),
+            //         ),
+            //     ),
+            //     readOnly: true,
+            //     // jika true, user tidak akan bisa edit textfield
+            //     onTap: () {
+            //         controller.getCurrentLocation();
+            //     }
+            // ),
+            //       ),
+            //   ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: 14,
+            // ),
+            // Stack(
+            //   children: [
+            //     Container(
+            //       width: 220,
+            //       child: TextField(
+            //   enabled: false,
+            //   enableInteractiveSelection: false,
+            //   focusNode: FocusNode(),
+            //   decoration: new InputDecoration(
+            //       labelText: controller.longitude,
+            //       labelStyle: TextStyle(
+            //         color: Color(0xffBDBDBD),
+            //       ),
+            //       filled: true,
+            //       fillColor: Color(0xffF2F2F2),
+            //       disabledBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(10),
+            //         borderSide: BorderSide(
+            //           color: Color(0xffe0e0e0),
+            //           width: 1.0
+            //         ),
+            //       ),
+            //   ),
+            //   readOnly: true,
+            //   // jika true, user tidak akan bisa edit textfield
+            //   onTap: () {
+            //       controller.getCurrentLocation();
+            //   }
+            // ),
+            //     ),
+            //   Positioned(
+            //     right: 70,
+            //     child: Container(
+            //       width: 105,
+            //         child: TextField(
+            //     enabled: false,
+            //     enableInteractiveSelection: false,
+            //     focusNode: FocusNode(),
+            //     decoration: new InputDecoration(
+            //       prefixIcon: Icon(Icons.location_on_outlined,
+            //       color: Color(0xff828282),
+            //       ),
+            //         labelText: "Long",
+            //         labelStyle: GoogleFonts.poppins(
+            //           color: Color(0xff828282),
+            //           fontSize: 12,
+            //         ),
+            //         filled: true,
+            //         fillColor: Color(0xffF8F8F8),
+            //         disabledBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(10),
+            //           borderSide: BorderSide(
+            //             color: Color(0xffe0e0e0),
+            //             width: 1.0
+            //           ),
+            //         ),
+            //     ),
+            //     readOnly: true,
+            //     // jika true, user tidak akan bisa edit textfield
+            //     onTap: () {
+            //         controller.getCurrentLocation();
+            //     }
+            // ),
+            //       ),
+            //   ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Text(
+            //   "note : Jika posisi masih kosong, tekan form \"Lat\" atau \"Long\" berulang kali hingga muncul",
+            //   style: GoogleFonts.poppins(
+            //     color: Color.fromARGB(255, 182, 182, 182),
+            //     fontSize: 6,
+            //     fontWeight: FontWeight.w400
+            //   ),
+            // ),
             SizedBox(
               height: 32,
             ),
@@ -425,7 +426,7 @@ class DinasluarView extends GetView<DinasluarController> {
             Container(
               height: 46,
               child: OutlinedButton(
-                onPressed: (){},
+                onPressed: ()=> Get.offAllNamed(Routes.DINASLUAR),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
                     color: Color(0xffFFC107),

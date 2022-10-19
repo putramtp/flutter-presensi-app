@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:safe_device/safe_device.dart';
 
 class PageIndexController extends GetxController {
   RxInt pageIndex = 0.obs;
@@ -33,10 +34,16 @@ class PageIndexController extends GetxController {
 
           //cek distance between 2 koordinat / 2 posisi
           double distance =  Geolocator.distanceBetween(-7.361053, 108.1127393, position.latitude, position.longitude);
+          bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
+          print(isDevelopmentModeEnable);
 
+          if (isDevelopmentModeEnable == false) {
+            await presensi(position, alamat, distance);
+          } else {
+            await presensiDetect();
+          }
           //absen
-          await presensi(position, alamat, distance);
-
+          
           // Get.snackbar("Berhasil", "Anda berhasil mengisi daftar hadir");
 
           Get.snackbar("${dataResponse['message']}" , alamat);
@@ -60,6 +67,40 @@ class PageIndexController extends GetxController {
         pageIndex.value = i;
         Get.offAllNamed(Routes.HOME);
     }
+  }
+
+  Future <void> presensiDetect() async {
+    await Get.defaultDialog(
+        backgroundColor: Color.fromARGB(255, 255, 229, 229),
+        title: "Developer Options\nHP Anda Aktif!",
+          titleStyle: GoogleFonts.poppins(
+          color: Color.fromARGB(255, 168, 7, 7),
+          fontSize: 18,
+          fontWeight: FontWeight.w800
+        ),
+        middleText: "Silahkan matikan Developer Options/Opsi Pengembang pada setting/pengaturan",
+        middleTextStyle: GoogleFonts.poppins(
+          color: Color.fromARGB(255, 168, 7, 7),
+          fontSize: 13,
+          fontWeight: FontWeight.w400
+        ),
+        actions: [
+          ElevatedButton(
+          style: TextButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 168, 7, 7),
+            ),
+            onPressed: ()=> Get.back(), 
+          child: Text(
+            "OK",
+            style: GoogleFonts.poppins(
+              color: Color(0xffFFFFFF),
+              fontSize: 12,
+              fontWeight: FontWeight.bold
+            ),
+            )
+          ),
+        ]
+      );
   }
 
   Future <void> presensi(Position position, String alamat, double distance) async {
