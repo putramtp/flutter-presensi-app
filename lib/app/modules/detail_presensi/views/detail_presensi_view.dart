@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:presensi/app/routes/app_pages.dart';
 
 import '../controllers/detail_presensi_controller.dart';
 
@@ -13,6 +14,12 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
     print(data);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: ()=> Get.toNamed(Routes.HOME), 
+        icon: Icon(Icons.arrow_back_ios_new,
+          size: 14,
+          ),
+        color: Color(0xff333333),
+        ),
         title: Text(
           'Detail Presensi',
           style: GoogleFonts.poppins(
@@ -58,9 +65,9 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                         ),
                     ),
                     SizedBox(
-                      width: 37,
+                      width: 33,
                     ),
-                  Text(":     ${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}",
+                  Text(":   ${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}",
                         style: GoogleFonts.poppins(
                           fontSize: 12
                         ),
@@ -75,9 +82,9 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                         ),
                     ),
                     SizedBox(
-                      width: 30,
+                      width: 26,
                     ),
-                  Text(":     ${data['datang']!['lat']} , ${data['datang']!['long']}",
+                  Text(":   ${data['datang']!['lat']} , ${data['datang']!['long']}",
                         style: GoogleFonts.poppins(
                           fontSize: 12
                         ),
@@ -92,16 +99,19 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                         ),
                     ),
                     SizedBox(
-                      width: 26,
+                      width: 22,
                     ),
-                  Text(":     ${data['datang']!['status']}",
+                  Text(":   ${data['datang']!['status']}",
                         style: GoogleFonts.poppins(
-                          fontSize: 12
+                          color: Color.fromARGB(255, 5, 151, 64),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400
                         ),
                     ),
                 ],
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Alamat",
                         style: GoogleFonts.poppins(
@@ -109,26 +119,45 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                         ),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 16,
                     ),
-                  Expanded(
-                    child: FittedBox(
-                      child: Text(":     ${data['datang']!['alamat']}",
+                    Text(":", 
+                      style: GoogleFonts.poppins(
+                      fontSize: 12
+                      ),
+                      ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                      child: Text("${data['datang']!['alamat']}",
                             style: GoogleFonts.poppins(
                               fontSize: 12
                             ),
                         ),
-                    ),
+                    
                   ),
                 ],
               ),
-              Text("Distance : ${data['datang']!['distance'].toString().split(".").first} meter",
-                    style: GoogleFonts.poppins(
-                      fontSize: 12
+              Row(
+                children: [
+                  Text("Distance",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
                     ),
-                ),
+                    SizedBox(
+                      width: 8
+                    ),
+                  Text(":   ${data['datang']!['distance'].toString().split(".").first} meter",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                ],
+              ),
               SizedBox(
-                height: 10,
+                height: 18,
               ),
               Text(
                 "Pulang",
@@ -137,20 +166,106 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                   fontSize: 12,
                 ),
                 ),
-              Text(
-                data['pulang']?['date'] == null ? "Jam : -" : "Jam : ${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}"
-                ),
-              Text(
-                data['pulang']?['lat'] == null && data['pulang']?['long'] == null ? "Posisi : -" : "Posisi : ${data['pulang']!['lat']} , ${data['pulang']!['long']}"
-                ),
-              Text(
-                data['pulang']?['status'] == null ? "Status : -" : "Status : ${data['pulang']!['status']}"
-                ),
-              Text(
-                data['pulang']?['alamat'] == null ? "Alamat : -" : "Alamat : ${data['pulang']!['alamat']}"),
-              Text(
-                data['pulang']?['distance'] == null ? "Distance : -" : "Distance : ${data['pulang']!['distance'].toString().split(".").first} meter"),
-            ],
+              Row(
+                children: [
+                  Text("Jam",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 33,
+                    ),
+                  Text(":   ${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Posisi",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 26,
+                    ),
+                  Text(":   ${data['pulang']!['lat']} , ${data['pulang']!['long']}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Status",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 22,
+                    ),
+                  Text(":   ${data['pulang']!['status']}",
+                        style: GoogleFonts.poppins(
+                          color: Color.fromARGB(255, 5, 151, 64),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400
+                        ),
+                    ),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Alamat",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Text(":", 
+                      style: GoogleFonts.poppins(
+                      fontSize: 12
+                      ),
+                      ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                      child: Text("${data['pulang']!['alamat']}",
+                            style: GoogleFonts.poppins(
+                              fontSize: 12
+                            ),
+                        ),
+                    
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Distance",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                    SizedBox(
+                      width: 8
+                    ),
+                  Text(":   ${data['pulang']!['distance'].toString().split(".").first} meter",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12
+                        ),
+                    ),
+                ],
+              ),
+              ],
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),

@@ -24,7 +24,7 @@ class LoginView extends GetView<LoginController> {
           padding: EdgeInsets.all(20),
           children: [
             SizedBox(
-              height: 20,
+              height: 40,
             ),
             Image.asset(
               'assets/kabtasik.gif',
@@ -89,24 +89,29 @@ class LoginView extends GetView<LoginController> {
             Container(
               height: 46,
               width: 276,
-              child: TextFormField(
-                textAlignVertical: TextAlignVertical.bottom,
-                autocorrect: false,
-                controller: controller.passC,
-                obscureText: true,
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  hintText: "Password",
-                  hintStyle: GoogleFonts.poppins(
-                    color: Color(0xff575757),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500
-                  ),
-                  suffixIcon: Icon(Icons.visibility),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide.none
+              child: Theme(
+                    data: Theme.of(context).copyWith(
+                      primaryColor: Color(0xffFFC107)
+                    ),
+                child: TextFormField(
+                  textAlignVertical: TextAlignVertical.bottom,
+                  autocorrect: false,
+                  controller: controller.passC,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: "Password",
+                    hintStyle: GoogleFonts.poppins(
+                      color: Color(0xff575757),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500
+                    ),
+                    suffixIcon: Icon(Icons.visibility),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide.none
+                    ),
                   ),
                 ),
               ),

@@ -24,11 +24,20 @@ class LoginController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future <void> safeDevice() async {
-    bool isRealDevice = await SafeDevice.isRealDevice;
-    bool canMockLocation = await SafeDevice.canMockLocation;
+    // bool canMockLocation = await SafeDevice.canMockLocation;
+    bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
+    // print(canMockLocation);
+    print(isDevelopmentModeEnable);
 
-    print(isRealDevice);
-    print(canMockLocation);
+    if (isDevelopmentModeEnable == false) {
+      return login();
+    } else {
+      Get.snackbar(
+        "Fake GPS Terdeteksi!", "Matikan aplikasi Fake GPS Anda sebelum mengakses SADASBOR",
+        duration: const Duration(seconds: 6)
+      );
+      Get.offAllNamed(Routes.LOGIN);
+    }
   }
 
   Future <void> login() async {

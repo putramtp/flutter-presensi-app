@@ -59,16 +59,18 @@ class ProfileView extends GetView<ProfileController> {
               Text("${user['nama_pegawai'].toString().toUpperCase()}, ${user['gelar_belakang']}", 
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
+                    color: Color(0xff333333),
                     fontSize: 18,
-                    fontWeight: FontWeight.w600
+                    fontWeight: FontWeight.w700
                   ),),
                   SizedBox(
-                height: 5,
+                height: 2,
               ),
               Text("${user['nomenklatur_jabatan']}", 
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 SizedBox(
@@ -91,9 +93,7 @@ class ProfileView extends GetView<ProfileController> {
                     fontSize: 14,
                   ),),
               ),
-              Container(
-                height: 48,
-                child: ListTile(
+              ListTile(
                   onTap: ()=> Get.toNamed(Routes.UPDATE_PROFILE, 
                   arguments: user
                   ),
@@ -114,20 +114,52 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                     ),
                 ),
+              SizedBox(
+                height: 10,
               ),
               ListTile(
                 onTap: ()=> Get.toNamed(Routes.UPDATE_PASSWORD),
-                leading: Icon(Icons.vpn_key),
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Color.fromARGB(255, 199, 199, 199)
+                    ),
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                leading: Icon(Icons.lock_outline,
+                color: Color(0xffFFC107),
+                ),
                 title: Text("Ganti Password",
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                   ),),
               ),
+              SizedBox(
+                height: 40,
+              ),
+              Container(
+              height: 1.5,
+              width: 276,
+              decoration: BoxDecoration(
+                color: const Color(0xffe0e0e0)
+              ),
+            ),
+              SizedBox(
+                  height: 20,
+                ),
               ListTile(
                 onTap: ()=> controller.logout(),
-                leading: Icon(Icons.logout),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: Color.fromARGB(255, 199, 199, 199)
+                    ),
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                leading: Icon(Icons.logout,
+                    color: Color(0xffEB5757),
+                ),
                 title: Text("Logout",
                   style: GoogleFonts.poppins(
+                    color: Color(0xffEB5757),
                     fontSize: 12,
                   ),),
               ),
