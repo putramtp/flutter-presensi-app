@@ -1,12 +1,19 @@
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:presensi/app/routes/app_pages.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:geolocator/geolocator.dart';
 
 class CheckStatusController extends GetxController {
 
@@ -14,6 +21,7 @@ class CheckStatusController extends GetxController {
   RxBool isLoadingAddDinasLuar = false.obs;
   TextEditingController jamdatang = TextEditingController();
   TextEditingController jampulang = TextEditingController();
+  TextEditingController nipC = TextEditingController();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -171,4 +179,99 @@ class CheckStatusController extends GetxController {
 //         print(sp);
 //       }
 
-}
+      Future <void> checkInput() async {
+              var myResponse = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/mobile"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : "198408032003122001", //199109102019031003
+                  }
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
+
+
+                var postHome = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/pegawai"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : "198408032003122001",
+                  }
+                );
+
+                // Tasiksiap2022
+
+                Map<String, dynamic> dataPegawai = json.decode(postHome.body) as Map<String, dynamic>;
+
+              print(myResponse.body);
+              print(postHome.body);
+              print(md5.convert(utf8.encode("istriasep")).toString()); // MD5 HASH Pasword
+               
+                  // cek nip apakah terdaftar atau tidak
+                  if("198408032003122001" == data['data']['nip'] && md5.convert(utf8.encode("istriasep")).toString() == data['data']['password']){  // cek nip apakah terdaftar atau tidak, jika nip dan password sama dengan api, login
+                  print("NIP Ditemukan Sinkronisasi berjalan...");
+                  UserCredential userCredential = 
+                    await auth.createUserWithEmailAndPassword(
+                      email: "198408032003122001@tasikmalayakab.go.id", 
+                      password: md5.convert(utf8.encode("istriasep")).toString()
+                      );
+
+                      if(userCredential.user != null) {
+                        String uid = userCredential.user!.uid;
+
+                        await firestore.collection("user").doc(uid).set({
+                          "nip" : nipC.text,
+                          "nama_pegawai" : dataPegawai['data']['nama_pegawai'],
+                          "gelar_depan" : dataPegawai['data']['gelar_depan'],
+                          "gelar_nonakademis" : dataPegawai['data']['gelar_nonakademis'],
+                          "gelar_belakang" : dataPegawai['data']['gelar_belakang'],
+                          "tempat_lahir" : dataPegawai['data']['tempat_lahir'],
+                          "tanggal_lahir" : dataPegawai['data']['tanggal_lahir'],
+                          "gender" : dataPegawai['data']['gender'],
+                          "nama_pangkat" : dataPegawai['data']['nama_pangkat'],
+                          "nama_golongan" : dataPegawai['data']['nama_golongan'],
+                          "tmt_pangkat" : dataPegawai['data']['tmt_pangkat'],
+                          "jenis_jabatan" : dataPegawai['data']['jenis_jabatan'],
+                          "nomenklatur_jabatan" : dataPegawai['data']['nomenklatur_jabatan'],
+                          "tmt_jabatan" : dataPegawai['data']['tmt_jabatan'],
+                          "nama_jenjang" : dataPegawai['data']['nama_jenjang'],
+                          "tmt_cpns" : dataPegawai['data']['tmt_cpns'],
+                          "tmt_pns" : dataPegawai['data']['tmt_pns'],
+                          "nomenklatur_pada" : dataPegawai['data']['nomenklatur_pada'],
+                          "nama_unor" : dataPegawai['data']['nama_unor'],
+                          "nik" : dataPegawai['data']['nik'],
+                          "status" : dataPegawai['data']['status'],
+                          "file_dokumen" : dataPegawai['data']['file_dokumen'],
+                          "id_jabatan" : data['data']['id_jabatan'],
+                          "password" : data['data']['password'],
+                          "level" : data['data']['level'],
+                          "id_skpd" : data['data']['id_skpd'],
+                          "lat" : data['data']['lat'],
+                          "long" : data['data']['long'],
+                          "uid" : uid,
+                          "j2" : data['data']['j2'],
+                          "j3" : data['data']['j3'],
+                          "nama_lokasi" : data['data']['nama_lokasi'],
+                          "role" : "pegawai",
+                          "createdAt" : DateTime.now().toIso8601String(),
+                          
+                        });
+
+                        // await userCredential.user!.sendEmailVerification();
+
+                        await auth.signOut();
+
+
+                      //  await auth.signInWithEmailAndPassword(
+                      //    email: email, 
+                      //    password: password)
+
+                        Get.back();
+                        Get.back();
+                        Get.snackbar("Login & Sinkronisasi Berhasil", "Selamat menggunakan layanan SADASBOR!");
+                      }
+                  }}}

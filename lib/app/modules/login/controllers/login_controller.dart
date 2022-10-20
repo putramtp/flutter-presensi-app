@@ -31,8 +31,8 @@ class LoginController extends GetxController {
     // print(canMockLocation);
     print(isDevelopmentModeEnable);
 
-    if (isDevelopmentModeEnable == false) {
-      return login();
+    if (isDevelopmentModeEnable == true) {
+      login();
     } else {
       // Get.snackbar(
       //   "Fake GPS Terdeteksi!", "Matikan aplikasi Fake GPS Anda sebelum mengakses SADASBOR",
@@ -185,7 +185,7 @@ class LoginController extends GetxController {
                           "nomenklatur_pada" : dataPegawai['data']['nomenklatur_pada'],
                           "nama_unor" : dataPegawai['data']['nama_unor'],
                           "nik" : dataPegawai['data']['nik'],
-                          "status" : dataPegawai['data']['pns'],
+                          "status" : dataPegawai['data']['status'],
                           "file_dokumen" : dataPegawai['data']['file_dokumen'],
                           "id_jabatan" : data['data']['id_jabatan'],
                           "password" : data['data']['password'],
@@ -196,6 +196,7 @@ class LoginController extends GetxController {
                           "uid" : uid,
                           "j2" : data['data']['j2'],
                           "j3" : data['data']['j3'],
+                          "nama_lokasi" : data['data']['nama_lokasi'],
                           "role" : "pegawai",
                           "createdAt" : DateTime.now().toIso8601String(),
                           
@@ -220,11 +221,15 @@ class LoginController extends GetxController {
                 Get.offAllNamed(Routes.LOGIN);
                 isLoading.value = false;
                 
-              }
-            
-                        
+              }       
+                    
       } else if (e.code == 'email-already-in-use') {
         Get.snackbar("Terjadi Kesalahan", "E-mail sudah ada. Tidak dapat menambah pegawai dengan email ini");
+      } else if (e.code == 'wrong-password'){
+        Get.snackbar("Terjadi Kesalahan", "Password yang Anda masukkan salah",
+        duration: const Duration(seconds: 5),
+        );
+        Get.offAllNamed(Routes.LOGIN);
       }
     } catch (e) {
     Get.snackbar("Terjadi Kesalahan", "NIP tidak terdaftar pada sistem");

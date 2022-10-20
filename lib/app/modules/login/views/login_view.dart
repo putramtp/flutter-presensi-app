@@ -63,7 +63,7 @@ class LoginView extends GetView<LoginController> {
               height: 48,
               width: 276,
               child: TextFormField(
-                onTap: ()=> controller.getCurrentLocation(),
+                // onTap: ()=> controller.getCurrentLocation(),
                 textAlign: TextAlign.left,
                 autocorrect: false,
                 controller: controller.nipC,
@@ -96,7 +96,7 @@ class LoginView extends GetView<LoginController> {
                       primaryColor: Color(0xffFFC107)
                     ),
                 child: TextFormField(
-                  onTap: ()=> controller.getCurrentLocation(),
+                  // onTap: ()=> controller.getCurrentLocation(),
                   textAlign: TextAlign.left,
                   autocorrect: false,
                   controller: controller.passC,
@@ -214,7 +214,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 onPressed: () async {               
                   if (controller.isLoading.isFalse){
-                    await controller.safeDevice();
+                    await controller.login();
                   }
                 }, 
                 child: Text(
