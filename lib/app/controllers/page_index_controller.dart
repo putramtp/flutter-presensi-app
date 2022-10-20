@@ -34,6 +34,8 @@ class PageIndexController extends GetxController {
 
           //cek distance between 2 koordinat / 2 posisi
           double distance =  Geolocator.distanceBetween(-7.361053, 108.1127393, position.latitude, position.longitude);
+          
+          //block fakeGPS atau mocklocation yang aktif lewat Developer Options
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
@@ -78,10 +80,10 @@ class PageIndexController extends GetxController {
           fontSize: 18,
           fontWeight: FontWeight.w800
         ),
-        middleText: "Silahkan matikan Developer Options/Opsi Pengembang pada setting/pengaturan",
+        middleText: "Silahkan matikan Developer Options/Opsi Pengembang pada setting/pengaturan device Anda, lalu keluarkan dahulu aplikasi ini dan coba kembali.",
         middleTextStyle: GoogleFonts.poppins(
           color: Color.fromARGB(255, 168, 7, 7),
-          fontSize: 13,
+          fontSize: 11,
           fontWeight: FontWeight.w400
         ),
         actions: [

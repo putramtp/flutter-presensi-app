@@ -12,6 +12,8 @@ import 'dart:convert';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LoginController extends GetxController {
   RxBool isLoading = false.obs;
@@ -32,13 +34,60 @@ class LoginController extends GetxController {
     if (isDevelopmentModeEnable == false) {
       return login();
     } else {
-      Get.snackbar(
-        "Fake GPS Terdeteksi!", "Matikan aplikasi Fake GPS Anda sebelum mengakses SADASBOR",
-        duration: const Duration(seconds: 6)
+      // Get.snackbar(
+      //   "Fake GPS Terdeteksi!", "Matikan aplikasi Fake GPS Anda sebelum mengakses SADASBOR",
+      //   duration: const Duration(seconds: 6),
+      // );
+      await Get.defaultDialog(
+        backgroundColor: Color.fromARGB(255, 255, 229, 229),
+        title: "Developer Options\nHP Anda Aktif!",
+          titleStyle: GoogleFonts.poppins(
+          color: Color.fromARGB(255, 168, 7, 7),
+          fontSize: 18,
+          fontWeight: FontWeight.w800
+        ),
+        middleText: "Silahkan matikan Developer Options/Opsi Pengembang pada setting/pengaturan device Anda, lalu coba kembali.",
+        middleTextStyle: GoogleFonts.poppins(
+          color: Color.fromARGB(255, 168, 7, 7),
+          fontSize: 11,
+          fontWeight: FontWeight.w400
+        ),
+        actions: [
+          ElevatedButton(
+          style: TextButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 168, 7, 7),
+            ),
+            onPressed: ()=> Get.back(), 
+          child: Text(
+            "OK",
+            style: GoogleFonts.poppins(
+              color: Color(0xffFFFFFF),
+              fontSize: 12,
+              fontWeight: FontWeight.bold
+            ),
+            )
+          ),
+        ]
       );
       Get.offAllNamed(Routes.LOGIN);
     }
   }
+
+  var locationMessage = "";
+  var latitude = "";
+  var longitude = "";
+
+  void getCurrentLocation() async {
+      var position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      var lastPosition = await Geolocator.getLastKnownPosition();
+      print(lastPosition);
+      latitude = position.latitude.toString();
+      longitude = position.longitude.toString();  
+      
+      locationMessage = "$position";
+      print(latitude);
+      print(longitude);
+    }
 
   Future <void> login() async {
     if(nipC.text.isNotEmpty && passC.text.isNotEmpty){

@@ -1,144 +1,46 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
+import 'package:presensi/app/routes/app_pages.dart';
 import '../controllers/update_profile_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdateProfileView extends GetView<UpdateProfileController> {
   final Map<String, dynamic> user = Get.arguments;
   @override
   Widget build(BuildContext context) {
-    controller.nipC.text = user['nip'];
-    controller.nameC.text = user['name'];
-    controller.emailC.text = user['email'];
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Perbaharui Profil'),
+        leading: IconButton(onPressed: ()=> Get.back(),
+        icon: const Icon(Icons.arrow_back_ios_new,
+          size: 14,
+          ),
+        color: Color(0xff333333),
+        ),
+        title: Text(
+          'Perbaharui Profil',
+          style: GoogleFonts.poppins(
+            color: Color(0xff333333),
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+          ),
         centerTitle: true,
+        backgroundColor: Color(0xffFFC107),
       ),
-      body: ListView(
-        padding: EdgeInsets.all(20),
-        children: [
-          TextField(
-            readOnly: true,
-            autocorrect: false,
-            controller: controller.nipC,
-            decoration: InputDecoration(
-              labelText: "NIP",
-              border: OutlineInputBorder(),
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.all(40),
+          child: Text(
+            'Menu Perbaharui Profil sedang dalam proses pengembangan sistem',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 14,
             ),
           ),
-          SizedBox(
-            height : 10,
-          ),
-          TextField(
-            autocorrect: false,
-            controller: controller.nameC,
-            decoration: InputDecoration(
-              labelText: "Nama",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(
-            height : 10,
-          ),
-          TextField(
-            readOnly: true,
-            autocorrect: false,
-            controller: controller.emailC,
-            decoration: InputDecoration(
-              labelText: "Email",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(
-            height : 15,
-          ),
-          Text(
-                "Foto Profil",
-                  style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),  
-              ),
-          SizedBox(
-            height : 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GetBuilder<UpdateProfileController>(
-                builder: (c) {
-                  if (c.image != null) {
-                    return ClipOval(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: Image.file(File(c.image!.path), 
-                        fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  } else {
-                    if (user['profile'] != null){
-                      return Column(
-                        children: [
-                          ClipOval(
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                              child: Image.network(
-                                user['profile'],
-                                fit: BoxFit.cover,
-                              ), 
-                            ),
-                          ),
-                          TextButton(onPressed: (){
-                          controller.deleteProfile(user["uid"]);
-                    }, 
-                        child: Text(
-                       "delete",
-                          style: TextStyle(
-                          fontSize: 12,
-                    ),
-                  ),
-                ),
-                        ],
-                      );
-                    } else {
-                      return Text("No Image");
-                    }
-                  }
-                },
-              ),
-              TextButton(onPressed: (){
-                controller.pickImage();
-              }, 
-                  child: Text(
-                    "choose",
-                      style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Obx(
-            ()=> ElevatedButton(onPressed: () async {
-            if(controller.isLoading.isFalse){
-              await controller.updateProfile(user["uid"]);
-            }
-          }, 
-            child: 
-            Text(controller.isLoading.isFalse ? "PERBAHARUI" : "LOADING...")),
-          ) 
-        ],
-      )
+        ),
+      ),
     );
   }
 }

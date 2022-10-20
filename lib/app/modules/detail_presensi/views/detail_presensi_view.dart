@@ -67,7 +67,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                     SizedBox(
                       width: 33,
                     ),
-                  Text(":   ${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}",
+                  Text(":   ${DateFormat("HH:mm:ss").format(DateTime.parse(data['datang']!['date']))} WIB",
                         style: GoogleFonts.poppins(
                           fontSize: 12
                         ),
@@ -176,7 +176,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                     SizedBox(
                       width: 33,
                     ),
-                  Text(":   ${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}",
+                  Text(":   ${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB",
                         style: GoogleFonts.poppins(
                           fontSize: 12
                         ),

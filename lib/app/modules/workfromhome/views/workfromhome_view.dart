@@ -11,7 +11,7 @@ class WorkfromhomeView extends GetView<WorkfromhomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: ()=> Get.toNamed(Routes.HOME),
+        leading: IconButton(onPressed: ()=> Get.offAllNamed(Routes.HOME),
         icon: const Icon(Icons.arrow_back_ios_new,
           size: 14,
           ),

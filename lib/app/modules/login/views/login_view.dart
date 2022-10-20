@@ -27,7 +27,7 @@ class LoginView extends GetView<LoginController> {
               height: 40,
             ),
             Image.asset(
-              'assets/kabtasik.gif',
+              'assets/loader.gif',
               height: 135,
             ),
             SizedBox(
@@ -60,16 +60,18 @@ class LoginView extends GetView<LoginController> {
               height: 39,
             ),
             Container(
-              height: 46,
+              height: 48,
               width: 276,
               child: TextFormField(
-                textAlignVertical: TextAlignVertical.bottom,
+                onTap: ()=> controller.getCurrentLocation(),
+                textAlign: TextAlign.left,
                 autocorrect: false,
                 controller: controller.nipC,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
                   hintText: "NIP",
+                  contentPadding: EdgeInsets.only(left: 20),
                   hintStyle: GoogleFonts.poppins(
                     color: Color(0xff575757),
                     fontSize: 12,
@@ -87,14 +89,15 @@ class LoginView extends GetView<LoginController> {
               height: 10,
             ),
             Container(
-              height: 46,
+              height: 48,
               width: 276,
               child: Theme(
                     data: Theme.of(context).copyWith(
                       primaryColor: Color(0xffFFC107)
                     ),
                 child: TextFormField(
-                  textAlignVertical: TextAlignVertical.bottom,
+                  onTap: ()=> controller.getCurrentLocation(),
+                  textAlign: TextAlign.left,
                   autocorrect: false,
                   controller: controller.passC,
                   obscureText: true,
@@ -102,6 +105,7 @@ class LoginView extends GetView<LoginController> {
                     fillColor: Colors.white,
                     filled: true,
                     hintText: "Password",
+                    contentPadding: EdgeInsets.only(left: 20),
                     hintStyle: GoogleFonts.poppins(
                       color: Color(0xff575757),
                       fontSize: 12,
@@ -138,17 +142,17 @@ class LoginView extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  height: 33,
+                  height: 34,
                   width: 146,
-                  child: TextFormField(
+                  child: TextField(
                     enabled: false,
                     decoration: InputDecoration(
-                      fillColor: Color(0xffdcdcdc),
+                      fillColor: Color(0xffe0e0e0),
                       filled: true,
-                      hintText: "Lat",
+                      hintText: "Lat   :          " + controller.latitude,
                       hintStyle: GoogleFonts.poppins(
-                      color: Color.fromARGB(255, 165, 165, 165),
-                        fontSize: 8,
+                      color: Color.fromARGB(255, 184, 184, 184),
+                        fontSize: 9,
                         fontWeight: FontWeight.w400,
                     ),
                     border: OutlineInputBorder(
@@ -162,17 +166,17 @@ class LoginView extends GetView<LoginController> {
                   width: 10,
                 ),
               Container(
-              height: 33,
+              height: 34,
               width: 146,
-              child: TextFormField(
+              child: TextField(
                 enabled: false,
                 decoration: InputDecoration(
-                  fillColor: Color(0xffdcdcdc),
+                  fillColor: Color(0xffe0e0e0),
                   filled: true,
-                  hintText: "Long",
+                  hintText: "Long   :          ${controller.longitude}",
                   hintStyle: GoogleFonts.poppins(
-                  color: Color.fromARGB(255, 165, 165, 165),
-                    fontSize: 8,
+                  color: Color.fromARGB(255, 184, 184, 184),
+                    fontSize: 9,
                     fontWeight: FontWeight.w400,
                 ),
                 border: OutlineInputBorder(
@@ -210,7 +214,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 onPressed: () async {               
                   if (controller.isLoading.isFalse){
-                    await controller.login();
+                    await controller.safeDevice();
                   }
                 }, 
                 child: Text(

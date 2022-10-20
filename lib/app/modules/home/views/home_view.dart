@@ -36,8 +36,8 @@ class HomeView extends GetView<HomeController> {
           if (snapshot.hasData){
 
           Map<String, dynamic> user = snapshot.data!.data()!;
-          String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
-
+          String defaultImageInitial = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
+          String defaultImage = "https://simpeg.tasikmalayakab.go.id/assets/media/file/${user['nip']}/pasfoto/thumb_${user['file_dokumen']}";
           return ListView(
             padding: EdgeInsets.all(20),
             children: [
@@ -48,7 +48,7 @@ class HomeView extends GetView<HomeController> {
                       height: 75,
                       width: 75,
                       color: Colors.grey[200],
-                      child: Image.network(user["profile"] != null ? user["profile"] : defaultImage,
+                      child: Image.network(user["file_dokumen"] != null ? defaultImageInitial : defaultImageInitial,
                               fit: BoxFit.cover,
                               ),
                       // child: Image.network(src),
@@ -91,6 +91,14 @@ class HomeView extends GetView<HomeController> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                    color: Color(0xffFFC107),
+                   boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 3,
+                      blurRadius: 7,
+                      offset: Offset(0,6)
+                    )
+                  ]
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,6 +140,14 @@ class HomeView extends GetView<HomeController> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xffFFC107),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 3,
+                      blurRadius: 7,
+                      offset: Offset(0,6)
+                    )
+                  ]
                 ),
                 child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                   stream: controller.streamTodayPresence(),
@@ -157,7 +173,7 @@ class HomeView extends GetView<HomeController> {
                               SizedBox(
                                 height: 2,
                               ),
-                            Text(dataToday?["datang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['datang']['date']))}",
+                            Text(dataToday?["datang"] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(dataToday!['datang']['date']))}",
                             style: GoogleFonts.poppins(),
                             ),
                           ],
@@ -165,7 +181,7 @@ class HomeView extends GetView<HomeController> {
                         Container(
                           width: 2,
                           height: 25,
-                          color: Color.fromARGB(255, 206, 156, 6),
+                          color: Color.fromARGB(255, 243, 185, 11),
                         ),
                         Column(
                           children: [
@@ -179,7 +195,7 @@ class HomeView extends GetView<HomeController> {
                               SizedBox(
                                 height: 2,
                               ),
-                            Text(dataToday?["pulang"] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(dataToday!['pulang']['date']))}",
+                            Text(dataToday?["pulang"] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(dataToday!['pulang']['date']))}",
                             style: GoogleFonts.poppins(),
                             ),
                           ],
@@ -280,7 +296,7 @@ class HomeView extends GetView<HomeController> {
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  Text(data['datang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}",
+                                  Text(data['datang']?['date'] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['datang']!['date']))} WIB",
                                     style: GoogleFonts.poppins(),
                                   ),
                                   SizedBox(
@@ -296,7 +312,7 @@ class HomeView extends GetView<HomeController> {
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  Text(data['pulang']?['date'] == null ? "-" : "${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}",
+                                  Text(data['pulang']?['date'] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB",
                                     style: GoogleFonts.poppins(),
                                   ),
                                 ],
@@ -321,6 +337,7 @@ class HomeView extends GetView<HomeController> {
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: Color(0xffFFC107),
         style: TabStyle.fixedCircle,
+        height: 56,
         items: [
           TabItem(icon: Icons.home_outlined, title: 'Home'),
           TabItem(icon: Icons.leave_bags_at_home_outlined, title: 'Cuti'),

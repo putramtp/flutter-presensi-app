@@ -111,13 +111,15 @@ class ProfileView extends GetView<ProfileController> {
                     arguments: user
                     ),
                     leading: Icon(Icons.people_outline,
-                    color: Color(0xffFFC107),
+                    color: Color(0xff333333),
                     ),
                     title: Text(
                       "Perbaharui Profil",
                       textAlign: TextAlign.start,
                       style: GoogleFonts.poppins(
+                        color: Color(0xff333333),
                         fontSize: 12,
+                        fontWeight: FontWeight.w600
                       ),
                       ),
                   ),
@@ -141,11 +143,13 @@ class ProfileView extends GetView<ProfileController> {
                 child: ListTile(
                   onTap: ()=> Get.toNamed(Routes.UPDATE_PASSWORD),
                   leading: Icon(Icons.lock_outline,
-                  color: Color(0xffFFC107),
+                  color: Color(0xff333333),
                   ),
                   title: Text("Ganti Password",
                     style: GoogleFonts.poppins(
+                      color: Color(0xff333333),
                       fontSize: 12,
+                      fontWeight: FontWeight.w600
                     ),),
                 ),
               ),
@@ -156,28 +160,37 @@ class ProfileView extends GetView<ProfileController> {
               height: 1.5,
               width: 276,
               decoration: BoxDecoration(
-                color: const Color(0xffe0e0e0)
+                color: Color.fromARGB(255, 241, 241, 241)
               ),
             ),
               SizedBox(
                   height: 20,
                 ),
-              ListTile(
-                onTap: ()=> controller.logout(),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                      color: Color.fromARGB(255, 199, 199, 199)
-                    ),
-                    borderRadius: BorderRadius.circular(10)
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xffFFF1F1),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0,6)
+                    )
+                  ]
                 ),
-                leading: Icon(Icons.logout,
-                    color: Color(0xffEB5757),
+                child: ListTile(
+                  onTap: ()=> controller.logout(),
+                  leading: Icon(Icons.logout,
+                      color: Color(0xffEB5757),
+                  ),
+                  title: Text("Logout",
+                    style: GoogleFonts.poppins(
+                      color: Color(0xffEB5757),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600
+                    ),),
                 ),
-                title: Text("Logout",
-                  style: GoogleFonts.poppins(
-                    color: Color(0xffEB5757),
-                    fontSize: 12,
-                  ),),
               ),
             ],
           );
@@ -190,18 +203,19 @@ class ProfileView extends GetView<ProfileController> {
         },
       ),
         bottomNavigationBar: ConvexAppBar(
-          backgroundColor: Color(0xffFFC107),
-          style: TabStyle.fixedCircle,
-          items: [
-            TabItem(icon: Icons.home_outlined, title: 'Home'),
-            TabItem(icon: Icons.leave_bags_at_home_outlined, title: 'Cuti'),
-            TabItem(icon: Icons.fingerprint, title: 'Add'),
-            TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
-            TabItem(icon: Icons.people_outline, title: 'Profil'),
-          ],
-          initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
-          onTap: (int i) => pageC.changePage(i),
-      ),
+        backgroundColor: Color(0xffFFC107),
+        style: TabStyle.fixedCircle,
+        height: 56,
+        items: [
+          TabItem(icon: Icons.home_outlined, title: 'Home'),
+          TabItem(icon: Icons.leave_bags_at_home_outlined, title: 'Cuti'),
+          TabItem(icon: Icons.fingerprint, title: 'Add'),
+          TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
+          TabItem(icon: Icons.people_outline, title: 'Profil'),
+        ],
+        initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
+        onTap: (int i) => pageC.changePage(i),
+      )
     );
   }
 }
