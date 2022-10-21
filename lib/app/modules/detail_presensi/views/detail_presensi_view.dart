@@ -328,6 +328,15 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                   color: Colors.grey[200],
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(onPressed: (){},
+                child: Icon(Icons.sync_outlined, size: 28),
+                backgroundColor: Color.fromARGB(255, 5, 151, 64),
+                ),
+              ],
+            )
             ],
           );
         } else {

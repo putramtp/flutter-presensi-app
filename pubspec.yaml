@@ -24,6 +24,7 @@ dependencies:
   trust_location: 2.0.13
   permission_handler: 9.2.0
   safe_device: 1.1.1
+  cached_network_image: 3.2.0
   flutter: 
     sdk: flutter
 

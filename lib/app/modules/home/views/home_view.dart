@@ -302,12 +302,27 @@ class HomeView extends GetView<HomeController> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text(
-                                    "Pulang",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Pulang",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 20),
+                                        child: data["sync"] == "N" 
+                                        ? Icon(Icons.close_rounded,
+                                        color: Color.fromARGB(255, 214, 32, 32),
+                                        )
+                                        : Icon(Icons.check_rounded,
+                                        color: Color.fromARGB(255, 19, 204, 13),
+                                        )
+                                      )
+                                    ],
                                   ),
                                   SizedBox(
                                     height: 2,
