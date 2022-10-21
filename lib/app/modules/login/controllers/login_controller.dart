@@ -3,17 +3,15 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presensi/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:safe_device/safe_device.dart';
-import 'package:trust_location/trust_location.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:developer';
 
 class LoginController extends GetxController {
   RxBool isLoading = false.obs;
@@ -24,6 +22,8 @@ class LoginController extends GetxController {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  var isPasswordHidden = true.obs;
 
   Future <void> safeDevice() async {
     // bool canMockLocation = await SafeDevice.canMockLocation;
@@ -90,6 +90,7 @@ class LoginController extends GetxController {
     }
 
   Future <void> login() async {
+    log("This is Log Print");
     if(nipC.text.isNotEmpty && passC.text.isNotEmpty){
             isLoading.value = true;
             try {
@@ -112,9 +113,8 @@ class LoginController extends GetxController {
                   Get.snackbar("Terjadi Kesalahan", "Tidak dapat login");
                 }
 
-            
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+      log(e.code);
       if (e.code == 'user-not-found'){
         Get.snackbar("Mohon Tunggu", "Sedang menyinkronkan akun Anda...");
             var myResponse = await http.post(
@@ -220,25 +220,26 @@ class LoginController extends GetxController {
                 Get.snackbar("Terjadi Kesalahan", "Gagal sinkronisasi data");
                 Get.offAllNamed(Routes.LOGIN);
                 isLoading.value = false;
-                
-              }       
-                    
-      } else if (e.code == 'email-already-in-use') {
-        Get.snackbar("Terjadi Kesalahan", "E-mail sudah ada. Tidak dapat menambah pegawai dengan email ini");
-      } else if (e.code == 'wrong-password'){
-        Get.snackbar("Terjadi Kesalahan", "Password yang Anda masukkan salah",
-        duration: const Duration(seconds: 5),
+              }                 
+            } 
+          } catch (e) {
+          Get.snackbar("Terjadi Kesalahan", "NIP tidak terdaftar pada sistem");
+          Get.offAllNamed(Routes.LOGIN);
+          }
+            }
+        } else if (e.code == 'wrong-password'){
+            Get.snackbar("Terjadi Kesalahan", "Password yang Anda masukkan salah!",
+            duration: const Duration(seconds: 5),
+              );
+            Get.offAllNamed(Routes.LOGIN);
+          }
+          }
+      } else {
+        Get.snackbar("Terjadi Kesalahan", "NIP dan Passwod wajib diisi!",
+        duration: const Duration(seconds: 6)
         );
         Get.offAllNamed(Routes.LOGIN);
       }
-    } catch (e) {
-    Get.snackbar("Terjadi Kesalahan", "NIP tidak terdaftar pada sistem");
-    Get.offAllNamed(Routes.LOGIN);
-    }
-              }
-      }
-    }
-    }
   }
 }
 

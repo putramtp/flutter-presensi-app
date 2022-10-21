@@ -19,6 +19,11 @@ class PageIndexController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void changePage(int i) async {
+    final User user = auth.currentUser!;
+    final uid = user.uid;
+
+    final nipSession = await firestore.collection("user").doc(uid).get();
+
     pageIndex.value = i;
     switch (i) {
       case 2 :
@@ -33,7 +38,13 @@ class PageIndexController extends GetxController {
           await updatePosition(position, alamat);
 
           //cek distance between 2 koordinat / 2 posisi
-          double distance =  Geolocator.distanceBetween(-7.361053, 108.1127393, position.latitude, position.longitude);
+          double distance =  Geolocator.distanceBetween(
+              // -7.361053, 
+              // 108.1127393, 
+              double.parse(nipSession['lat']),
+              double.parse(nipSession['long']),
+              position.latitude, 
+              position.longitude);
           
           //block fakeGPS atau mocklocation yang aktif lewat Developer Options
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
@@ -170,7 +181,7 @@ class PageIndexController extends GetxController {
             }
           });
           Get.back();
-          Get.snackbar("Berhasil", "Anda berhasil mengisi Presensi Datang");
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang");
 
       String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
@@ -389,7 +400,7 @@ class PageIndexController extends GetxController {
         },
         });
           Get.back();
-          Get.snackbar("Berhasil", "Anda berhasil mengisi Presensi Pulang");
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Pulang");
 
       String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
@@ -597,7 +608,7 @@ class PageIndexController extends GetxController {
             }
           });
           Get.back();
-          Get.snackbar("Berhasil", "Anda berhasil mengisi Presensi Datang");
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang");
 
       String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
@@ -761,7 +772,7 @@ class PageIndexController extends GetxController {
       }
     }
   } else {
-    Get.snackbar("Diluar Area", "Presensi Gagal, Anda berada diluar Area",
+    Get.snackbar("Presensi Gagal", "Anda berada diluar Area Kantor Anda",
     duration: const Duration(seconds: 5)
     );
   }

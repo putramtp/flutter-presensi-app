@@ -77,7 +77,7 @@ class LoginView extends GetView<LoginController> {
                     fontSize: 12,
                     fontWeight: FontWeight.w500
                   ),
-                  suffixIcon: Icon(Icons.person),
+                  suffixIcon: Icon(Icons.person, size: 22,),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
                     borderSide: BorderSide.none,
@@ -95,28 +95,38 @@ class LoginView extends GetView<LoginController> {
                     data: Theme.of(context).copyWith(
                       primaryColor: Color(0xffFFC107)
                     ),
-                child: TextFormField(
+                child: 
+                Obx(()=>
+                TextFormField(
                   // onTap: ()=> controller.getCurrentLocation(),
                   textAlign: TextAlign.left,
                   autocorrect: false,
                   controller: controller.passC,
-                  obscureText: true,
+                  obscureText: controller.isPasswordHidden.value,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
                     hintText: "Password",
-                    contentPadding: EdgeInsets.only(left: 20),
+                    contentPadding: EdgeInsets.only(left: 22),
                     hintStyle: GoogleFonts.poppins(
                       color: Color(0xff575757),
                       fontSize: 12,
                       fontWeight: FontWeight.w500
                     ),
-                    suffixIcon: Icon(Icons.visibility),
+                    suffixIcon: InkWell(
+                      child: Icon(controller.isPasswordHidden.value? Icons.visibility:
+                      Icons.visibility_off, size: 22,),
+                      onTap: (){
+                        controller.isPasswordHidden.value =
+                          !controller.isPasswordHidden.value;
+                      },
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide.none
                     ),
                   ),
+                ),
                 ),
               ),
             ),
