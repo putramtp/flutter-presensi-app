@@ -50,7 +50,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == false) {
+          if (isDevelopmentModeEnable == true) {
             await presensi(position, alamat, distance);
           } else {
             await presensiDetect();
@@ -171,6 +171,7 @@ class PageIndexController extends GetxController {
             onPressed: () async {
               await colPresence.doc(todayDocID).set({
               "date" : now.toIso8601String(),
+              "sync" : "N",
               "datang" : {
               "date" : now.toIso8601String(),
               "lat" : position.latitude,
@@ -178,7 +179,15 @@ class PageIndexController extends GetxController {
               "alamat" : alamat,
               "status" : status,
               "distance" : distance,
-            }
+            },"pulang" : {
+              "date" : now.toIso8601String(),
+              "lat" : position.latitude,
+              "long" : position.longitude,
+              "alamat" : alamat,
+              "status" : status,
+              "distance" : distance,
+            },
+
           });
           Get.back();
           Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang");
@@ -772,7 +781,7 @@ class PageIndexController extends GetxController {
       }
     }
   } else {
-    Get.snackbar("Presensi Gagal", "Anda berada diluar Area Kantor Anda",
+    Get.snackbar("Presensi Gagal", "Anda sedang berada diluar area kantor Anda",
     duration: const Duration(seconds: 5)
     );
   }

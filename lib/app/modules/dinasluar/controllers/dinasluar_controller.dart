@@ -101,7 +101,7 @@ class DinasluarController extends GetxController {
                 Get.offAllNamed(Routes.DINASLUAR);
                 isLoading.value = false;
     } else {
-      Get.snackbar("Terjadi Kesalahan", "Gagal memproses data. Silahkan coba kembali");
+      Get.snackbar("Terjadi Kesalahan", "Gagal memproses data. Silahkan coba kembali.");
       Get.offAllNamed(Routes.DINASLUAR);
       isLoading.value = false;
     }

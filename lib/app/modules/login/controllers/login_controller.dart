@@ -221,9 +221,14 @@ class LoginController extends GetxController {
                 Get.offAllNamed(Routes.LOGIN);
                 isLoading.value = false;
               }                 
-            } 
+            } else {
+              Get.snackbar("Terjadi Kesalahan", "Password yang Anda masukkan salah. Harap masukkan password yang benar.",
+              duration: const Duration(seconds: 8),
+              );
+              Get.offAllNamed(Routes.LOGIN);
+            }
           } catch (e) {
-          Get.snackbar("Terjadi Kesalahan", "NIP tidak terdaftar pada sistem");
+          Get.snackbar("Terjadi Kesalahan", "NIP yang Anda masukkan tidak terdaftar pada sistem.");
           Get.offAllNamed(Routes.LOGIN);
           }
             }
@@ -232,7 +237,12 @@ class LoginController extends GetxController {
             duration: const Duration(seconds: 5),
               );
             Get.offAllNamed(Routes.LOGIN);
-          }
+        } else if (e.code == 'too-many-requests'){
+            Get.snackbar("Sistem Sedang Sibuk", "Harap coba kembali sekitar 20 detik kedepan",
+            duration: const Duration(seconds: 5),
+            );
+            Get.offAllNamed(Routes.LOGIN);
+        }
           }
       } else {
         Get.snackbar("Terjadi Kesalahan", "NIP dan Passwod wajib diisi!",
