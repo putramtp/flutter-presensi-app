@@ -106,7 +106,7 @@ class LoginController extends GetxController {
                   // Get.snackbar("Login Berhasil", "Selamat menggunakan SADASBOR");
                 } else {
                   isLoading.value = false;
-                  Get.snackbar("Terjadi Kesalahan", "Tidak dapat login");
+                  Get.snackbar("Terjadi Kesalahan", "Tidak dapat login.");
                 }
 
     } on FirebaseAuthException catch (e) {
@@ -209,11 +209,11 @@ class LoginController extends GetxController {
 
                         Get.back();
                         Get.back();
-                        Get.snackbar("Login & Sinkronisasi Berhasil", "Selamat menggunakan layanan SADASBOR!");
+                        Get.snackbar("Login & Sinkronisasi Berhasil!", "Selamat menggunakan layanan SADASBOR Kab. Tasikmalaya");
                         login(); //jika berhasil sinkron, auto login dengan inputan nip dan password tersebut
                         isLoadingAddPegawai.value = false;
                     } else {
-                Get.snackbar("Terjadi Kesalahan", "Gagal sinkronisasi data");
+                Get.snackbar("Terjadi Kesalahan", "Gagal sinkronisasi data.");
                 Get.offAllNamed(Routes.LOGIN);
                 isLoading.value = false;
               }                 
@@ -224,7 +224,9 @@ class LoginController extends GetxController {
               Get.offAllNamed(Routes.LOGIN);
             }
           } catch (e) {
-          Get.snackbar("Terjadi Kesalahan", "NIP yang Anda masukkan tidak terdaftar pada sistem.");
+          Get.snackbar("Terjadi Kesalahan", "NIP yang Anda masukkan tidak terdaftar pada sistem. Silahkan coba kembali.",
+          duration: const Duration(seconds: 5),
+            );
           Get.offAllNamed(Routes.LOGIN);
           }
             }
@@ -234,67 +236,17 @@ class LoginController extends GetxController {
               );
             Get.offAllNamed(Routes.LOGIN);
         } else if (e.code == 'too-many-requests'){
-            Get.snackbar("Sistem Sedang Sibuk", "Harap coba kembali sekitar 20 detik kedepan",
+            Get.snackbar("Sistem Sedang Sibuk", "Harap coba kembali sekitar 20 detik kedepan.",
             duration: const Duration(seconds: 5),
             );
             Get.offAllNamed(Routes.LOGIN);
         }
           }
       } else {
-        Get.snackbar("Terjadi Kesalahan", "NIP dan Passwod wajib diisi!",
+        Get.snackbar("Terjadi Kesalahan", "NIP dan Password Anda wajib diisi!",
         duration: const Duration(seconds: 6)
         );
         Get.offAllNamed(Routes.LOGIN);
       }
   }
 }
-
-  // class MockLocation extends StatefulWidget {
-  //   const MockLocation({Key? key}) : super(key: key);
-  //   @override
-  //   _MockLocationState createState() => _MockLocationState();
-  // }
-
-  // class _MockLocationState extends State<MockLocation> {
-  //     String? latitude_tl;
-  //     String? longitude_tl;
-  //     bool? isMock;
-  //     bool showText = false;
-
-  //     @override
-  //     void initState(){
-  //       requestPermission();
-  //       super.initState();
-  //     }
-
-  //     void requestPermission() async {
-  //       final permission = await Permission.location.request();
-
-  //       if (permission == PermissionStatus.denied) {
-  //         TrustLocation.start(10);
-  //         getLocation();
-  //       } else if (permission == PermissionStatus.denied) {
-  //         await Permission.location.request();
-  //       }
-  //     }
-
-  //     void getLocation() async {
-  //       try {
-  //         TrustLocation.onChange.listen((result) {
-  //           setState(() {
-  //             latitude_tl = result.latitude;
-  //             longitude_tl = result.longitude;
-  //             isMock = result.isMockLocation;
-  //             showText = true;
-  //           });
-  //         });
-  //       } catch (e) {
-  //         print("Trust Location Error");
-  //       }
-  //     }
-
-  //     @override
-  //     Widget build(BuildContext context) {
-  //       return Scaffold();
-  //     }
-  // }

@@ -84,7 +84,7 @@ class PageIndexController extends GetxController {
 
   Future <void> presensiDetect() async {
         Get.snackbar(
-            "Fake GPS Terdeteksi!", "Matikan aplikasi Fake GPS Anda sebelum melakukan presensi",
+            "Fake GPS Terdeteksi!", "Mohon matikan aplikasi Fake GPS Anda sebelum melakukan presensi.",
                 duration: const Duration(seconds: 6),
                   );
     await Get.defaultDialog(
@@ -196,7 +196,7 @@ class PageIndexController extends GetxController {
 
           });
           Get.back();
-          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang");
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang.");
 
       String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
@@ -338,12 +338,12 @@ class PageIndexController extends GetxController {
 
                 Get.back();
                 Get.back();
-                Get.snackbar("Sukses","Data Datang Berhasil Masuk ke API");
+                Get.snackbar("Sukses!","Data Datang Berhasil Masuk ke API.");
                 print("Data Datang Berhasil Masuk ke API");
                 isLoading.value = false;
 
             } else {
-              Get.snackbar("Gagal","Data Datang Gagal Masuk ke API");
+              Get.snackbar("Gagal","Data Datang Gagal Masuk ke API. Silahkan coba kembali.");
               print("Data Datang Gagal Terupdate, Coba Kembali");
               Get.offAllNamed(Routes.HOME);
               isLoading.value = false;
@@ -415,7 +415,7 @@ class PageIndexController extends GetxController {
         },
         });
           Get.back();
-          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Pulang");
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Pulang.");
 
       String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
@@ -557,12 +557,12 @@ class PageIndexController extends GetxController {
 
                 Get.back();
                 Get.back();
-                Get.snackbar("Sukses","Data Pulang Berhasil Masuk ke API");
+                Get.snackbar("Sukses!","Data Pulang Berhasil Masuk ke API.");
                 print("Data Pulang Berhasil Masuk ke API");
                 isLoading.value = false;
 
             } else {
-              Get.snackbar("Gagal","Data Pulang Gagal Masuk ke API");
+              Get.snackbar("Gagal","Data Pulang Gagal Masuk ke API. Silahkan coba kembali.");
               print("Data Pulang Gagal Terupdate, Coba Kembali");
               Get.offAllNamed(Routes.HOME);
               isLoading.value = false;
@@ -623,7 +623,7 @@ class PageIndexController extends GetxController {
             }
           });
           Get.back();
-          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang");
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang.");
 
       String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
       String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
@@ -768,12 +768,12 @@ class PageIndexController extends GetxController {
 
                 Get.back();
                 Get.back();
-                Get.snackbar("Sukses","Data Datang Berhasil Masuk ke API");
+                Get.snackbar("Sukses!","Data Datang Berhasil Masuk ke API.");
                 print("Data Datang Berhasil Masuk ke API");
                 isLoading.value = false;
 
             } else {
-              Get.snackbar("Gagal","Data Datang Gagal Masuk ke API");
+              Get.snackbar("Gagal","Data Datang Gagal Masuk ke API. Silahkan coba kembali.");
               print("Data Datang Gagal Terupdate, Coba Kembali");
               Get.offAllNamed(Routes.HOME);
               isLoading.value = false;
@@ -787,7 +787,7 @@ class PageIndexController extends GetxController {
       }
     }
   } else {
-    Get.snackbar("Presensi Gagal", "Anda sedang berada diluar area ${nipSession['nama_lokasi']}",
+    Get.snackbar("Presensi Gagal", "Anda tidak dapat melakukan presensi karena sedang diluar area ${nipSession['nama_lokasi']}.",
     duration: const Duration(seconds: 8)
     );
   }
@@ -843,7 +843,7 @@ class PageIndexController extends GetxController {
   if (permission == LocationPermission.deniedForever) {
     // Permissions are denied forever, handle appropriately. 
     return {
-    "message" : "Pengaturan HP Anda tidak memperbolehkan untuk mengakses GPS. Ubah pada pengaturan HP Anda",
+    "message" : "Pengaturan HP Anda tidak memperbolehkan untuk mengakses GPS. Ubah pada pengaturan HP Anda.",
     "error" : true,
     };
     //return Future.error(
@@ -857,7 +857,7 @@ class PageIndexController extends GetxController {
   );
   return {
     "position" : position,
-    "message" : "Berhasil Mendapatkan Posisi Device Anda",
+    "message" : "Berhasil Mendapatkan Posisi Device Anda.",
     "error" : false,
     };
 }
