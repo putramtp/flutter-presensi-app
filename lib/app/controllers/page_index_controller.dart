@@ -781,8 +781,8 @@ class PageIndexController extends GetxController {
       }
     }
   } else {
-    Get.snackbar("Presensi Gagal", "Anda sedang berada diluar area kantor Anda",
-    duration: const Duration(seconds: 5)
+    Get.snackbar("Presensi Gagal", "Anda sedang berada diluar area ${nipSession['nama_lokasi']}",
+    duration: const Duration(seconds: 8)
     );
   }
   }

@@ -315,8 +315,13 @@ class HomeView extends GetView<HomeController> {
                                       Padding(
                                         padding: const EdgeInsets.only(right: 20),
                                         child: data["sync"] == "N" 
-                                        ? Icon(Icons.close_rounded,
-                                        color: Color.fromARGB(255, 214, 32, 32),
+                                        ? Column(
+                                          children: [
+                                            Icon(Icons.close_rounded,
+                                            color: Color.fromARGB(255, 214, 32, 32),
+                                            ),
+                                        
+                                          ],
                                         )
                                         : Icon(Icons.check_rounded,
                                         color: Color.fromARGB(255, 19, 204, 13),
@@ -325,7 +330,7 @@ class HomeView extends GetView<HomeController> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 2,
+                                    height: 0,
                                   ),
                                   Text(data['pulang']?['date'] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB",
                                     style: GoogleFonts.poppins(),
