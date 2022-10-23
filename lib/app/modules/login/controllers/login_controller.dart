@@ -31,13 +31,9 @@ class LoginController extends GetxController {
     // print(canMockLocation);
     print(isDevelopmentModeEnable);
 
-    if (isDevelopmentModeEnable == true) {
+    if (isDevelopmentModeEnable == false) {
       login();
     } else {
-      // Get.snackbar(
-      //   "Fake GPS Terdeteksi!", "Matikan aplikasi Fake GPS Anda sebelum mengakses SADASBOR",
-      //   duration: const Duration(seconds: 6),
-      // );
       await Get.defaultDialog(
         backgroundColor: Color.fromARGB(255, 255, 229, 229),
         title: "Developer Options\nHP Anda Aktif!",

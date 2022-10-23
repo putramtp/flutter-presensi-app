@@ -44,7 +44,6 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
           if (snapshot.hasData){
              Map<String, dynamic> user = snapshot.data!.data()!;
           
-         
           return ListView(
             padding: EdgeInsets.all(20),
             children : [ 

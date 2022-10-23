@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:presensi/app/routes/app_pages.dart';
 import '../../../controllers/page_index_controller.dart';
 import '../controllers/home_controller.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeView extends GetView<HomeController> {
+  final String imageLogo = 'assets/kabtasik.svg';
   final pageC = Get.find<PageIndexController>();
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,14 @@ class HomeView extends GetView<HomeController> {
           ),
         backgroundColor: Color(0xffFFC107),
         centerTitle: true,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: SvgPicture.asset(
+                      imageLogo,
+                        height: 38,
+                        ),
+        ),
+        leadingWidth: 46,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: controller.streamUser(),
@@ -218,7 +228,7 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Presensi 5 hari terakhir",
+                    "Presensi 5 Hari Terakhir",
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

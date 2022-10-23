@@ -50,7 +50,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == true) {
+          if (isDevelopmentModeEnable == false) {
             await presensi(position, alamat, distance);
           } else {
             await presensiDetect();
@@ -83,7 +83,12 @@ class PageIndexController extends GetxController {
   }
 
   Future <void> presensiDetect() async {
+        Get.snackbar(
+            "Fake GPS Terdeteksi!", "Matikan aplikasi Fake GPS Anda sebelum melakukan presensi",
+                duration: const Duration(seconds: 6),
+                  );
     await Get.defaultDialog(
+        titlePadding: EdgeInsets.only(top: 22),
         backgroundColor: Color.fromARGB(255, 255, 229, 229),
         title: "Developer Options\nHP Anda Aktif!",
           titleStyle: GoogleFonts.poppins(
@@ -91,7 +96,8 @@ class PageIndexController extends GetxController {
           fontSize: 18,
           fontWeight: FontWeight.w800
         ),
-        middleText: "Silahkan matikan Developer Options/Opsi Pengembang pada setting/pengaturan device Anda, lalu keluarkan dahulu aplikasi ini dan coba kembali.",
+        contentPadding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 12),
+        middleText: "Silahkan matikan Developer Options/Opsi Pengembang pada Pengaturan device Anda, lalu keluar dari aplikasi ini dan coba masuk kembali.",
         middleTextStyle: GoogleFonts.poppins(
           color: Color.fromARGB(255, 168, 7, 7),
           fontSize: 11,
@@ -851,7 +857,7 @@ class PageIndexController extends GetxController {
   );
   return {
     "position" : position,
-    "message" : "Berhasil mendapatkan posisi device Anda",
+    "message" : "Berhasil Mendapatkan Posisi Device Anda",
     "error" : false,
     };
 }

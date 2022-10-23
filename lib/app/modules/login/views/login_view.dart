@@ -224,7 +224,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 onPressed: () async {               
                   if (controller.isLoading.isFalse){
-                    await controller.login();
+                    await controller.safeDevice();
                   }
                 }, 
                 child: Text(

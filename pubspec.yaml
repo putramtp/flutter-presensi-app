@@ -27,6 +27,7 @@ dependencies:
   cached_network_image: 3.2.0
   image_network: 2.5.1
   flutter_svg: 1.0.3
+  cool_alert: 1.1.0
   flutter: 
     sdk: flutter
 
