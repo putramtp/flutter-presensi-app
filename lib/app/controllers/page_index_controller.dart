@@ -50,7 +50,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == false) {
+          if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
             await presensi(position, alamat, distance);
           } else {
             await presensiDetect();
@@ -342,6 +342,14 @@ class PageIndexController extends GetxController {
                 print("Data Datang Berhasil Masuk ke API");
                 isLoading.value = false;
 
+                if (data['status'] == "success") {
+                    await colPresence.doc(todayDocID).update({
+                        "sync" : "Y",
+                    });
+                } else {
+                  Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server. Silahkan Coba Lain Waktu.");
+                }
+
             } else {
               Get.snackbar("Gagal","Data Datang Gagal Masuk ke API. Silahkan coba kembali.");
               print("Data Datang Gagal Terupdate, Coba Kembali");
@@ -561,6 +569,14 @@ class PageIndexController extends GetxController {
                 print("Data Pulang Berhasil Masuk ke API");
                 isLoading.value = false;
 
+                if (data['status'] == "success") {
+                    await colPresence.doc(todayDocID).update({
+                        "sync" : "Y",
+                    });
+                } else {
+                  Get.snackbar("Terjadi Gangguan Server", "Data Pulang Sukses, Tetapi Belum Sinkron Dengan API Server. Silahkan Coba Lain Waktu.");
+                }
+
             } else {
               Get.snackbar("Gagal","Data Pulang Gagal Masuk ke API. Silahkan coba kembali.");
               print("Data Pulang Gagal Terupdate, Coba Kembali");
@@ -613,6 +629,7 @@ class PageIndexController extends GetxController {
             onPressed: () async {
               await colPresence.doc(todayDocID).set({
               "date" : now.toIso8601String(),
+              "sync" : "N",
               "datang" : {
               "date" : now.toIso8601String(),
               "lat" : position.latitude,
@@ -620,7 +637,15 @@ class PageIndexController extends GetxController {
               "alamat" : alamat,
               "status" : status,
               "distance" : distance,
-            }
+            },"pulang" : {
+              "date" : now.toIso8601String(),
+              "lat" : position.latitude,
+              "long" : position.longitude,
+              "alamat" : alamat,
+              "status" : status,
+              "distance" : distance,
+            },
+
           });
           Get.back();
           Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang.");
@@ -772,6 +797,14 @@ class PageIndexController extends GetxController {
                 print("Data Datang Berhasil Masuk ke API");
                 isLoading.value = false;
 
+                 if (data['status'] == "success") {
+                    await colPresence.doc(todayDocID).update({
+                        "sync" : "Y",
+                    });
+                } else {
+                  Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server. Silahkan Coba Lain Waktu.");
+                }
+
             } else {
               Get.snackbar("Gagal","Data Datang Gagal Masuk ke API. Silahkan coba kembali.");
               print("Data Datang Gagal Terupdate, Coba Kembali");
@@ -853,7 +886,7 @@ class PageIndexController extends GetxController {
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
   Position position =  await Geolocator.getCurrentPosition(
-    desiredAccuracy: LocationAccuracy.high,
+    desiredAccuracy: LocationAccuracy.bestForNavigation,
   );
   return {
     "position" : position,

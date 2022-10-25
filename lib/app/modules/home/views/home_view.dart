@@ -183,7 +183,7 @@ class HomeView extends GetView<HomeController> {
                               SizedBox(
                                 height: 2,
                               ),
-                            Text(dataToday?["datang"] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(dataToday!['datang']['date']))}",
+                            Text(dataToday?["datang"] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(dataToday!['datang']['date']))} WIB",
                             style: GoogleFonts.poppins(),
                             ),
                           ],
@@ -205,7 +205,7 @@ class HomeView extends GetView<HomeController> {
                               SizedBox(
                                 height: 2,
                               ),
-                            Text(dataToday?["pulang"] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(dataToday!['pulang']['date']))}",
+                            Text(dataToday?["pulang"] == null ? "-" : "${DateFormat("HH:mm:ss").format(DateTime.parse(dataToday!['pulang']['date']))} WIB",
                             style: GoogleFonts.poppins(),
                             ),
                           ],

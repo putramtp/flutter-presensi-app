@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:presensi/app/routes/app_pages.dart';
-
 import '../controllers/detail_presensi_controller.dart';
 
 class DetailPresensiView extends GetView<DetailPresensiController> {
@@ -336,10 +334,29 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
         }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-          child: Icon(Icons.sync_outlined, size: 28),
-          backgroundColor: Color.fromARGB(255, 5, 151, 64),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: data['sync'] == "N" 
+        ? FloatingActionButton(
+              onPressed: () async {
+                await controller.postSync();
+              },
+                child: Icon(Icons.sync_outlined, size: 28),
+                backgroundColor: Color.fromARGB(255, 5, 151, 64),
+            ) 
+        : Visibility(
+          visible: false,
+          child: FloatingActionButton(
+                onPressed: (){
+                  print("Cek Visible");
+                },
+                  child: Icon(
+                      Icons.sync_outlined, size: 28,
+                        color: Color.fromARGB(255, 241, 241, 241),
+                    ),
+                  backgroundColor: Color.fromARGB(255, 218, 218, 218),
+              ),
+        ),
       ),
     );
   }

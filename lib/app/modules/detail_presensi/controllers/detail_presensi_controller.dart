@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DetailPresensiController extends GetxController {
-  //TODO: Implement DetailPresensiController
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -19,18 +18,12 @@ class DetailPresensiController extends GetxController {
     yield* firestore.collection("user").doc(uid).collection("presence").doc(todayID).snapshots();
   }
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  Future <void> postSync() async {
+    String uid = await auth.currentUser!.uid;
+    
+    CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("user").doc(uid).collection("presence");
+    QuerySnapshot<Map<String, dynamic>> snapPresence =  await colPresence.get();
+    print(snapPresence.docs.length);
+    print("Check Length");
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }
