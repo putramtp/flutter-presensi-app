@@ -28,6 +28,8 @@ dependencies:
   image_network: 2.5.1
   flutter_svg: 1.0.3
   cool_alert: 1.1.0
+  timezone: 0.9.0
+  flutter_native_timezone: 2.0.0
   flutter: 
     sdk: flutter
 

@@ -560,6 +560,8 @@ class PageIndexController extends GetxController {
                   }
                 );
 
+              if (myResponse.statusCode == 200) {
+                
                 Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
                 print(myResponse.body);
 
@@ -574,8 +576,15 @@ class PageIndexController extends GetxController {
                         "sync" : "Y",
                     });
                 } else {
-                  Get.snackbar("Terjadi Gangguan Server", "Data Pulang Sukses, Tetapi Belum Sinkron Dengan API Server. Silahkan Coba Lain Waktu.");
+                  Get.snackbar("Terjadi Gangguan Server", "Data Pulang Sukses, Tetapi Belum Sinkron Dengan API Server (N). Silahkan Coba Lain Waktu.",
+                    duration: const Duration(seconds: 8),
+                  );
                 }
+                 } else {
+                  Get.snackbar("Terjadi Gangguan Server", "Data Presensi Anda Sukses, Tetapi Belum Sinkron Dengan API Server (404). Silahkan Coba Lain Waktu.",
+                    duration: const Duration(seconds: 8),
+                  );
+              }
 
             } else {
               Get.snackbar("Gagal","Data Pulang Gagal Masuk ke API. Silahkan coba kembali.");
@@ -788,22 +797,31 @@ class PageIndexController extends GetxController {
                   }
                 );
 
-                Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
-                print(myResponse.body);
+              if (myResponse.statusCode == 200) {
 
-                Get.back();
-                Get.back();
-                Get.snackbar("Sukses!","Data Datang Berhasil Masuk ke API.");
-                print("Data Datang Berhasil Masuk ke API");
-                isLoading.value = false;
+                  Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
+                  print(myResponse.body);
 
-                 if (data['status'] == "success") {
-                    await colPresence.doc(todayDocID).update({
-                        "sync" : "Y",
-                    });
-                } else {
-                  Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server. Silahkan Coba Lain Waktu.");
-                }
+                  Get.back();
+                  Get.back();
+                  Get.snackbar("Sukses!","Data Datang Berhasil Masuk ke API.");
+                  print("Data Datang Berhasil Masuk ke API");
+                  isLoading.value = false;
+
+                  if (data['status'] == "success") {
+                      await colPresence.doc(todayDocID).update({
+                          "sync" : "Y",
+                      });
+                  } else {
+                    Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server (N). Silahkan Coba Lain Waktu.",
+                      duration: const Duration(seconds: 8),
+                      );
+                  }
+                  } else {
+                    Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server (404). Silahkan Coba Lain Waktu.",
+                      duration: const Duration(seconds: 8),
+                      );
+                  }
 
             } else {
               Get.snackbar("Gagal","Data Datang Gagal Masuk ke API. Silahkan coba kembali.");

@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../controllers/check_status_controller.dart';
-import 'package:image_network/image_network.dart';
+import 'package:timezone/data/latest.dart' as tz;
+// import 'package:timezone/standalone.dart' as tz;
 
 
 class CheckStatusView extends GetView<CheckStatusController> {
+
+  void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+}
+
+  DateTime sekarang = DateTime.now();
   @override
   Widget build(BuildContext context) {
     String defaultImage = "https://simpeg.tasikmalayakab.go.id/assets/media/file/199109102019031003/pasfoto/thumb_xx_Foto_2.jpeg";
@@ -65,7 +73,8 @@ class CheckStatusView extends GetView<CheckStatusController> {
             ElevatedButton(
               onPressed: () async {
                 if (controller.isLoading.isFalse){
-                  await controller.checkInput();
+                  await controller.checkAPITime();
+                 ;
                 }
               }, child: Text(
                 "CEK",

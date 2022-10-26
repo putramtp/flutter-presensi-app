@@ -14,6 +14,9 @@ import 'package:safe_device/safe_device.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class CheckStatusController extends GetxController {
 
@@ -27,6 +30,20 @@ class CheckStatusController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   
   DateTime today = new DateTime.now();
+
+  void main() {
+  tz.initializeTimeZones();
+  var locations = tz.timeZoneDatabase.locations;
+  print(locations.length); // => 429
+  print(locations.keys.first); // => "Africa/Abidjan"
+  print(locations.keys.last); // => "US/Pacific"
+}
+
+  Future <void> nativeTimeZone() async {
+    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+
+    print(currentTimeZone);
+  }
 
   Future <void> safeDevice() async {
     bool isRealDevice = await SafeDevice.isRealDevice;
@@ -178,6 +195,36 @@ class CheckStatusController extends GetxController {
 //         String? sp = cekStatusPulang(dpul);
 //         print(sp);
 //       }
+
+    Future <void> checkAPITime() async {
+      var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                print(data);
+                print(myResponse.body);
+
+      var dateTime = data['dateTime'];
+
+      print(dateTime);
+                
+    }
+
+    Future <void> checkUrl() async {
+      final response = await http.get(
+                  Uri.parse("https://google.com"),
+      );
+
+      print(response);
+      if (response.statusCode == 200) {
+        print("web tersedia");
+        return json.decode(response.body);
+      } else {
+        print("web tidak ada cuy");
+      }
+    }
 
       Future <void> checkInput() async {
               var myResponse = await http.post(
