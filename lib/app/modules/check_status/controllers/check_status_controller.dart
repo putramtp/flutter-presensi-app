@@ -17,6 +17,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:intl/intl.dart';
 
 class CheckStatusController extends GetxController {
 
@@ -203,12 +204,14 @@ class CheckStatusController extends GetxController {
 
                 Map<String, dynamic> data = json.decode(myResponse.body);
 
-                print(data);
-                print(myResponse.body);
+                // print(data);
+                // print(myResponse.body);
 
-      var dateTime = data['dateTime'];
+      var dateTimeAPI = data['dateTime'];
 
-      print(dateTime);
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
                 
     }
 

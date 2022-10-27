@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeView extends GetView<HomeController> {
   final String imageLogo = 'assets/kabtasik.svg';
+  final String imageSiluet = 'assets/kabtasiksiluet-saiful2.svg';
   final pageC = Get.find<PageIndexController>();
   @override
   Widget build(BuildContext context) {
@@ -97,7 +98,7 @@ class HomeView extends GetView<HomeController> {
                 height: 20,
               ),
               Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                    color: Color(0xffFFC107),
@@ -110,35 +111,47 @@ class HomeView extends GetView<HomeController> {
                     )
                   ]
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    Text(
-                      "${user['nomenklatur_jabatan']}",
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400
+                    Positioned(
+                      top: 10,
+                      left: 220,
+                      child: SvgPicture.asset(imageSiluet,
+                        height: 70,
+                        color: Color.fromARGB(255, 231, 173, 0),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${user['nomenklatur_jabatan']}",
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        Text(
+                          "${user['nip']}",
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    Text(
-                      "${user['nip']}",
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                      ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "${user['nama_pegawai']}, ${user['gelar_belakang']}",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500
+                          ),
+                          )
+                      ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "${user['nama_pegawai']}, ${user['gelar_belakang']}",
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500
-                      ),
-                      )
                   ],
                 ),
               ),
@@ -370,7 +383,7 @@ class HomeView extends GetView<HomeController> {
         height: 56,
         items: [
           TabItem(icon: Icons.home_outlined, title: 'Home'),
-          TabItem(icon: Icons.leave_bags_at_home_outlined, title: 'Cuti'),
+          TabItem(icon: Icons.local_hospital_outlined, title: 'Sakit'),
           TabItem(icon: Icons.fingerprint, title: 'Add'),
           TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
           TabItem(icon: Icons.people_outline, title: 'Profil'),

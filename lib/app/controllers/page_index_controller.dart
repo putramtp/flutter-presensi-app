@@ -50,7 +50,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
+          if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
             await presensi(position, alamat, distance);
           } else {
             await presensiDetect();

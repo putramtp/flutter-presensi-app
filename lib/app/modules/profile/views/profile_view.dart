@@ -224,7 +224,7 @@ class ProfileView extends GetView<ProfileController> {
         height: 56,
         items: [
           TabItem(icon: Icons.home_outlined, title: 'Home'),
-          TabItem(icon: Icons.leave_bags_at_home_outlined, title: 'Cuti'),
+          TabItem(icon: Icons.local_hospital_outlined, title: 'Sakit'),
           TabItem(icon: Icons.fingerprint, title: 'Add'),
           TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
           TabItem(icon: Icons.people_outline, title: 'Profil'),
