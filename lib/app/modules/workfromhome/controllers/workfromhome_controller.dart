@@ -103,4 +103,8 @@ class WorkfromhomeController extends GetxController {
     }
 
   }
+
+  Future <bool> backDeviceButton() {
+    return Future.value(false);
+  }
 }

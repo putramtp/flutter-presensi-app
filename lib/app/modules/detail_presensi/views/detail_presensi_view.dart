@@ -112,7 +112,13 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                         SizedBox(
                           width: 22,
                         ),
-                      Text(":   ${data['datang']!['status']}",
+                      Text(":   ",
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400
+                            ),
+                        ),
+                      Text("${data['datang']!['status']}",
                             style: GoogleFonts.poppins(
                               color: Color.fromARGB(255, 5, 151, 64),
                               fontSize: 12,
@@ -237,16 +243,22 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                         SizedBox(
                           width: 22,
                         ),
+                        Text(":   ",
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400
+                            ),
+                        ),
                       Container(
                         child: user["pulang"] != null 
-                            ? Text(":   ${data['pulang']!['status']}",
+                            ? Text("${data['pulang']!['status']}",
                                   style: GoogleFonts.poppins(
                                     color: Color.fromARGB(255, 5, 151, 64),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400
                                   ),
                               )
-                            : Text(":   ${data['datang']!['status']}",
+                            : Text("${data['datang']!['status']}",
                                   style: GoogleFonts.poppins(
                                     color: Color.fromARGB(255, 5, 151, 64),
                                     fontSize: 12,

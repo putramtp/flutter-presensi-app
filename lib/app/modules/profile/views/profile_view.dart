@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:presensi/app/routes/app_pages.dart';
-
 import '../controllers/profile_controller.dart';
 import '../../../controllers/page_index_controller.dart';
 
@@ -13,225 +11,228 @@ class ProfileView extends GetView<ProfileController> {
   final pageC = Get.find<PageIndexController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Profil',
-          style: GoogleFonts.poppins(
-            color: Color(0xff333333),
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-          ),
-        backgroundColor: Color(0xffFFC107),
-        centerTitle: true,
-      ),
-      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: controller.streamUser(),
-        builder: (context, snap) {
-          if (snap.connectionState == ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator(),);
-          }
-          if (snap.hasData){
-            Map<String, dynamic> user = snap.data!.data()!;
-            String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
-          return ListView(
-            padding: EdgeInsets.all(20),
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ClipOval(
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      child: Image.network(
-                        user["profile"] != null ? user["profile"] != "" ? user["profile"] 
-                        : defaultImage 
-                        : defaultImage,
-                      fit: BoxFit.cover,)),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text("${user['nama_pegawai'].toString().toUpperCase()}, ${user['gelar_belakang']}", 
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    color: Color(0xff333333),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700
-                  ),),
-                  SizedBox(
-                height: 2,
-              ),
-              Text("${user['nomenklatur_jabatan']}", 
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+    return WillPopScope(
+      onWillPop: () async => controller.backDeviceButton(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Profil',
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+            ),
+          backgroundColor: Color(0xffFFC107),
+          centerTitle: true,
+        ),
+        body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          stream: controller.streamUser(),
+          builder: (context, snap) {
+            if (snap.connectionState == ConnectionState.waiting){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            if (snap.hasData){
+              Map<String, dynamic> user = snap.data!.data()!;
+              String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
+            return ListView(
+              padding: EdgeInsets.all(20),
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipOval(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        child: Image.network(
+                          user["profile"] != null ? user["profile"] != "" ? user["profile"] 
+                          : defaultImage 
+                          : defaultImage,
+                        fit: BoxFit.cover,)),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 10,
                 ),
-              Text("${user["nomenklatur_pada"]}",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                  fontSize: 8,
-                ),),
-                SizedBox(
-                  height: 40,
+                Text("${user['nama_pegawai'].toString().toUpperCase()}, ${user['gelar_belakang']}", 
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      color: Color(0xff333333),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700
+                    ),),
+                    SizedBox(
+                  height: 2,
                 ),
-              if (user["role"] == "admin")
-              ListTile(
-                onTap: ()=> Get.toNamed(Routes.ADD_PEGAWAI),
-                leading: Icon(Icons.person_add),
-                title: Text("Tambah Pegawai",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xffFFFFFF),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0,6)
-                    )
-                  ]
-                ),
-                child: ListTile(
-                    onTap: ()=> Get.toNamed(Routes.UPDATE_PROFILE, 
-                    arguments: user
+                Text("${user['nomenklatur_jabatan']}", 
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                     ),
-                    leading: Icon(Icons.people_outline,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                Text("${user["nomenklatur_pada"]}",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 8,
+                  ),),
+                  SizedBox(
+                    height: 40,
+                  ),
+                if (user["role"] == "admin")
+                ListTile(
+                  onTap: ()=> Get.toNamed(Routes.ADD_PEGAWAI),
+                  leading: Icon(Icons.person_add),
+                  title: Text("Tambah Pegawai",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFFFFF),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0,6)
+                      )
+                    ]
+                  ),
+                  child: ListTile(
+                      onTap: ()=> Get.toNamed(Routes.UPDATE_PROFILE, 
+                      arguments: user
+                      ),
+                      leading: Icon(Icons.people_outline,
+                      color: Color(0xff333333),
+                      ),
+                      title: Text(
+                        "Perbaharui Profil",
+                        textAlign: TextAlign.start,
+                        style: GoogleFonts.poppins(
+                          color: Color(0xff333333),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600
+                        ),
+                        ),
+                    ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFFFFF),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0,6)
+                      ),
+                    ]
+                  ),
+                  child: ListTile(
+                    onTap: ()=> Get.toNamed(Routes.UPDATE_PASSWORD),
+                    leading: Icon(Icons.lock_outline,
                     color: Color(0xff333333),
                     ),
-                    title: Text(
-                      "Perbaharui Profil",
-                      textAlign: TextAlign.start,
+                    title: Text("Ganti Password",
                       style: GoogleFonts.poppins(
                         color: Color(0xff333333),
                         fontSize: 12,
                         fontWeight: FontWeight.w600
-                      ),
-                      ),
+                      ),),
                   ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                Container(
+                height: 1.5,
+                width: 200,
                 decoration: BoxDecoration(
-                  color: Color(0xffFFFFFF),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0,6)
-                    )
-                  ]
-                ),
-                child: ListTile(
-                  onTap: ()=> Get.toNamed(Routes.UPDATE_PASSWORD),
-                  leading: Icon(Icons.lock_outline,
-                  color: Color(0xff333333),
-                  ),
-                  title: Text("Ganti Password",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600
-                    ),),
+                  color: Color.fromARGB(255, 241, 241, 241)
                 ),
               ),
               SizedBox(
-                height: 60,
+                height: 20,
               ),
-              Container(
-              height: 1.5,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 241, 241, 241)
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Pemerintah Daerah Kabupaten Tasikmalaya. © 2020',
-                  style: GoogleFonts.poppins(
-                    color: Color(0xff575757),
-                    fontSize: 8,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Pemerintah Daerah Kabupaten Tasikmalaya. © 2020',
+                    style: GoogleFonts.poppins(
+                      color: Color(0xff575757),
+                      fontSize: 8,
+                    ),
                   ),
-                ),
+                ],
+              ),
+                // SizedBox(
+                //     height: 20,
+                //   ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: Color(0xffFFF1F1),
+                //     borderRadius: BorderRadius.all(Radius.circular(10)),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Colors.grey.withOpacity(0.2),
+                //         spreadRadius: 5,
+                //         blurRadius: 7,
+                //         offset: Offset(0,6)
+                //       )
+                //     ]
+                //   ),
+                //   child: ListTile(
+                //     onTap: ()=> controller.logout(),
+                //     leading: Icon(Icons.logout,
+                //         color: Color(0xffEB5757),
+                //     ),
+                //     title: Text("Logout",
+                //       style: GoogleFonts.poppins(
+                //         color: Color(0xffEB5757),
+                //         fontSize: 12,
+                //         fontWeight: FontWeight.w600
+                //       ),),
+                //   ),
+                // ),
               ],
-            ),
-              // SizedBox(
-              //     height: 20,
-              //   ),
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: Color(0xffFFF1F1),
-              //     borderRadius: BorderRadius.all(Radius.circular(10)),
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: Colors.grey.withOpacity(0.2),
-              //         spreadRadius: 5,
-              //         blurRadius: 7,
-              //         offset: Offset(0,6)
-              //       )
-              //     ]
-              //   ),
-              //   child: ListTile(
-              //     onTap: ()=> controller.logout(),
-              //     leading: Icon(Icons.logout,
-              //         color: Color(0xffEB5757),
-              //     ),
-              //     title: Text("Logout",
-              //       style: GoogleFonts.poppins(
-              //         color: Color(0xffEB5757),
-              //         fontSize: 12,
-              //         fontWeight: FontWeight.w600
-              //       ),),
-              //   ),
-              // ),
-            ],
-          );
-          } else {
-            return Center(
-              child: Text("Data tidak dapat ditemukan"),
             );
-          }
-          
-        },
+            } else {
+              return Center(
+                child: Text("Data tidak dapat ditemukan"),
+              );
+            }
+            
+          },
+        ),
+          bottomNavigationBar: ConvexAppBar(
+          backgroundColor: Color(0xffFFC107),
+          style: TabStyle.fixedCircle,
+          height: 56,
+          items: [
+            TabItem(icon: Icons.home_outlined, title: 'Home'),
+            TabItem(icon: Icons.local_hospital_outlined, title: 'Sakit'),
+            TabItem(icon: Icons.fingerprint, title: 'Add'),
+            TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
+            TabItem(icon: Icons.people_outline, title: 'Profil'),
+          ],
+          initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
+          onTap: (int i) => pageC.changePage(i),
+        )
       ),
-        bottomNavigationBar: ConvexAppBar(
-        backgroundColor: Color(0xffFFC107),
-        style: TabStyle.fixedCircle,
-        height: 56,
-        items: [
-          TabItem(icon: Icons.home_outlined, title: 'Home'),
-          TabItem(icon: Icons.local_hospital_outlined, title: 'Sakit'),
-          TabItem(icon: Icons.fingerprint, title: 'Add'),
-          TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
-          TabItem(icon: Icons.people_outline, title: 'Profil'),
-        ],
-        initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
-        onTap: (int i) => pageC.changePage(i),
-      )
     );
   }
 }

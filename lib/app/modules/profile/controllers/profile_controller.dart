@@ -17,4 +17,8 @@ class ProfileController extends GetxController {
     await auth.signOut();
     Get.offAllNamed(Routes.LOGIN);
   }
+
+  Future <bool> backDeviceButton() {
+    return Future.value(false);
+  }
 }
