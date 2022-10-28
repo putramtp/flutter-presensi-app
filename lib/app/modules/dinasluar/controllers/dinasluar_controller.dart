@@ -37,9 +37,29 @@ class DinasluarController extends GetxController {
       print(longitude);
     }
   
-  var selectedDate = DateTime.now().obs;
+  // var selectedDate = DateTime.now().obs;
 
   chooseDate() async {
+    // API DateTime GMT +07:00
+    var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                // print(data);
+                // print(myResponse.body);
+
+      var dateTimeAPI = data['dateTime'];
+
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
+    
+    var selectedDate = dateTimeGMT.obs;
+    
+    // API DateTime GMT +07:00 - End
+
     DateTime? pickedDate = await showDatePicker(
       context: Get.context!, 
       initialDate: selectedDate.value, 
@@ -64,7 +84,29 @@ class DinasluarController extends GetxController {
   }
 
 
+  var selectedDateNow = DateTime.now().obs;
+
   Future <void> addDinasLuar() async {
+    // API DateTime GMT +07:00
+    var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                // print(data);
+                // print(myResponse.body);
+
+      var dateTimeAPI = data['dateTime'];
+
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
+    
+    var selectedDate = dateTimeGMT.obs;
+    
+    // API DateTime GMT +07:00 - End
+
     final User user = auth.currentUser!;
     final uid = user.uid;
 

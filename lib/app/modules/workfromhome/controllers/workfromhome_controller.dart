@@ -34,18 +34,32 @@ class WorkfromhomeController extends GetxController {
       print(latitude);
       print(longitude);
     }
-  
-  var selectedDate = DateTime.now().obs;
-
-  defaultDate() async {
-  }
 
   chooseDate() async {
+    // API DateTime GMT +07:00
+    var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                // print(data);
+                // print(myResponse.body);
+
+      var dateTimeAPI = data['dateTime'];
+
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
+    
+    var selectedDateGMT = dateTimeGMT.obs;
+    
+    // API DateTime GMT +07:00 - End
     DateTime? pickedDate = await showDatePicker(
       context: Get.context!, 
-      initialDate: selectedDate.value, 
-      firstDate: DateTime.now(), 
-      lastDate: DateTime.now(),
+      initialDate: dateTimeGMT, 
+      firstDate: dateTimeGMT, 
+      lastDate: dateTimeGMT,
       builder: (context, child) {
         return Theme(
           data: ThemeData.light(). copyWith(
@@ -57,15 +71,35 @@ class WorkfromhomeController extends GetxController {
       }
       );
 
-      if (pickedDate != null && pickedDate != selectedDate.value){
-        selectedDate.value = pickedDate;
-        dateInput.text = DateFormat('yyyy-MM-dd HH:mm:ss').format(selectedDate.value).toString();
+      if (pickedDate != null && pickedDate != dateTimeGMT){
+        dateTimeGMT = pickedDate;
+        dateInput.text = DateFormat('yyyy-MM-dd HH:mm:ss').format(selectedDateGMT.value).toString();
       }
       print(pickedDate);
   }
 
+    var selectedDate = DateTime.now().obs;
 
   Future <void> addSakit() async {
+     // API DateTime GMT +07:00
+    var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                // print(data);
+                // print(myResponse.body);
+
+      var dateTimeAPI = data['dateTime'];
+
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
+    
+    var selectedDateGMT = dateTimeGMT.obs;
+    
+    // API DateTime GMT +07:00 - End
     final User user = auth.currentUser!;
     final uid = user.uid;
 
@@ -80,7 +114,7 @@ class WorkfromhomeController extends GetxController {
                   },
                   body: {
                     "nip" : nipSession['nip'],
-                    "tgl" : DateFormat("yyyy-MM-dd HH:mm:ss").format(selectedDate.value),
+                    "tgl" : DateFormat("yyyy-MM-dd HH:mm:ss").format(selectedDateGMT.value),
                     "ket" : keterangan.text,
                     "status" : "menunggu",
                   }

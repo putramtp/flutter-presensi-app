@@ -123,6 +123,24 @@ class PageIndexController extends GetxController {
   }
 
   Future <void> presensi(Position position, String alamat, double distance) async {
+    // API DateTime GMT +07:00
+    var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                // print(data);
+                // print(myResponse.body);
+
+      var dateTimeAPI = data['dateTime'];
+
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
+    
+    // API DateTime GMT +07:00 - End
+
     String uid = await auth.currentUser!.uid;
 
     CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("user").doc(uid).collection("presence");
@@ -130,7 +148,7 @@ class PageIndexController extends GetxController {
     print(snapPresence.docs.length);
     print("Check Length");
 
-    DateTime now = DateTime.now();
+    DateTime now = dateTimeGMT;
     String todayDocID = DateFormat.yMd().format(now).replaceAll("/", "-");
 
     final nipSession = await firestore.collection("user").doc(uid).get();
@@ -248,11 +266,11 @@ class PageIndexController extends GetxController {
       print(jamd);
       print(jamp);
 
-      DateTime jam = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 15, 1); // test
-      DateTime PJ1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 45, 0); // Patokan jam masuk //
+      DateTime jam = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
+      DateTime PJ1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 7, 45, 0); // Patokan jam masuk //
 
-      DateTime jam1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 15, 46, 0); // test
-      DateTime PJ2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
+      DateTime jam1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 15, 46, 0); // test
+      DateTime PJ2 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
       
       // strtotime - Convert DateTime to millisecond //
       int jamDatangStr = jamDatangC.millisecondsSinceEpoch;
@@ -475,11 +493,11 @@ class PageIndexController extends GetxController {
       print(jamd);
       print(jamp);
 
-      DateTime jam = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 15, 1); // test
-      DateTime PJ1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 45, 0); // Patokan jam masuk //
+      DateTime jam = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
+      DateTime PJ1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 7, 45, 0); // Patokan jam masuk //
 
-      DateTime jam1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 15, 46, 0); // test
-      DateTime PJ2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
+      DateTime jam1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 15, 46, 0); // test
+      DateTime PJ2 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
       
       // strtotime - Convert DateTime to millisecond //
       int jamDatangStr = jamDatangC.millisecondsSinceEpoch;
@@ -709,11 +727,11 @@ class PageIndexController extends GetxController {
       print(jamd);
       print(jamp);
 
-      DateTime jam = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 15, 1); // test
-      DateTime PJ1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 45, 0); // Patokan jam masuk //
+      DateTime jam = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
+      DateTime PJ1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 7, 45, 0); // Patokan jam masuk //
 
-      DateTime jam1 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 15, 46, 0); // test
-      DateTime PJ2 = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
+      DateTime jam1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 15, 46, 0); // test
+      DateTime PJ2 = DateTime(dateTimeGMT.year,dateTimeGMT.month, dateTimeGMT.day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
       
       // strtotime - Convert DateTime to millisecond //
       int jamDatangStr = jamDatangC.millisecondsSinceEpoch;

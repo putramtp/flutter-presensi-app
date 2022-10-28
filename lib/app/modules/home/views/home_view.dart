@@ -379,7 +379,10 @@ class HomeView extends GetView<HomeController> {
       ),
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: Color(0xffFFC107),
+        activeColor: Color(0xffFFFFFF),
         style: TabStyle.fixedCircle,
+        elevation: 2,
+        cornerRadius: 16,
         height: 56,
         items: [
           TabItem(icon: Icons.home_outlined, title: 'Home'),

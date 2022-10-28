@@ -78,7 +78,7 @@ class DinasluarView extends GetView<DinasluarController> {
                 ()=> TextField(
                 controller: controller.dateInput,
                 decoration: new InputDecoration(
-                  hintText: DateFormat("yyyy-MM-dd").format(controller.selectedDate.value),
+                  hintText: DateFormat("yyyy-MM-dd").format(controller.selectedDateNow.value),
                   hintStyle: TextStyle(
                     color: Colors.black
                   ),

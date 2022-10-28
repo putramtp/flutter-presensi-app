@@ -197,7 +197,7 @@ class CheckStatusController extends GetxController {
 //         print(sp);
 //       }
 
-    Future <void> checkAPITime() async {
+    Future <void> DateTimeGMT() async {
       var myResponse = await http.get(
                   Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
                 );
@@ -212,6 +212,7 @@ class CheckStatusController extends GetxController {
       DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
 
       print(dateTimeGMT);
+      print(DateTime.now());
                 
     }
 

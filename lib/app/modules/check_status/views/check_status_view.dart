@@ -73,7 +73,7 @@ class CheckStatusView extends GetView<CheckStatusController> {
             ElevatedButton(
               onPressed: () async {
                 if (controller.isLoading.isFalse){
-                  await controller.checkAPITime();
+                  await controller.DateTimeGMT();
                  ;
                 }
               }, child: Text(
