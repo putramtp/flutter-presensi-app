@@ -50,7 +50,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
+          if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
             await presensi(position, alamat, distance);
           } else {
             await presensiDetect();
@@ -141,6 +141,52 @@ class PageIndexController extends GetxController {
     
     // API DateTime GMT +07:00 - End
 
+
+    // LOGIC LIBUR (BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/)
+
+    String hariIni = DateFormat("EEE").format(dateTimeGMT);
+      print(hariIni);
+
+    String liburId = DateFormat("yMd").format(dateTimeGMT).replaceAll("/", "-");  // 10-30-2022 BHT
+
+    final liburSession = await firestore.collection("libur").doc(liburId).get();
+
+    if (hariIni == 'Sat' || hariIni == 'Sun' || liburSession['tanggal_libur'] == liburId) {
+            Get.defaultDialog(
+              titlePadding: EdgeInsets.only(top: 22),
+              title: "Hari Ini Hari Libur",
+                titleStyle: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              contentPadding: EdgeInsets.all(16),
+              middleText: liburSession.exists == false
+                            ? "Menu Presensi Akan Aktif Kembali Pada Hari Kerja."
+                            : "Bertepatan dengan libur ${liburSession['nama_libur']}, menu presensi akan aktif kembali pada hari kerja selanjutnya.",
+                middleTextStyle: GoogleFonts.poppins(
+                fontSize: 13,
+                fontWeight: FontWeight.w400
+              ),
+              actions: [
+            ElevatedButton(
+            style: TextButton.styleFrom(
+                backgroundColor: Color(0xffFFC107),
+              ),
+              onPressed: ()=> Get.back(), 
+            child: Text(
+              "OK",
+              style: GoogleFonts.poppins(
+                color: Color(0xff333333),
+                fontSize: 12,
+                fontWeight: FontWeight.bold
+              ),
+              )
+            ),
+          ]
+            );
+        // LOGIC LIBUR (BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/)
+    } else {  
+
     String uid = await auth.currentUser!.uid;
 
     CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("user").doc(uid).collection("presence");
@@ -227,8 +273,8 @@ class PageIndexController extends GetxController {
       // print(parsedPulangPresence);
 
       // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase //
-      String j2 = nipSession['j2'];
-      String j3 = nipSession['j3'];
+      String j2 = nipSession['j2']; //Pukul 15.45
+      String j3 = nipSession['j3']; //Pukul 16.15
       // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase - end //
 
       // String sekarang = DateFormat("EEE").format(DateTime(2022, 10, 15));
@@ -856,10 +902,11 @@ class PageIndexController extends GetxController {
       }
     }
   } else {
-    Get.snackbar("Presensi Gagal", "Anda tidak dapat melakukan presensi karena sedang diluar area ${nipSession['nama_lokasi']}.",
-    duration: const Duration(seconds: 8)
-    );
-  }
+      Get.snackbar("Presensi Gagal", "Anda tidak dapat melakukan presensi karena sedang diluar area ${nipSession['nama_lokasi']}.",
+        duration: const Duration(seconds: 8)
+      );
+      }
+    }
   }
 
   Future <void> updatePosition(Position position, String alamat) async {

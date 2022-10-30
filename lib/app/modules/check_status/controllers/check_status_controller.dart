@@ -213,6 +213,28 @@ class CheckStatusController extends GetxController {
 
       print(dateTimeGMT);
       print(DateTime.now());
+
+      // LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-
+
+      String hariLibur = DateFormat("EEE").format(dateTimeGMT);
+      print(hariLibur);
+
+      String liburId = DateFormat("yMd").format(dateTimeGMT).replaceAll("/", "-");  // 10-30-2022 BHT
+
+      final liburSession = await firestore.collection("libur").doc(liburId).get();
+       String cekLibur = liburSession['tanggal_libur']; // 1996/10/07 format flutter asli THB
+       String cekHari = liburSession['nama_libur'];
+
+      String hariIni = DateFormat("EEE").format(dateTimeGMT);
+      print(hariIni);
+
+      if (cekLibur == liburId) {
+        print("ada");
+      } else {
+        print("gaada");
+      }
+
+      // LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR-LOGIC LIBUR- End
                 
     }
 
