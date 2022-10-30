@@ -162,7 +162,7 @@ class PageIndexController extends GetxController {
               contentPadding: EdgeInsets.all(16),
               middleText: liburSession.exists == false
                             ? "Menu Presensi Akan Aktif Kembali Pada Hari Kerja."
-                            : "Bertepatan dengan libur ${liburSession['nama_libur']}, menu presensi akan aktif kembali pada hari kerja selanjutnya.",
+                            : "Bertepatan dengan Libur ${liburSession['nama_libur']}, menu presensi akan aktif kembali pada hari kerja selanjutnya.",
                 middleTextStyle: GoogleFonts.poppins(
                 fontSize: 13,
                 fontWeight: FontWeight.w400

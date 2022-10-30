@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:presensi/app/routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 import '../../../controllers/page_index_controller.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileView extends GetView<ProfileController> {
+  String bgGradationCurve = 'assets/rec-shadow-trim.png';
   final pageC = Get.find<PageIndexController>();
   @override
   Widget build(BuildContext context) {
@@ -40,23 +42,44 @@ class ProfileView extends GetView<ProfileController> {
               String TTL = DateFormat("dd MMMM yyyy").format(tanggal_lahirDT);
               String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
             return ListView(
-              padding: EdgeInsets.all(28),
+              // padding: EdgeInsets.all(28),
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Stack(
                   children: [
-                    ClipOval(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: Image.network(
-                          user["profile"] != null ? user["profile"] != "" ? user["profile"] 
-                          : defaultImage 
-                          : defaultImage,
-                        fit: BoxFit.cover,)),
-                    ),
+                      Image.asset(bgGradationCurve,
+                        fit: BoxFit.fill,
+                  ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 36),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipOval(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(1),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0,6)
+                                    ),
+                                  ]
+                                ),
+                                height: 114,
+                                width: 114,
+                                child: Image.network(
+                                  user["profile"] != null ? user["profile"] != "" ? user["profile"] 
+                                  : defaultImage 
+                                  : defaultImage,
+                                fit: BoxFit.cover,)
+                                ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
-                ),
+                ),      
                 SizedBox(
                   height: 10,
                 ),
@@ -89,176 +112,182 @@ class ProfileView extends GetView<ProfileController> {
                   SizedBox(
                     height: 24,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Tempat Tanggal Lahir",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 28, right: 28),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Tempat Tanggal Lahir",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
                           ),
-                        ),
-                      
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['tempat_lahir']}, $TTL",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                        
+                          SizedBox(
+                            height: 4,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text("Jenis Kelamin",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                          Text("${user['tempat_lahir']}, $TTL",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['gender']}",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 16,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text("Pangkat",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                          Text("Jenis Kelamin",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['nama_pangkat']}",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 4,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text("Jabatan",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                          Text("${user['gender']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['jenis_jabatan']}",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 16,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text("Golongan",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                          Text("Pangkat",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['nama_golongan']}",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 4,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text("Jenjang Pendidikan",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                          Text("${user['nama_pangkat']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['nama_jenjang']}",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 16,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text("TMT CPNS",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                          Text("Jabatan",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['tmt_cpns']}",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 4,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text("TMT PNS",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff828282),
-                            fontSize: 8,
+                          Text("${user['jenis_jabatan']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text("${user['tmt_pns']}",
-                          style: GoogleFonts.poppins(
-                            color: Color(0xff333333),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 16,
                           ),
-                        ),
-                      ],
+                          Text("Golongan",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text("${user['nama_golongan']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text("Jenjang Pendidikan",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text("${user['nama_jenjang']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text("TMT CPNS",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text("${user['tmt_cpns']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text("TMT PNS",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text("${user['tmt_pns']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                              color: Colors.grey[200],
                     ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                            color: Colors.grey[200],
-                  ),
+                    ),
                   ),
                   SizedBox(
                       height: 20,
                     ),
-                  Container(
-                    height: 1.5,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 241, 241, 241)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 38, right: 38),
+                    child: Container(
+                      height: 1.5,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 241, 241, 241)
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -273,91 +302,90 @@ class ProfileView extends GetView<ProfileController> {
                       fontSize: 14,
                     ),),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0,6)
-                      )
-                    ]
-                  ),
-                  child: ListTile(
-                      onTap: ()=> Get.toNamed(Routes.UPDATE_PROFILE, 
-                      arguments: user
+                Padding(
+                  padding: const EdgeInsets.only(left: 28, right: 28),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0,6)
+                        )
+                      ]
+                    ),
+                    child: ListTile(
+                        onTap: ()=> Get.toNamed(Routes.UPDATE_PROFILE, 
+                        arguments: user
+                        ),
+                        leading: Icon(Icons.people_outline,
+                        color: Color(0xff333333),
+                        ),
+                        title: Text(
+                          "Perbaharui Profil",
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600
+                          ),
+                          ),
                       ),
-                      leading: Icon(Icons.people_outline,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 28, right: 28),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0,6)
+                        ),
+                      ]
+                    ),
+                    child: ListTile(
+                      onTap: ()=> Get.toNamed(Routes.UPDATE_PASSWORD),
+                      leading: Icon(Icons.lock_outline,
                       color: Color(0xff333333),
                       ),
-                      title: Text(
-                        "Perbaharui Profil",
-                        textAlign: TextAlign.start,
+                      title: Text("Ganti Password",
                         style: GoogleFonts.poppins(
                           color: Color(0xff333333),
                           fontSize: 12,
                           fontWeight: FontWeight.w600
-                        ),
-                        ),
+                        ),),
                     ),
+                  ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 36,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0,6)
-                      ),
-                    ]
-                  ),
-                  child: ListTile(
-                    onTap: ()=> Get.toNamed(Routes.UPDATE_PASSWORD),
-                    leading: Icon(Icons.lock_outline,
-                    color: Color(0xff333333),
-                    ),
-                    title: Text("Ganti Password",
+              Padding(
+                padding: const EdgeInsets.only(bottom: 28),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Pemerintah Daerah Kabupaten Tasikmalaya. © 2020',
                       style: GoogleFonts.poppins(
-                        color: Color(0xff333333),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600
-                      ),),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                height: 1.5,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 241, 241, 241)
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Pemerintah Daerah Kabupaten Tasikmalaya. © 2020',
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff575757),
-                      fontSize: 8,
+                        color: Color(0xff575757),
+                        fontSize: 8,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
                 // SizedBox(
                 //     height: 20,

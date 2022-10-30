@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:new_version/new_version.dart';
 
 class HomeController extends GetxController {
   RxBool isLoading = false.obs;
@@ -47,5 +47,28 @@ class HomeController extends GetxController {
     String todayID = DateFormat.yMd().format(dateTimeGMT).replaceAll("/", "-");
 
     yield* firestore.collection("user").doc(uid).collection("presence").doc(todayID).snapshots();
+  }
+
+  @override 
+  void onInit() async {
+    super.onInit();
+    final newVersion = 
+        NewVersion(androidId: "com.msaiflanwr.presensi", iOSId: "com.msaiflanwr.presensi");
+        newVersion.showAlertIfNecessary(context: Get.context!);
+
+    final status = await newVersion.getVersionStatus();
+    if (status != null) {
+          newVersion.showUpdateDialog(
+            context: Get.context!, 
+            versionStatus: status,
+            dialogTitle: "Pembaharuan Tersedia!",
+            dialogText: "Silahkan perbaharui versi aplikasi untuk mendapatkan fitur terbaru dari SADASBOR.",
+            allowDismissal: false,
+            updateButtonText: "Perbaharui",
+            dismissAction: () {},
+            dismissButtonText: "Batal"
+
+            );
+    }
   }
 }
