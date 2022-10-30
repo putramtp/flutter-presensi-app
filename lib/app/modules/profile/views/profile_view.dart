@@ -40,7 +40,7 @@ class ProfileView extends GetView<ProfileController> {
               String TTL = DateFormat("dd MMMM yyyy").format(tanggal_lahirDT);
               String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
             return ListView(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(28),
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,159 +87,182 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ),
                   SizedBox(
+                    height: 24,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Tempat Tanggal Lahir",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                      
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['tempat_lahir']}, $TTL",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("Jenis Kelamin",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['gender']}",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("Pangkat",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['nama_pangkat']}",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("Jabatan",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['jenis_jabatan']}",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("Golongan",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['nama_golongan']}",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("Jenjang Pendidikan",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['nama_jenjang']}",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("TMT CPNS",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['tmt_cpns']}",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("TMT PNS",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff828282),
+                            fontSize: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text("${user['tmt_pns']}",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff333333),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                            color: Colors.grey[200],
+                  ),
+                  ),
+                  SizedBox(
+                      height: 20,
+                    ),
+                  Container(
+                    height: 1.5,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 241, 241, 241)
+                    ),
+                  ),
+                  SizedBox(
                     height: 20,
-                  ),
-                  Text("Tempat Tanggal Lahir",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['tempat_lahir']}, $TTL",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                   Text("Jenis Kelamin",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['gender']}",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text("Pangkat",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['nama_pangkat']}",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text("Jabatan",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['jenis_jabatan']}",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text("Golongan",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['nama_golongan']}",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text("Jenjang Pendidikan",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['nama_jenjang']}",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                   Text("TMT CPNS",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['tmt_cpns']}",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                   Text("TMT PNS",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff828282),
-                      fontSize: 8,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("${user['tmt_pns']}",
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff333333),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
                   ),
                 if (user["role"] == "admin")
                 ListTile(
@@ -377,7 +400,10 @@ class ProfileView extends GetView<ProfileController> {
         ),
           bottomNavigationBar: ConvexAppBar(
           backgroundColor: Color(0xffFFC107),
+          activeColor: Color(0xffFFFFFF),
           style: TabStyle.fixedCircle,
+          elevation: 2,
+          cornerRadius: 16,
           height: 56,
           items: [
             TabItem(icon: Icons.home_outlined, title: 'Home'),
@@ -386,9 +412,9 @@ class ProfileView extends GetView<ProfileController> {
             TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
             TabItem(icon: Icons.people_outline, title: 'Profil'),
           ],
-          initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
-          onTap: (int i) => pageC.changePage(i),
-        )
+        initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
+        onTap: (int i) => pageC.changePage(i),
+        ),
       ),
     );
   }
