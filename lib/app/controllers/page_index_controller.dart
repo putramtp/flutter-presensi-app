@@ -50,7 +50,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
+          if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
             await presensi(position, alamat, distance);
           } else {
             await presensiDetect();
@@ -151,7 +151,7 @@ class PageIndexController extends GetxController {
 
     final liburSession = await firestore.collection("libur").doc(liburId).get();
 
-    if (hariIni == 'Sat' || hariIni == 'Sun' || liburSession['tanggal_libur'] == liburId) {
+    if (hariIni == 'Sat' || hariIni == 'Sun' || liburSession.exists == liburId) {
             Get.defaultDialog(
               titlePadding: EdgeInsets.only(top: 22),
               title: "Hari Ini Hari Libur",

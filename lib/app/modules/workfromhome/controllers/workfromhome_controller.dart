@@ -78,7 +78,27 @@ class WorkfromhomeController extends GetxController {
       print(pickedDate);
   }
 
-    var selectedDate = DateTime.now().obs;
+  var selectedDate = DateTime.now().obs;
+
+  Future <void> realTimeGMT() async {
+    var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                // print(data);
+                // print(myResponse.body);
+
+      var dateTimeAPI = data['dateTime'];
+
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
+    
+    var selectedDateGMT = dateTimeGMT.obs;
+    print(selectedDateGMT);
+  }
 
   Future <void> addSakit() async {
      // API DateTime GMT +07:00

@@ -76,7 +76,9 @@ class WorkfromhomeView extends GetView<WorkfromhomeController> {
                 ),
                 readOnly: true,
                 // jika true, user tidak akan bisa edit textfield
-                onTap: () {}
+                onTap: () async {
+                  await controller.realTimeGMT();
+                }
               ),
               
               SizedBox(
