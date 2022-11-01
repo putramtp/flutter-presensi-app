@@ -186,7 +186,26 @@ class ProfileView extends GetView<ProfileController> {
                           SizedBox(
                             height: 4,
                           ),
-                          Text("${user['jenis_jabatan']}",
+                          Text("${user['nomenklatur_jabatan']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text("Unit Organisasi",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text("${user['nama_unor']}",
                             style: GoogleFonts.poppins(
                               color: Color(0xff333333),
                               fontSize: 10,
@@ -263,6 +282,25 @@ class ProfileView extends GetView<ProfileController> {
                             height: 4,
                           ),
                           Text("${user['tmt_pns']}",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff333333),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text("Lokasi Presensi",
+                            style: GoogleFonts.poppins(
+                              color: Color(0xff828282),
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text("${user['nama_lokasi']}",
                             style: GoogleFonts.poppins(
                               color: Color(0xff333333),
                               fontSize: 10,

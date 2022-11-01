@@ -20,6 +20,8 @@ import '../modules/new_password/bindings/new_password_binding.dart';
 import '../modules/new_password/views/new_password_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/splashscreen/bindings/splashscreen_binding.dart';
+import '../modules/splashscreen/views/splashscreen_view.dart';
 import '../modules/update_password/bindings/update_password_binding.dart';
 import '../modules/update_password/views/update_password_view.dart';
 import '../modules/update_profile/bindings/update_profile_binding.dart';
@@ -101,6 +103,11 @@ class AppPages {
       name: _Paths.CHECK_STATUS,
       page: () => CheckStatusView(),
       binding: CheckStatusBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASHSCREEN,
+      page: () => SplashscreenView(),
+      binding: SplashscreenBinding(),
     ),
   ];
 }

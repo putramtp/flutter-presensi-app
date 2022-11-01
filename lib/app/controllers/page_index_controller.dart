@@ -50,7 +50,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
+          if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
             await presensi(position, alamat, distance);
           } else {
             await presensiDetect();
@@ -895,7 +895,14 @@ class PageIndexController extends GetxController {
             }
             //// POST DATA DATANG KE API ABSENSI - end ////
             }, 
-          child: Text("Presensi")
+          child: Text(
+                    "Presensi",
+                      style: GoogleFonts.poppins(
+                        color: Color(0xff333333),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500
+                    ),
+            )
           ),
         ]
       );
