@@ -31,7 +31,7 @@ class LoginController extends GetxController {
     // print(canMockLocation);
     print(isDevelopmentModeEnable);
 
-    if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
+    if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
       login();
     } else {
       await Get.defaultDialog(

@@ -246,14 +246,29 @@ class LoginView extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Pemerintah Daerah Kabupaten Tasikmalaya. © 2020',
+                  'Pemerintah Daerah Kabupaten Tasikmalaya. © 2022',
                   style: GoogleFonts.poppins(
                     color: Color(0xff575757),
                     fontSize: 10,
                   ),
                 ),
               ],
-            )
+            ),
+            SizedBox(
+              height: 4
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                      'Versi Obt 0.4.',
+                      style: GoogleFonts.poppins(
+                        color: Color.fromARGB(255, 192, 192, 192),
+                        fontSize: 7,
+                      ),
+                    ),
+              ],
+            ),
           ],
         )
       ),

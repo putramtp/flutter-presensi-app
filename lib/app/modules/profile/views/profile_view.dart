@@ -407,16 +407,16 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                 ),
                 SizedBox(
-                  height: 36,
+                  height: 40,
                 ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 28),
+                Padding(
+                padding: const EdgeInsets.only(bottom: 0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Pemerintah Daerah Kabupaten Tasikmalaya. © 2020',
+                      'Pemerintah Daerah Kabupaten Tasikmalaya. © 2022',
                       style: GoogleFonts.poppins(
                         color: Color(0xff575757),
                         fontSize: 8,
@@ -425,6 +425,16 @@ class ProfileView extends GetView<ProfileController> {
                   ],
                 ),
               ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 38.0),
+                  child: Image.asset("assets/Sadasbor-Logo.png",
+                    height: 22,
+                  ),
+                ),
+                
                 // SizedBox(
                 //     height: 20,
                 //   ),
