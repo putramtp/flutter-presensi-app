@@ -1,4 +1,4 @@
-**Presensi Mobile Apps with REST API and Fake GPS Detector**
+**Presensi Mobile App with REST API and Fake GPS Detector**
 
 Pada project ini, saya menggunakan Dart dan Flutter Framework dengan konsep MVC (GetX Framework) untuk penulisan script baik logic (controller), design (view) dan biding (model) secara terpisah. Selain itu saya menggunakan package _Geolocator_ dan _Geocoding_ dari pub.dev untuk menjalankan logic GPS presensinya dan package _Safe Device_ untuk mengatasi permasalahan penggunaan Fake GPS ketika presensi. Secara singkat, user hanya bisa presensi dalam radius tertentu (yang dibatas menggunakan lat dan long). Diluar itu, user tidak bisa presensi.
 
@@ -39,6 +39,7 @@ Untuk Pengajuan Sakit, sama halnya seperti Dinas Luar. Aplikasi akan membaca lat
 Package yang dipakai untuk block Fake GPS atau Mock Location lain adalah _Safe Device 1.1.1. Package_ (https://pub.dev/packages/safe_device), yang saya implementasikan pada halaman Login dan button Presensi, dengan sintaks : 
 
 `bool canMockLocation = await SafeDevice.canMockLocation;` // untuk check Mock Location aktif atau tidak
+
 `bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;` // untuk check Developer Mode apakah aktif atau tidak
 
 Idenya, hampir seluruh aplikasi Mock Location pasti mengharuskan user untuk menyalakan fitur Developer Mode pada devicenya sebagai syarat agar aplikasi dapat berjalan. Oleh karena itu, aplikasi ini dibuat agar bisa mendeteksi hingga "sedikit lebih dalam" karena aplikasi ini akan bekerja 2 kali, yaitu cek apakah aplikasi Mock Location itu sedang berjalan atau tidak, dan juga cek apakah Developer Mode pada device user itu sedang aktif atau tidak. Jika salah satu aktif, maka kembalian nilai akan tetap "true" dan aplikasi akan mengeluarkan pop-up "Fake GPS Terdeteksi" dan menghimbau user untuk mematikan aplikasi mock location tersebut. Jika mock location tetap aktif dan developer mode masih aktif, maka user tidak dapat presensi sama sekali.
