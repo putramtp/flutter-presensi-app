@@ -1,5 +1,7 @@
 **Presensi Mobile App with FAKE GPS Detector**
 
+**App Name : SADASBOR**
+
 Pada project ini, saya menggunakan Dart dan Flutter Framework dengan konsep MVC (GetX Framework) untuk penulisan script baik logic (controller), design (view) dan biding (model) secara terpisah. Selain itu saya menggunakan package _Geolocator_ dan _Geocoding_ dari pub.dev untuk menjalankan logic GPS presensinya dan package _Safe Device_ untuk mengatasi permasalahan penggunaan Fake GPS ketika presensi. Secara singkat, user hanya bisa presensi dalam radius tertentu (yang dibatas menggunakan lat dan long). Diluar itu, user tidak bisa presensi.
 
 Project ini saya buat untuk presensi ASN di suatu Pemerintah Daerah, latar belakang dibuatnya aplikasi ini sebenarnya adalah ketidak-efektifan presensi jika menggunakan web, sehingga ada keinginan untuk migrasi dari presensi web ke presensi mobile, yang dimana aplikasi web yang dipakai sebelumnya menggunakan Native PHP dengan database SQL yang disimpan di server lokal. Meskipun aplikasi web tersebut di web-view menjadi app android, tetapi dirasa kurang efektif karena corenya masih web sehingga ketika dihadapkan dalam kondisi serentak (pengisian laporan kinerja bulanan atau kegiatan serentak lain) yang menyebabkan server lokal akan bekerja lebih berat karena seluruh data yang berjalan itu di proses pada server, bukan device masing-masing user. Oleh karena itu, dibuatlah aplikasi mobile dengan flutter ini agar bisa di compile di android dan iOS sekaligus sehingga proses data yang berjalan bisa dilakukan pada device masing-masing dan tidak memberatkan server. Server hanya menerima kembalian data berupa mapping JSON dari aplikasi ini dan memasukannya ke database utama tanpa harus melakukan serangkaian logic didalam server tersebut sekaligus. Adapun metode proses data yang digunakan adalah menggunakan REST API.
@@ -43,6 +45,12 @@ Package yang dipakai untuk block Fake GPS atau Mock Location lain adalah _Safe D
 `bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;` // untuk check Developer Mode apakah aktif atau tidak
 
 Idenya, hampir seluruh aplikasi Mock Location pasti mengharuskan user untuk menyalakan fitur Developer Mode pada devicenya sebagai syarat agar aplikasi dapat berjalan. Oleh karena itu, aplikasi ini dibuat agar bisa mendeteksi "lebih dalam" karena aplikasi ini akan bekerja 2 kali, yaitu cek apakah aplikasi Mock Location itu sedang berjalan atau tidak, dan juga cek apakah Developer Mode pada device user itu sedang aktif atau tidak. Jika salah satu aktif, maka kembalian nilai akan tetap "true" dan aplikasi akan mengeluarkan pop-up "Fake GPS Terdeteksi" dan menghimbau user untuk keluar dari aplikasi dan mematikan aplikasi mock location tersebut sebelum melakukan presensi. Jika mock location tetap aktif dan developer mode masih aktif, maka user tidak dapat presensi sama sekali.
+
+
+**Minimum System Requirements**
+
+SADASBOR for Android app is available for phones running Android OS versions 7.0. (Nougat) and above. 
+Note: We no longer support older versions of SADASBOR for Android.
 
 
 ## Fluter Apps
