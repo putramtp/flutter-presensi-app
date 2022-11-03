@@ -38,7 +38,7 @@ Untuk Pengajuan Sakit, sama halnya seperti Dinas Luar. Aplikasi akan membaca lat
 
 Package yang dipakai untuk block Fake GPS atau Mock Location lain adalah _Safe Device 1.1.1. Package_ (https://pub.dev/packages/safe_device), yang saya implementasikan pada halaman Login dan button Presensi, dengan sintaks : 
 
-`bool canMockLocation = await SafeDevice.canMockLocation;` // untuk check Mock Location aktif atau tidak
+`bool canMockLocation = await SafeDevice.canMockLocation;` // untuk check Mock Location apakah aktif atau tidak
 
 `bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;` // untuk check Developer Mode apakah aktif atau tidak
 
