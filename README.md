@@ -1,6 +1,6 @@
 **Presensi Mobile App with FAKE GPS Detector**
 
-**App Name : SADASBOR**
+_App Name : SADASBOR_
 
 Pada project ini, saya menggunakan Dart dan Flutter Framework dengan konsep MVC (GetX Framework) untuk penulisan script baik logic (controller), design (view) dan biding (model) secara terpisah. Selain itu saya menggunakan package _Geolocator_ dan _Geocoding_ dari pub.dev untuk menjalankan logic GPS presensinya dan package _Safe Device_ untuk mengatasi permasalahan penggunaan Fake GPS ketika presensi. Secara singkat, user hanya bisa presensi dalam radius tertentu (yang dibatas menggunakan lat dan long). Diluar itu, user tidak bisa presensi.
 
@@ -50,7 +50,7 @@ Idenya, hampir seluruh aplikasi Mock Location pasti mengharuskan user untuk meny
 **Minimum System Requirements**
 
 SADASBOR for Android app is available for phones running Android OS versions 7.0. (Nougat) and above. 
-Note: We no longer support older versions of SADASBOR for Android.
+Note: No longer support older versions of SADASBOR for Android.
 
 
 ## Fluter Apps
