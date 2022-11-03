@@ -8,13 +8,13 @@ Idenya, data 15.000 ASN yang ada di lokal server di proses melalui serangkaian R
 
 Karena login di Firebase mengharuskan authentikasi dengan email, maka logicnya saya buat seperti berikut :
 1. Cek NIP dari controller == NIP API,
-2. Jika true, jalankan signInWithEmailAndPassword(), nah disini kuncinya, digunakanlah error handling
-3. Error handling yg dipakai adalah "user-not-found"
-4. Jika user baru pertama kali download, otomatis akan "user-not-found" meskipun langkah no. 1 true, 
+2. Jika true, jalankan `signInWithEmailAndPassword()`, nah disini kuncinya, digunakanlah error handling
+3. Error handling yg dipakai adalah `"user-not-found"`
+4. Jika user baru pertama kali download, otomatis akan `"user-not-found"` meskipun langkah no. 1 true, 
         karena nip dari user tsb belum ada di Firebase. 
-5. Lalu, dalam error handling tersebut dijalankan createUserWithEmailAndPassword() dengan idenya 
-email : nipC.text + "@email.go.id"
-password : passC.text ditambah MD5 hash
+5. Lalu, dalam error handling tersebut dijalankan `createUserWithEmailAndPassword()` dengan idenya 
+`email : nipC.text + "@email.go.id"`
+`password : passC.text` ditambah MD5 hash
 Sehingga, firebase akan membaca inputan tersebut sebagai email, bukan string biasa.
 Nah pada tahap function ini pula, dijalankan Url POST untuk mengambil data dari API dan ditampung ke variabel yang selanjutnya variabel tsb akan dipanggil untuk dimasukkan ke firebase
 6. Dengan ide tsb, otomatis email baru dibuat dan flutter mendapat variabel yang isinya respon JSON lalu bekerja utk memasukkan data JSON tsb ke Firebase Database sehingga user tersebut sudah otomatis register tanpa perlu register manual.
@@ -42,7 +42,7 @@ Package yang dipakai untuk block Fake GPS atau Mock Location lain adalah _Safe D
 
 `bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;` // untuk check Developer Mode apakah aktif atau tidak
 
-Idenya, hampir seluruh aplikasi Mock Location pasti mengharuskan user untuk menyalakan fitur Developer Mode pada devicenya sebagai syarat agar aplikasi dapat berjalan. Oleh karena itu, aplikasi ini dibuat agar bisa mendeteksi hingga "sedikit lebih dalam" karena aplikasi ini akan bekerja 2 kali, yaitu cek apakah aplikasi Mock Location itu sedang berjalan atau tidak, dan juga cek apakah Developer Mode pada device user itu sedang aktif atau tidak. Jika salah satu aktif, maka kembalian nilai akan tetap "true" dan aplikasi akan mengeluarkan pop-up "Fake GPS Terdeteksi" dan menghimbau user untuk mematikan aplikasi mock location tersebut. Jika mock location tetap aktif dan developer mode masih aktif, maka user tidak dapat presensi sama sekali.
+Idenya, hampir seluruh aplikasi Mock Location pasti mengharuskan user untuk menyalakan fitur Developer Mode pada devicenya sebagai syarat agar aplikasi dapat berjalan. Oleh karena itu, aplikasi ini dibuat agar bisa mendeteksi hingga "sedikit lebih dalam" karena aplikasi ini akan bekerja 2 kali, yaitu cek apakah aplikasi Mock Location itu sedang berjalan atau tidak, dan juga cek apakah Developer Mode pada device user itu sedang aktif atau tidak. Jika salah satu aktif, maka kembalian nilai akan tetap "true" dan aplikasi akan mengeluarkan pop-up "Fake GPS Terdeteksi" dan menghimbau user untuk keluar dari aplikasi dan mematikan aplikasi mock location tersebut sebelum melakukan presensi. Jika mock location tetap aktif dan developer mode masih aktif, maka user tidak dapat presensi sama sekali.
 
 
 ## Fluter Apps
