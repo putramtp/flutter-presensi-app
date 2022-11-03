@@ -208,7 +208,7 @@ class PageIndexController extends GetxController {
       status = "Di Dalam Area"; 
 
     if (snapPresence.docs.length == 0){
-      //belum pernah absen & set absen datang
+      //null - belum pernah absen & set absen datang
       SizedBox(
         height: 5,
       );
