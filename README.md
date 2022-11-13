@@ -1,7 +1,10 @@
 ## **Presensi Mobile App with FAKE GPS Detector**
 
-# Playstore Link : 
-[](https://play.google.com/store/apps/details?id=com.msaiflanwr.presensi&pli=1)
+**_• View in Google Play Store_**
+[Link](https://play.google.com/store/apps/details?id=com.msaiflanwr.presensi&pli=1)
+
+
+_**Latar Belakang :**_
 
 Pada project ini, saya menggunakan Dart dan Flutter Framework dengan konsep MVC (GetX Framework) untuk penulisan script baik logic (controller), design (view) dan biding (model) secara terpisah. Selain itu saya menggunakan package _Geolocator_ dan _Geocoding_ dari pub.dev untuk menjalankan logic GPS presensinya dan package _Safe Device_ untuk mengatasi permasalahan penggunaan Fake GPS ketika presensi. Secara singkat, user hanya bisa presensi dalam radius tertentu (yang dibatas menggunakan lat dan long). Diluar itu, user tidak bisa presensi.
 
