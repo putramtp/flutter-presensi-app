@@ -22,6 +22,30 @@ class PageIndexController extends GetxController {
     final User user = auth.currentUser!;
     final uid = user.uid;
 
+    // API DateTime GMT +07:00
+    var myResponse = await http.get(
+                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body);
+
+                // print(data);
+                // print(myResponse.body);
+
+      var dateTimeAPI = data['dateTime'];
+
+      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+      print(dateTimeGMT);
+    
+    // API DateTime GMT +07:00 - End
+
+    String hariIni = DateFormat("EEE").format(dateTimeGMT);
+      print(hariIni);
+    String tanggalHariIni = DateFormat("d").format(dateTimeGMT);
+      print(tanggalHariIni);  
+    
+    //
     final nipSession = await firestore.collection("user").doc(uid).get();
 
     pageIndex.value = i;
@@ -37,6 +61,37 @@ class PageIndexController extends GetxController {
           String alamat = "${placemarks[0].street} , ${placemarks[0].subLocality} , ${placemarks[0].locality} , ${placemarks[0].subAdministrativeArea}";
           await updatePosition(position, alamat);
 
+          // ABSEN HARI SENIN atau TANGGAL 17 di SETDA
+          if (hariIni == 'Sun' || tanggalHariIni == '13') {
+            print("Absen di Setda Aktif");
+              //cek distance between 2 koordinat / 2 posisi
+              double distance2 =  Geolocator.distanceBetween( // rev distance
+                // -7.361053, //SETDA
+                // 108.1127393, //SETDA
+                -7.308180376093359, // SB
+                108.20877916637005, // SB
+                position.latitude, 
+                position.longitude); print("ini lokasi setda");
+              
+              double distance =  Geolocator.distanceBetween(
+                // -7.361053, 
+                // 108.1127393, 
+                double.parse(nipSession['lat']),
+                double.parse(nipSession['long']),
+                position.latitude, 
+                position.longitude);
+
+            //block fakeGPS atau mocklocation yang aktif lewat Developer Options pada hari Senin/Tanggal 17    
+            bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
+              print(isDevelopmentModeEnable);
+
+              if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
+                await presensi(position, alamat, distance, distance2);
+              } else {
+                await presensiDetect();
+              }
+          } else {
+          print("Absen lokasi masing-masing aktif"); 
           //cek distance between 2 koordinat / 2 posisi
           double distance =  Geolocator.distanceBetween(
               // -7.361053, 
@@ -46,14 +101,23 @@ class PageIndexController extends GetxController {
               position.latitude, 
               position.longitude);
           
-          //block fakeGPS atau mocklocation yang aktif lewat Developer Options
+          double distance2 =  Geolocator.distanceBetween( //double check untuk kebutuhan function // rev distance
+              // -7.361053, 
+              // 108.1127393,
+              double.parse(nipSession['lat']),
+              double.parse(nipSession['long']),
+              position.latitude, 
+              position.longitude);
+          
+          //block fakeGPS atau mocklocation yang aktif lewat Developer Options pada hari Normal
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
-            await presensi(position, alamat, distance);
+          if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
+            await presensi(position, alamat, distance, distance2);
           } else {
             await presensiDetect();
+          }
           }
           //absen
           
@@ -122,7 +186,9 @@ class PageIndexController extends GetxController {
       );
   }
 
-  Future <void> presensi(Position position, String alamat, double distance) async {
+  Future <void> presensi(Position position, String alamat, double distance, double distance2) async {
+    final User user = auth.currentUser!;
+    final uid = user.uid;
     // API DateTime GMT +07:00
     var myResponse = await http.get(
                   Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
@@ -150,8 +216,790 @@ class PageIndexController extends GetxController {
     String liburId = DateFormat("yMd").format(dateTimeGMT).replaceAll("/", "-");  // 10-30-2022 BHT
 
     final liburSession = await firestore.collection("libur").doc(liburId).get();
+    final nipSession = await firestore.collection("user").doc(uid).get();
 
+    //interpolasi 5 dan 6 hari kerja
+    String j2 = nipSession['j2'];
+    String j3 = nipSession['j3'];
+
+    // KONDISI 5 HARI KERJA (5HARIKERJA/5HARIKERJA/5HARIKERJA/5HARIKERJA/5HARIKERJA/)
+    if (j2 == '15:45:00' || j3 == '16:15:00') {
+      print("5 Hari Kerja Aktif"); // 5 HARI KERJA
     if (hariIni == 'Sat' || hariIni == 'Sun' || liburSession.exists == liburId) {
+            Get.defaultDialog(
+              titlePadding: EdgeInsets.only(top: 22),
+              title: "Hari Ini Hari Libur",
+                titleStyle: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              contentPadding: EdgeInsets.all(16),
+              middleText: liburSession.exists == false
+                            ? "Menu Presensi Akan Aktif Kembali Pada Hari Kerja."
+                            : "Bertepatan dengan Libur ${liburSession['nama_libur']}, menu presensi akan aktif kembali pada hari kerja selanjutnya.",
+                middleTextStyle: GoogleFonts.poppins(
+                fontSize: 13,
+                fontWeight: FontWeight.w400
+              ),
+              actions: [
+            ElevatedButton(
+            style: TextButton.styleFrom(
+                backgroundColor: Color(0xffFFC107),
+              ),
+              onPressed: ()=> Get.back(), 
+            child: Text(
+              "OK",
+              style: GoogleFonts.poppins(
+                color: Color(0xff333333),
+                fontSize: 12,
+                fontWeight: FontWeight.bold
+              ),
+              )
+            ),
+          ]
+            );
+        // LOGIC LIBUR (BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/BERHASIL/)
+    } else {  
+
+    String uid = await auth.currentUser!.uid;
+
+    CollectionReference<Map<String, dynamic>> colPresence =  firestore.collection("user").doc(uid).collection("presence");
+    QuerySnapshot<Map<String, dynamic>> snapPresence =  await colPresence.get();
+    print(snapPresence.docs.length);
+    print("Check Length");
+
+    DateTime now = dateTimeGMT;
+    String todayDocID = DateFormat.yMd().format(now).replaceAll("/", "-");
+
+    final nipSession = await firestore.collection("user").doc(uid).get();
+
+    DocumentSnapshot<Map<String, dynamic>> todayDoc = await colPresence.doc(todayDocID).get();
+    Map<String, dynamic>? dataPresenceToday =  todayDoc.data();
+
+    String status = "Di Luar Area";
+
+    if(distance <= 500 || distance2 <= 500){ // rev distance
+      status = "Di Dalam Area"; 
+
+    if (snapPresence.docs.length == 0){
+      //null - belum pernah absen & set absen datang
+      SizedBox(
+        height: 5,
+      );
+      await Get.defaultDialog(
+        title: "Validasi Presensi",
+          titleStyle: GoogleFonts.poppins(
+          fontSize: 18,
+          fontWeight: FontWeight.w600
+        ),
+        middleText: "Apakah Anda yakin ingin mengisi Presensi Datang sekarang?",
+        middleTextStyle: GoogleFonts.poppins(
+          fontSize: 13,
+          fontWeight: FontWeight.w400
+        ),
+        actions: [
+          OutlinedButton(
+            onPressed: ()=> Get.back(), 
+          child: Text(
+            "Batalkan",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+            ),
+            )
+          ),
+          ElevatedButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Color(0xffFFC107),
+            ),
+            onPressed: () async {
+              await colPresence.doc(todayDocID).set({
+              "date" : now.toIso8601String(),
+              "sync" : "N",
+              "datang" : {
+              "date" : now.toIso8601String(),
+              "lat" : position.latitude,
+              "long" : position.longitude,
+              "alamat" : alamat,
+              "status" : status,
+              "distance" : distance,
+              "distance2" : distance2, // rev distance
+            },"pulang" : {
+              "date" : now.toIso8601String(),
+              "lat" : position.latitude,
+              "long" : position.longitude,
+              "alamat" : alamat,
+              "status" : status,
+              "distance" : distance,
+              "distance2" : distance2, // rev distance
+            },
+
+          });
+          Get.back();
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang.");
+
+      String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
+      String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
+      // String pulangPresence = dataPresenceToday?['pulang']['date']; //Interpolasi dari Firestore
+
+      var parsedDatangPresence = DateTime.parse(datangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
+      var parsedPulangPresence = DateTime.parse(pulangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
+
+      // print(parsedDatangPresence);
+      // print(parsedPulangPresence);
+
+      // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase //
+      String j2 = nipSession['j2']; //Pukul 15.45
+      String j3 = nipSession['j3']; //Pukul 16.15
+      // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase - end //
+
+      // String sekarang = DateFormat("EEE").format(DateTime(2022, 10, 15));
+      String hariSekarang = DateFormat("EEE").format(now);
+      print(hariSekarang);
+
+        cekHari(String hari) {
+          String b;
+          if (hari == 'Fri') {
+            return b = j3;
+          } else {
+            return b = j2;
+          }
+        }
+            String jp =  cekHari(hariSekarang);
+            
+            final arr = jp.split(':');
+        
+        // print(arr[0]);
+      // print(arr[1]);
+
+      String jam2 = arr[0];
+      String menit2 = arr[1];
+
+      // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI //
+
+      // Inputan Presensi //
+      DateTime jamDatangC = parsedDatangPresence;
+      DateTime jamPulangC = parsedPulangPresence;
+      // Inputen Presensi - End//
+      
+      String jamd = DateFormat.Hms().format(jamDatangC);
+      String jamp = DateFormat.Hms().format(jamPulangC);
+
+      print(jamd);
+      print(jamp);
+
+      DateTime jam = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
+      DateTime PJ1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 7, 45, 0); // Patokan jam masuk //
+
+      DateTime jam1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 15, 46, 0); // test
+      DateTime PJ2 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
+      
+      // strtotime - Convert DateTime to millisecond //
+      int jamDatangStr = jamDatangC.millisecondsSinceEpoch;
+      int jamPulangStr = jamPulangC.millisecondsSinceEpoch;
+      int datang = PJ1.millisecondsSinceEpoch;
+      int pulang = PJ2.millisecondsSinceEpoch;
+      // strtotime - Convert DateTime to millisecond - end //
+
+      // Logic Status Jam //
+      double hasil = (jamDatangStr - datang)/60000;
+      int ddat = hasil.ceil();
+
+      double hasil2 = (pulang - jamPulangStr)/60000;
+      int dpul = hasil2.ceil();
+
+      // print(ddat);
+      // print(jamd);
+      // print(datang);
+      // print(hasil);
+      // // print(dpul);
+
+      cekStatusDatang(int d) {
+        String statusd;
+          if (d <= 0) {
+            return statusd = "Tepat Waktu";
+          } else if (d >= 1 && d <= 30){
+            return statusd = "TL1";
+          } else if (d >= 31 && d <= 60){
+            return statusd = "TL2";
+          } else if (d >= 61 && d <= 90){
+            return statusd = "TL3";
+          } else if (d >= 91){
+            return statusd = "TL4";
+          }
+        }
+
+        cekStatusPulang(int p) {
+          String statusp;
+          if (p < 1) {
+            return statusp = "Sesuai Waktu";
+          } else if (p >= 1 && p <= 30){
+            return statusp = "PSW1";
+          } else if (p >= 31 && p <= 60){
+            return statusp = "PSW2";
+          } else if (p >= 61 && p <= 90){
+            return statusp = "PSW3";
+          } else if (p >= 91){
+            return statusp = "PSW4";
+          }
+        }
+          // Cetak Status Datang //
+          String? sd = cekStatusDatang(ddat);
+          print(sd);
+
+
+          // Cetak Status Pulang //
+          String? sp = cekStatusPulang(dpul);
+          print(sp);
+
+      // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI - End //
+          
+          //// POST DATA DATANG KE API ABSENSI ////
+            if (sd != null && sp != null) {
+              Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
+            var myResponse = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : nipSession['nip'],
+                    "tanggal" : DateFormat("yyyy-MM-dd").format(now),
+                    "sd" : sd,
+                    "sp" : sp,
+                    "id_th" : "1",
+                    "jamd" : DateFormat.Hms().format(jamDatangC),
+                    "jamp" : DateFormat.Hms().format(jamPulangC),
+                  }
+                );
+
+                Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
+                print(myResponse.body);
+
+                Get.back();
+                Get.back();
+                Get.snackbar("Sukses!","Data Datang Berhasil Masuk ke API.");
+                print("Data Datang Berhasil Masuk ke API");
+                isLoading.value = false;
+
+                if (data['status'] == "success") {
+                    await colPresence.doc(todayDocID).update({
+                        "sync" : "Y",
+                    });
+                } else {
+                  Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server. Silahkan Coba Lain Waktu.");
+                }
+
+            } else {
+              Get.snackbar("Gagal","Data Datang Gagal Masuk ke API. Silahkan coba kembali.");
+              print("Data Datang Gagal Terupdate, Coba Kembali");
+              Get.offAllNamed(Routes.HOME);
+              isLoading.value = false;
+            }
+            //// POST DATA DATANG KE API ABSENSI - end ////
+
+            }, 
+          child: Text(
+            "Presensi",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+              fontWeight: FontWeight.w500
+            ),
+            ),
+          ),
+        ]
+      );
+
+    } else {
+      //sudah pernah absen, cek hari ini udah absen datang atau keluar udah belum?
+      DocumentSnapshot<Map<String, dynamic>> todayDoc = await colPresence.doc(todayDocID).get();
+
+      // print(todayDoc.exists);
+
+      if(todayDoc.exists == true){
+        // tinggal absen pulang atau sudah 2-2nya 
+        // Map<String, dynamic>? dataPresenceToday =  todayDoc.data();
+        // // if (dataPresenceToday?["pulang"] != null){
+        // //   // sudah absen datang dan pulang
+        // //   Get.snackbar("Informasi Penting", "Anda telah presensi Datang dan Pulang hari ini. Tidak dapat mengubah data kembali.");
+        // // } else {
+          /////////////////////////////////// absen pulang ////////////////////////////////////////
+          await Get.defaultDialog(
+        title: "Validasi Presensi",
+        titleStyle: GoogleFonts.poppins(
+          fontSize: 18,
+          fontWeight: FontWeight.w600
+        ),
+        middleText: "Apakah Anda yakin ingin mengisi Presensi Pulang sekarang?",
+        middleTextStyle: GoogleFonts.poppins(
+          fontSize : 13,
+          fontWeight: FontWeight.w400
+        ),
+        actions: [
+          OutlinedButton(
+            onPressed: ()=> Get.back(), 
+          child: Text(
+            "Batalkan",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+            )
+            )
+          ),
+          ElevatedButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Color(0xffFFC107)
+            ),
+            onPressed: () async {
+              await colPresence.doc(todayDocID).update({
+              "pulang" : {
+              "date" : now.toIso8601String(),
+              "lat" : position.latitude,
+              "long" : position.longitude,
+              "alamat" : alamat,
+              "status" : status,
+              "distance" : distance,
+              "distance2" : distance2,
+        },
+        });
+          Get.back();
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Pulang.");
+
+      String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
+      String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
+      // String pulangPresence = dataPresenceToday?['pulang']['date']; //Interpolasi dari Firestore
+
+      var parsedDatangPresence = DateTime.parse(datangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
+      var parsedPulangPresence = DateTime.parse(pulangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
+
+      // print(parsedDatangPresence);
+      // print(parsedPulangPresence);
+
+      // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase //
+      String j2 = nipSession['j2'];
+      String j3 = nipSession['j3'];
+      // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase - end //
+
+      // String sekarang = DateFormat("EEE").format(DateTime(2022, 10, 15));
+      String hariSekarang = DateFormat("EEE").format(now);
+      print(hariSekarang);
+
+        cekHari(String hari) {
+          String b;
+          if (hari == 'Fri') {
+            return b = j3;
+          } else {
+            return b = j2;
+          }
+        }
+            String jp =  cekHari(hariSekarang);
+            
+            final arr = jp.split(':');
+        
+        // print(arr[0]);
+      // print(arr[1]);
+
+      String jam2 = arr[0];
+      String menit2 = arr[1];
+
+      // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI //
+
+      // Inputan Presensi //
+      DateTime jamDatangC = parsedDatangPresence;
+      DateTime jamPulangC = parsedPulangPresence;
+      // Inputen Presensi - End//
+      
+      String jamd = DateFormat.Hms().format(jamDatangC);
+      String jamp = DateFormat.Hms().format(jamPulangC);
+
+      print(jamd);
+      print(jamp);
+
+      DateTime jam = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
+      DateTime PJ1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 7, 45, 0); // Patokan jam masuk //
+
+      DateTime jam1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 15, 46, 0); // test
+      DateTime PJ2 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
+      
+      // strtotime - Convert DateTime to millisecond //
+      int jamDatangStr = jamDatangC.millisecondsSinceEpoch;
+      int jamPulangStr = jamPulangC.millisecondsSinceEpoch;
+      int datang = PJ1.millisecondsSinceEpoch;
+      int pulang = PJ2.millisecondsSinceEpoch;
+      // strtotime - Convert DateTime to millisecond - end //
+
+      // Logic Status Jam //
+      double hasil = (jamDatangStr - datang)/60000;
+      int ddat = hasil.ceil();
+
+      double hasil2 = (pulang - jamPulangStr)/60000;
+      int dpul = hasil2.ceil();
+
+      // print(ddat);
+      // print(jamd);
+      // print(datang);
+      // print(hasil);
+      // // print(dpul);
+
+      cekStatusDatang(int d) {
+        String statusd;
+          if (d <= 0) {
+            return statusd = "Tepat Waktu";
+          } else if (d >= 1 && d <= 30){
+            return statusd = "TL1";
+          } else if (d >= 31 && d <= 60){
+            return statusd = "TL2";
+          } else if (d >= 61 && d <= 90){
+            return statusd = "TL3";
+          } else if (d >= 91){
+            return statusd = "TL4";
+          }
+        }
+
+        cekStatusPulang(int p) {
+          String statusp;
+          if (p < 1) {
+            return statusp = "Sesuai Waktu";
+          } else if (p >= 1 && p <= 30){
+            return statusp = "PSW1";
+          } else if (p >= 31 && p <= 60){
+            return statusp = "PSW2";
+          } else if (p >= 61 && p <= 90){
+            return statusp = "PSW3";
+          } else if (p >= 91){
+            return statusp = "PSW4";
+          }
+        }
+          // Cetak Status Datang //
+          String? sd = cekStatusDatang(ddat);
+          print(sd);
+
+
+          // Cetak Status Pulang //
+          String? sp = cekStatusPulang(dpul);
+          print(sp);
+
+      // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI - End //
+          
+          //// POST DATA PULANG KE API ABSENSI ////
+            if (todayDoc.exists == true) {
+              Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
+            var myResponse = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : nipSession['nip'],
+                    "tanggal" : DateFormat("yyyy-MM-dd").format(now),
+                    "sd" : sd,
+                    "sp" : sp,
+                    "id_th" : "1",
+                    "jamd" : DateFormat.Hms().format(jamDatangC),
+                    "jamp" : DateFormat.Hms().format(jamPulangC),
+                  }
+                );
+
+              if (myResponse.statusCode == 200) {
+                
+                Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
+                print(myResponse.body);
+
+                Get.back();
+                Get.back();
+                Get.snackbar("Sukses!","Data Pulang Berhasil Masuk ke API.");
+                print("Data Pulang Berhasil Masuk ke API");
+                isLoading.value = false;
+
+                if (data['status'] == "success") {
+                    await colPresence.doc(todayDocID).update({
+                        "sync" : "Y",
+                    });
+                } else {
+                  Get.snackbar("Terjadi Gangguan Server", "Data Pulang Sukses, Tetapi Belum Sinkron Dengan API Server (N). Silahkan Coba Lain Waktu.",
+                    duration: const Duration(seconds: 8),
+                  );
+                }
+                 } else {
+                  Get.snackbar("Terjadi Gangguan Server", "Data Presensi Anda Sukses, Tetapi Belum Sinkron Dengan API Server (404). Silahkan Coba Lain Waktu.",
+                    duration: const Duration(seconds: 8),
+                  );
+              }
+
+            } else {
+              Get.snackbar("Gagal","Data Pulang Gagal Masuk ke API. Silahkan coba kembali.");
+              print("Data Pulang Gagal Terupdate, Coba Kembali");
+              Get.offAllNamed(Routes.HOME);
+              isLoading.value = false;
+            }
+            //// POST DATA PULANG KE API ABSENSI - end ////
+            
+            }, 
+          child: Text(
+            "Presensi",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+              fontWeight: FontWeight.w500
+            ),
+            )
+          ),
+        ]
+      );
+       
+      } else {
+        // absen datang
+       await Get.defaultDialog(
+        title: "Validasi Presensi",
+          titleStyle: GoogleFonts.poppins(
+          fontSize: 18,
+          fontWeight: FontWeight.w600
+        ),
+        middleText: "Apakah Anda yakin ingin mengisi Presensi Datang sekarang?",
+        middleTextStyle: GoogleFonts.poppins(
+          fontSize: 13,
+          fontWeight: FontWeight.w400
+        ),
+        actions: [
+          OutlinedButton(
+            onPressed: ()=> Get.back(), 
+          child: Text(
+            "Batalkan",
+            style: GoogleFonts.poppins(
+              color: Color(0xff333333),
+              fontSize: 12,
+            ),
+            )
+          ),
+          ElevatedButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Color(0xffFFC107),
+            ),
+            onPressed: () async {
+              await colPresence.doc(todayDocID).set({
+              "date" : now.toIso8601String(),
+              "sync" : "N",
+              "datang" : {
+              "date" : now.toIso8601String(),
+              "lat" : position.latitude,
+              "long" : position.longitude,
+              "alamat" : alamat,
+              "status" : status,
+              "distance" : distance,
+              "distance2" : distance2,
+            },"pulang" : {
+              "date" : now.toIso8601String(),
+              "lat" : position.latitude,
+              "long" : position.longitude,
+              "alamat" : alamat,
+              "status" : status,
+              "distance" : distance,
+              "distance2" : distance2,
+            },
+
+          });
+          Get.back();
+          Get.snackbar("Berhasil!", "Anda berhasil mengisi Presensi Datang.");
+
+      String datangPresence = now.toIso8601String(); //Interpolasi dari Firestore
+      String pulangPresence = now.toIso8601String(); //Interpolasi dari Firestore
+      // String pulangPresence = dataPresenceToday?['pulang']['date']; //Interpolasi dari Firestore
+
+      var parsedDatangPresence = DateTime.parse(datangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
+      var parsedPulangPresence = DateTime.parse(pulangPresence); //Convert hasil interpolasi jadi DateTime (supaya bisa di convert ke ms)
+
+      // print(parsedDatangPresence);
+      // print(parsedPulangPresence);
+
+      // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase //
+      String j2 = nipSession['j2'];
+      String j3 = nipSession['j3'];
+      // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase - end //
+
+      // String sekarang = DateFormat("EEE").format(DateTime(2022, 10, 15));
+      String hariSekarang = DateFormat("EEE").format(now);
+      print(hariSekarang);
+
+        cekHari(String hari) {
+          String b;
+          if (hari == 'Fri') {
+            return b = j3;
+          } else {
+            return b = j2;
+          }
+        }
+            String jp =  cekHari(hariSekarang);
+            
+            final arr = jp.split(':');
+        
+        // print(arr[0]);
+      // print(arr[1]);
+
+      String jam2 = arr[0];
+      String menit2 = arr[1];
+
+      // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI //
+
+      // Inputan Presensi //
+      DateTime jamDatangC = parsedDatangPresence;
+      DateTime jamPulangC = parsedPulangPresence;
+      // Inputen Presensi - End//
+      
+      String jamd = DateFormat.Hms().format(jamDatangC);
+      String jamp = DateFormat.Hms().format(jamPulangC);
+
+      print(jamd);
+      print(jamp);
+
+      DateTime jam = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
+      DateTime PJ1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 7, 45, 0); // Patokan jam masuk //
+
+      DateTime jam1 = DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day, 15, 46, 0); // test
+      DateTime PJ2 = DateTime(dateTimeGMT.year,dateTimeGMT.month, dateTimeGMT.day, int.parse(jam2), int.parse(menit2), 0); // Patokan jam pulang //
+      
+      // strtotime - Convert DateTime to millisecond //
+      int jamDatangStr = jamDatangC.millisecondsSinceEpoch;
+      int jamPulangStr = jamPulangC.millisecondsSinceEpoch;
+      int datang = PJ1.millisecondsSinceEpoch;
+      int pulang = PJ2.millisecondsSinceEpoch;
+      // strtotime - Convert DateTime to millisecond - end //
+
+      // Logic Status Jam //
+      double hasil = (jamDatangStr - datang)/60000;
+      int ddat = hasil.ceil();
+
+      double hasil2 = (pulang - jamPulangStr)/60000;
+      int dpul = hasil2.ceil();
+
+      // print(ddat);
+      // print(jamd);
+      // print(datang);
+      // print(hasil);
+      // // print(dpul);
+
+      cekStatusDatang(int d) {
+        String statusd;
+          if (d <= 0) {
+            return statusd = "Tepat Waktu";
+          } else if (d >= 1 && d <= 30){
+            return statusd = "TL1";
+          } else if (d >= 31 && d <= 60){
+            return statusd = "TL2";
+          } else if (d >= 61 && d <= 90){
+            return statusd = "TL3";
+          } else if (d >= 91){
+            return statusd = "TL4";
+          }
+        }
+
+        cekStatusPulang(int p) {
+          String statusp;
+          if (p < 1) {
+            return statusp = "Sesuai Waktu";
+          } else if (p >= 1 && p <= 30){
+            return statusp = "PSW1";
+          } else if (p >= 31 && p <= 60){
+            return statusp = "PSW2";
+          } else if (p >= 61 && p <= 90){
+            return statusp = "PSW3";
+          } else if (p >= 91){
+            return statusp = "PSW4";
+          }
+        }
+          // Cetak Status Datang //
+          String? sd = cekStatusDatang(ddat);
+          print(sd);
+
+
+          // Cetak Status Pulang //
+          String? sp = cekStatusPulang(dpul);
+          print(sp);
+
+      // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI - End //
+          
+          //// POST DATA DATANG KE API ABSENSI ////
+          if (dataPresenceToday?['datang']['date'] == true) {
+            print("sukses");
+          }
+            if (todayDoc.exists == false) {
+              Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
+            var myResponse = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : nipSession['nip'],
+                    "tanggal" : DateFormat("yyyy-MM-dd").format(now),
+                    "sd" : sd,
+                    "sp" : sp,
+                    "id_th" : "1",
+                    "jamd" : DateFormat.Hms().format(jamDatangC),
+                    "jamp" : DateFormat.Hms().format(jamPulangC),
+                  }
+                );
+
+              if (myResponse.statusCode == 200) {
+
+                  Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
+                  print(myResponse.body);
+
+                  Get.back();
+                  Get.back();
+                  Get.snackbar("Sukses!","Data Datang Berhasil Masuk ke API.");
+                  print("Data Datang Berhasil Masuk ke API");
+                  isLoading.value = false;
+
+                  if (data['status'] == "success") {
+                      await colPresence.doc(todayDocID).update({
+                          "sync" : "Y",
+                      });
+                  } else {
+                    Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server (N). Silahkan Coba Lain Waktu.",
+                      duration: const Duration(seconds: 8),
+                      );
+                  }
+                  } else {
+                    Get.snackbar("Terjadi Gangguan Server", "Data Datang Sukses, Tetapi Belum Sinkron Dengan API Server (404). Silahkan Coba Lain Waktu.",
+                      duration: const Duration(seconds: 8),
+                      );
+                  }
+
+            } else {
+              Get.snackbar("Gagal","Data Datang Gagal Masuk ke API. Silahkan coba kembali.");
+              print("Data Datang Gagal Terupdate, Coba Kembali");
+              Get.offAllNamed(Routes.HOME);
+              isLoading.value = false;
+            }
+            //// POST DATA DATANG KE API ABSENSI - end ////
+            }, 
+          child: Text(
+                    "Presensi",
+                      style: GoogleFonts.poppins(
+                        color: Color(0xff333333),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500
+                    ),
+            )
+          ),
+        ]
+      );
+      }
+    }
+  } else {
+      Get.snackbar("Presensi Gagal", "Anda tidak dapat melakukan presensi karena sedang diluar area ${nipSession['nama_lokasi']}.",
+        duration: const Duration(seconds: 8)
+      );
+      }
+    } // KONDISI 5 HARI KERJA - End
+  } 
+    
+    
+  // KONDISI 6 HARI KERJA (6HARIKERJA/6HARIKERJA/6HARIKERJA/6HARIKERJA/6HARIKERJA/)
+  else if (j2 == '14:30:00' || j3 == '15:00:00'){ // 6 HARI KERJA
+    print("6 Hari Kerja Aktif");
+    if (hariIni == 'Sun' || liburSession.exists == liburId) {
             Get.defaultDialog(
               titlePadding: EdgeInsets.only(top: 22),
               title: "Hari Ini Hari Libur",
@@ -913,7 +1761,8 @@ class PageIndexController extends GetxController {
         duration: const Duration(seconds: 8)
       );
       }
-    }
+    } 
+    } // KONDISI 6 HARI KERJA - End
   }
 
   Future <void> updatePosition(Position position, String alamat) async {
