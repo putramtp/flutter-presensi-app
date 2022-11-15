@@ -18,7 +18,7 @@ class ProfileController extends GetxController {
     Get.offAllNamed(Routes.LOGIN);
   }
 
-  Future <bool> backDeviceButton() {
-    return Future.value(false);
+  backDeviceButton() {
+    Get.offAllNamed(Routes.HOME);
   }
 }

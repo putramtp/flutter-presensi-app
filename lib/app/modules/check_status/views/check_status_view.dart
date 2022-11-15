@@ -47,15 +47,9 @@ class CheckStatusView extends GetView<CheckStatusController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipOval(
-                    child: Container(
-                      height: 75,
-                      width: 75,
-                      child: CachedNetworkImage(imageUrl: "https://i.picsum.photos/id/9/250/250.jpg?hmac=tqDH5wEWHDN76mBIWEPzg1in6egMl49qZeguSaH9_VI",
-                      placeholder: (context, url) => CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit.fill,
-                      ),
+                  Center(
+                    child: CircleAvatar(
+                      radius: 50,
                     ),
                   ),
                 ],

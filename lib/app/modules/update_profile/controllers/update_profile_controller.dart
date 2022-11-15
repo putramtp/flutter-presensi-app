@@ -1,72 +1,57 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:firebase_storage/firebase_storage.dart' as s;
+import 'package:presensi/app/routes/app_pages.dart';
+import 'package:http/http.dart' as http;
 
 class UpdateProfileController extends GetxController {
-
-  RxBool isLoading = false.obs;
-  TextEditingController nipC = TextEditingController();
-  TextEditingController nameC = TextEditingController();
-  TextEditingController emailC = TextEditingController();
-
+  FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  s.FirebaseStorage storage = s.FirebaseStorage.instance;
+  var isDataLoading = false.obs;
 
-  final ImagePicker picker = ImagePicker();
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
+    String uid = await auth.currentUser!.uid;
 
-  XFile? image;
-
-  void pickImage() async {
-    image = await picker.pickImage(source: ImageSource.gallery);
-    
-    update();
+    yield* firestore.collection("user").doc(uid).snapshots();
   }
 
-  Future<void> updateProfile(String uid) async {
-    if (nameC.text.isNotEmpty && emailC.text.isNotEmpty && nipC.text.isNotEmpty){
-      isLoading.value = true;
-      try {
-        Map<String, dynamic> data = {
-        "name" : nameC.text,
-        };
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamTodayProfile() async* {
+    final User user = auth.currentUser!;
+    final uid = user.uid;
+    final nipSession = await firestore.collection("user").doc(uid).get();
+    var myResponse = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/mobile"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : nipSession['nip'], //199109102019031003
+                  }
+                );
 
-        if (image != null) {
-          //proses upload image ke firebase storage
-          File file = File(image!.path);
-          String ext = image!.name.split(".").last;
+                Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
 
-          await storage.ref('$uid/profile.$ext').putFile(file);
-          String urlImage =  await storage.ref('$uid/profile.$ext').getDownloadURL();
 
-          data.addAll({"profile": urlImage});
-        }
-        await firestore.collection("pegawai").doc(uid).update(data);
-        image = null;
-        Get.snackbar("Berhasil", "Berhasil memperbarui profil");
-      } catch (e) {
-        Get.snackbar("Terjadi Kesalahan", "Tidak dapat memperbarui profil");
-      } finally {
-      isLoading.value = false;
-      }
-    } 
+                var postHome = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/pegawai"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : nipSession['nip'],
+                  }
+                );
+                Map<String, dynamic> dataPegawai = json.decode(postHome.body) as Map<String, dynamic>;
   }
 
-  void deleteProfile(String uid) async {
-      try {
-        await firestore.collection("pegawai").doc(uid).update({
-        "profile" : FieldValue.delete(),
-      });
-      Get.back();
-      Get.snackbar("Berhasil", "Berhasil menghapus foto profil");
-      } catch (e) {
-        Get.snackbar("Terjadi Kesalahan", "Permintaan Perbaharuan Profil Anda gagal");
-      } finally {
-        update();
-      }
-      
+  void logout() async {
+    await auth.signOut();
+    Get.offAllNamed(Routes.LOGIN);
+  }
+
+  backDeviceButton() {
+    Get.back();
   }
 }

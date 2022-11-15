@@ -150,8 +150,8 @@ class DinasluarController extends GetxController {
 
   }
 
-  Future <bool> backDeviceButton() {
-    return Future.value(false);
+  backDeviceButton() {
+    Get.offAllNamed(Routes.HOME);
   }
 
 }

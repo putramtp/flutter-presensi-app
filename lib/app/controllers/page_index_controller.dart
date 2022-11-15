@@ -62,14 +62,14 @@ class PageIndexController extends GetxController {
           await updatePosition(position, alamat);
 
           // ABSEN HARI SENIN atau TANGGAL 17 di SETDA
-          if (hariIni == 'Sun' || tanggalHariIni == '13') {
+          if (hariIni == 'Mon' || tanggalHariIni == '17') {
             print("Absen di Setda Aktif");
               //cek distance between 2 koordinat / 2 posisi
               double distance2 =  Geolocator.distanceBetween( // rev distance
-                // -7.361053, //SETDA
-                // 108.1127393, //SETDA
-                -7.308180376093359, // SB
-                108.20877916637005, // SB
+                -7.361053, //SETDA
+                108.1127393, //SETDA
+                // -7.308180376093359, // SB
+                // 108.20877916637005, // SB
                 position.latitude, 
                 position.longitude); print("ini lokasi setda");
               
@@ -280,6 +280,10 @@ class PageIndexController extends GetxController {
 
     if(distance <= 500 || distance2 <= 500){ // rev distance
       status = "Di Dalam Area"; 
+      double jarak = distance <= 500 ? distance : distance2;
+
+      print("Jarak Terdekat adalah : ");
+      print(jarak);
 
     if (snapPresence.docs.length == 0){
       //null - belum pernah absen & set absen datang
@@ -322,16 +326,16 @@ class PageIndexController extends GetxController {
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
-              "distance2" : distance2, // rev distance
+              "distance" : jarak,
+               // rev distance
             },"pulang" : {
               "date" : now.toIso8601String(),
               "lat" : position.latitude,
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
-              "distance2" : distance2, // rev distance
+              "distance" : jarak,
+              // rev distance
             },
 
           });
@@ -559,8 +563,8 @@ class PageIndexController extends GetxController {
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
-              "distance2" : distance2,
+              "distance" : jarak,
+
         },
         });
           Get.back();
@@ -786,16 +790,14 @@ class PageIndexController extends GetxController {
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
-              "distance2" : distance2,
+              "distance" : jarak,
             },"pulang" : {
               "date" : now.toIso8601String(),
               "lat" : position.latitude,
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
-              "distance2" : distance2,
+              "distance" : jarak,
             },
 
           });
@@ -1051,9 +1053,14 @@ class PageIndexController extends GetxController {
     Map<String, dynamic>? dataPresenceToday =  todayDoc.data();
 
     String status = "Di Luar Area";
+    double jarak = 0.0;
 
-    if(distance <= 500){
+    if(distance <= 500 || distance2 <= 500){ // rev distance
       status = "Di Dalam Area"; 
+      double jarak = distance <= 500 ? distance : distance2;
+
+      print("Jarak Terdekat adalah : ");
+      print(jarak);
 
     if (snapPresence.docs.length == 0){
       //null - belum pernah absen & set absen datang
@@ -1096,14 +1103,14 @@ class PageIndexController extends GetxController {
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
+              "distance" : jarak,
             },"pulang" : {
               "date" : now.toIso8601String(),
               "lat" : position.latitude,
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
+              "distance" : jarak,
             },
 
           });
@@ -1331,7 +1338,7 @@ class PageIndexController extends GetxController {
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
+              "distance" : jarak,
         },
         });
           Get.back();
@@ -1557,14 +1564,14 @@ class PageIndexController extends GetxController {
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
+              "distance" : jarak,
             },"pulang" : {
               "date" : now.toIso8601String(),
               "lat" : position.latitude,
               "long" : position.longitude,
               "alamat" : alamat,
               "status" : status,
-              "distance" : distance,
+              "distance" : jarak,
             },
 
           });

@@ -717,12 +717,12 @@ packages:
     source: hosted
     version: "4.2.4"
   rxdart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.27.5"
+    version: "0.27.6"
   safe_device:
     dependency: "direct main"
     description:

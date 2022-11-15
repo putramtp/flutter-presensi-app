@@ -88,6 +88,8 @@ class HomeView extends GetView<HomeController> {
                           textAlign: TextAlign.left,
                           style: GoogleFonts.poppins(
                             fontSize: 11,
+                            color: Color.fromARGB(255, 116, 116, 116),
+                            fontWeight: FontWeight.normal,
                           ),),
                       )
                     ],
@@ -113,6 +115,9 @@ class HomeView extends GetView<HomeController> {
                 ),
                 child: Stack(
                   children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                    ),
                     Positioned(
                       top: 10,
                       left: 220,
@@ -121,6 +126,7 @@ class HomeView extends GetView<HomeController> {
                         color: Color.fromARGB(255, 231, 173, 0),
                       ),
                     ),
+                    Spacer(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -391,7 +397,7 @@ class HomeView extends GetView<HomeController> {
           TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
           TabItem(icon: Icons.people_outline, title: 'Profil'),
         ],
-        initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
+        // initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
         onTap: (int i) => pageC.changePage(i),
       )
     );

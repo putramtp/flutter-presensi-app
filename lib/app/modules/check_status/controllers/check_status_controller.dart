@@ -240,6 +240,34 @@ class CheckStatusController extends GetxController {
                 
     }
 
+    Future <void> NetworkHandler() async {
+
+      var postHome = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/pegawai"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : "199109102019031003",
+                  }
+                );
+      
+      Map<String, dynamic> dataPegawai = json.decode(postHome.body) as Map<String, dynamic>;
+
+      String baseurl = "https://simpeg.tasikmalayakab.go.id/assets/media/file";
+
+      String formatter(String url) {
+      return baseurl + url;
+      }
+
+      NetworkImage getImage(String username){
+      String url = formatter("/${dataPegawai['nip']}/pasfoto/thumb_${dataPegawai['file_dokumen']}");
+      return NetworkImage(url);
+    }
+      String foto = dataPegawai['file_dokumen'];
+      String getImages = foto;
+    }
+
     Future <void> checkUrl() async {
       final response = await http.get(
                   Uri.parse("https://google.com"),
@@ -349,4 +377,31 @@ class CheckStatusController extends GetxController {
                         Get.back();
                         Get.snackbar("Login & Sinkronisasi Berhasil", "Selamat menggunakan layanan SADASBOR!");
                       }
-                  }}}
+                  }}
+                  }
+  class NetworkHandler {
+    String baseUrl = "https://simpeg.tasikmalayakab.go.id/assets/media/file";
+
+    Future get(String url) async {
+
+      var postHome = await http.post(
+                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/pegawai"),
+                  headers: {
+                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                  },
+                  body: {
+                    "nip" : "199109102019031003",
+                  }
+                );
+      
+      Map<String, dynamic> dataPegawai = json.decode(postHome.body) as Map<String, dynamic>;
+
+      String baseurl = "https://simpeg.tasikmalayakab.go.id/assets/media/file";
+
+      NetworkImage getImage(String username){
+      String url = baseurl + "/${dataPegawai['nip']}/pasfoto/thumb_${dataPegawai['file_dokumen']}";
+      return NetworkImage(url);
+    }
+    }
+    
+  }
