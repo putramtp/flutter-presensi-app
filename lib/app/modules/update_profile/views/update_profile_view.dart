@@ -70,7 +70,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                                   decoration: BoxDecoration(
                                     color: const Color(0xff7c94b6),
                                     image: DecorationImage(
-                                      image: NetworkImage(imageSample 
+                                      image: NetworkImage(defaultImage
                                       ,
                                     ),
                                       fit: BoxFit.cover,

@@ -48,7 +48,6 @@ class ProfileView extends GetView<ProfileController> {
               String TTL = DateFormat("dd MMMM yyyy").format(tanggal_lahirDT);
               String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
               String imageSample = "http://i.imgur.com/QSev0hg.jpg";
-              String imageSimpeg = "";
             return ListView(
               // padding: EdgeInsets.all(28),
               children: [
@@ -68,7 +67,7 @@ class ProfileView extends GetView<ProfileController> {
                                   decoration: BoxDecoration(
                                     color: const Color(0xff7c94b6),
                                     image: DecorationImage(
-                                      image: NetworkImage(imageSimpeg == "" ? defaultImage : imageSimpeg
+                                      image: NetworkImage(defaultImage
                                       ,
                                     ),
                                       fit: BoxFit.cover,

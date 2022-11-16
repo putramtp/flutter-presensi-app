@@ -56,8 +56,8 @@ class HomeView extends GetView<HomeController> {
           if (snapshot.hasData){
 
           Map<String, dynamic> user = snapshot.data!.data()!;
-          String defaultImageInitial = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
-          String defaultImage = "https://simpeg.tasikmalayakab.go.id/assets/media/file/${user['nip']}/pasfoto/thumb_${user['file_dokumen']}";
+          String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
+          String imageSimpeg = "https://simpeg.tasikmalayakab.go.id/assets/media/file/${user['nip']}/pasfoto/thumb_${user['file_dokumen']}";
           return ListView(
             padding: EdgeInsets.all(20),
             children: [
@@ -74,7 +74,7 @@ class HomeView extends GetView<HomeController> {
                                   decoration: BoxDecoration(
                                     color: const Color(0xff7c94b6),
                                     image: DecorationImage(
-                                      image: NetworkImage("http://i.imgur.com/QSev0hg.jpg" 
+                                      image: NetworkImage(defaultImage 
                                       ,
                                     ),
                                       fit: BoxFit.cover,
@@ -82,7 +82,7 @@ class HomeView extends GetView<HomeController> {
                                     borderRadius: BorderRadius.all( Radius.circular(70.0)),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
+                                        color: Colors.grey.withOpacity(0.1),
                                         spreadRadius: 3,
                                         blurRadius: 7,
                                         offset: Offset(0,6)
@@ -90,7 +90,7 @@ class HomeView extends GetView<HomeController> {
                                     ],
                                     border: Border.all(
                                       color: Color.fromARGB(255, 255, 255, 255),
-                                      width: 2.0,
+                                      width: 0,
                                     ),
                                   ),
                                 ),
@@ -279,7 +279,7 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Presensi 4 Hari Terakhir",
+                    "Presensi 3 Hari Terakhir",
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

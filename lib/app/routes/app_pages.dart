@@ -83,6 +83,7 @@ class AppPages {
       name: _Paths.DETAIL_PRESENSI,
       page: () => DetailPresensiView(),
       binding: DetailPresensiBinding(),
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: _Paths.ALL_PRESENSI,

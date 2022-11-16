@@ -85,11 +85,14 @@ class PageIndexController extends GetxController {
             bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
               print(isDevelopmentModeEnable);
 
-              if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
+              if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
                 await presensi(position, alamat, distance, distance2);
               } else {
                 await presensiDetect();
               }
+            // ABSEN HARI SENIN atau TANGGAL 17 di SETDA - End
+
+            // ABSEN DENGAN LAT LONG MASING-MASING
           } else {
           print("Absen lokasi masing-masing aktif"); 
           //cek distance between 2 koordinat / 2 posisi
@@ -113,7 +116,7 @@ class PageIndexController extends GetxController {
           bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
           print(isDevelopmentModeEnable);
 
-          if (isDevelopmentModeEnable == true) { //false (asli apk), true (debug)
+          if (isDevelopmentModeEnable == false) { //false (asli apk), true (debug)
             await presensi(position, alamat, distance, distance2);
           } else {
             await presensiDetect();

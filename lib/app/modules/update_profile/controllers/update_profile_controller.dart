@@ -85,7 +85,7 @@ class UpdateProfileController extends GetxController {
                           "role" : "pegawai",
                           "createdAt" : DateTime.now().toIso8601String(),
                         });
-                        Get.snackbar("Berhasil", "Profil Anda Sudah Berhasil Diperbaharui");
+                        Get.snackbar("Berhasil", "Profil Anda Sudah Berhasil Diperbaharui.");
     } catch (e) {
       Get.snackbar("Terjadi Kesalahan", "Perbaharui Profil Gagal, Coba Beberapa Saat Lagi");
     }
