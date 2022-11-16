@@ -47,6 +47,8 @@ class ProfileView extends GetView<ProfileController> {
               DateTime tanggal_lahirDT = DateTime.parse(tanggal_lahir);
               String TTL = DateFormat("dd MMMM yyyy").format(tanggal_lahirDT);
               String defaultImage = "https://ui-avatars.com/api/?name=${user['nama_pegawai']}";
+              String imageSample = "http://i.imgur.com/QSev0hg.jpg";
+              String imageSimpeg = "";
             return ListView(
               // padding: EdgeInsets.all(28),
               children: [
@@ -60,36 +62,33 @@ class ProfileView extends GetView<ProfileController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ClipOval(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(1),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(0,6)
+                             Container(
+                                  width: 124.0,
+                                  height: 124.0,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff7c94b6),
+                                    image: DecorationImage(
+                                      image: NetworkImage(imageSimpeg == "" ? defaultImage : imageSimpeg
+                                      ,
                                     ),
-                                  ]
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.all( Radius.circular(70.0)),
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      width: 4.0,
+                                    ),
+                                  ),
                                 ),
-                                height: 114,
-                                width: 114,
-                                child: Image.network(
-                                  user["profile"] != null ? user["profile"] != "" ? user["profile"] 
-                                  : defaultImage 
-                                  : defaultImage,
-                                fit: BoxFit.cover,)
-                                ),
-                            ),
                           ],
                         ),
                       ),
                   ],
                 ),      
                 SizedBox(
-                  height: 10,
+                  height: 12,
                 ),
-                Text("${user['nama_pegawai'].toString().toUpperCase()}, ${user['gelar_belakang']}", 
+                Text("${user['gelar_depan']} ${user['gelar_nonakademis']} ${user['nama_pegawai'].toString().toUpperCase()}, ${user['gelar_belakang']}", 
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
                       color: Color(0xff333333),
@@ -119,7 +118,7 @@ class ProfileView extends GetView<ProfileController> {
                       height: 35,
                     ),
                   SizedBox(
-                    height: 20,
+                    height: 13,
                   ),
                 if (user["role"] == "admin")
                 ListTile(

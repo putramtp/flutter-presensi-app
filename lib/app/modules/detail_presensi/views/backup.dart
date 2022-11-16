@@ -30,7 +30,18 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
         backgroundColor: Color(0xffFFC107),
         centerTitle: true,
       ),
-      body: ListView(
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: controller.streamTodayPresence(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } 
+          if (snapshot.hasData){
+             Map<String, dynamic> user = snapshot.data!.data()!;
+          
+          return ListView(
             padding: EdgeInsets.all(20),
             children : [ 
               Container(
@@ -182,7 +193,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                           width: 33,
                         ),
                       Container(
-                        child: data['pulang'] != null 
+                        child: user['pulang'] != null 
                             ? Text(":   ${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB",
                                   style: GoogleFonts.poppins(
                                     fontSize: 12
@@ -207,7 +218,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                           width: 26,
                         ),
                       Container(
-                        child: data["pulang"] != null 
+                        child: user["pulang"] != null 
                             ? Text(":   ${data['pulang']!['lat']} , ${data['pulang']!['long']}",
                                   style: GoogleFonts.poppins(
                                     fontSize: 12
@@ -238,7 +249,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                             ),
                         ),
                       Container(
-                        child: data["pulang"] != null 
+                        child: user["pulang"] != null 
                             ? Text("${data['pulang']!['status']}",
                                   style: GoogleFonts.poppins(
                                     color: Color.fromARGB(255, 5, 151, 64),
@@ -277,7 +288,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                         ),
                         Flexible(
                           child: Container(
-                            child: data['pulang'] != null 
+                            child: user['pulang'] != null 
                                 ? Text("${data['pulang']!['alamat']}",
                                       style: GoogleFonts.poppins(
                                         fontSize: 12
@@ -304,7 +315,7 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                           width: 8
                         ),
                       Container(
-                        child: data['pulang'] != null
+                        child: user['pulang'] != null
                             ? Text(":   ${data['pulang']!['distance'].toString().split(".").first} meter",
                                   style: GoogleFonts.poppins(
                                     fontSize: 12
@@ -326,7 +337,14 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
               ),
             ),
             ],
-          ),
+          );
+        } else {
+          return Center(
+            child: Text("Tidak dapat memuat database!"),
+          );
+        }
+        },
+      ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),
         child: data['sync'] == "N" 

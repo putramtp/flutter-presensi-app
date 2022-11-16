@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HomeView extends GetView<HomeController> {
   final String imageLogo = 'assets/kabtasik.svg';
   final String imageSiluet = 'assets/kabtasiksiluet-saiful2.svg';
+  final String sadasborLogo = 'assets/sadasbor-icon-tr.png';
   final pageC = Get.find<PageIndexController>();
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,14 @@ class HomeView extends GetView<HomeController> {
                         ),
         ),
         leadingWidth: 46,
+        actions: [
+            Padding(
+              padding: const EdgeInsets.only(top:13, bottom: 13, right: 18),
+              child: Image.asset(sadasborLogo,
+                height: 15,  
+          ),
+            ),
+        ],
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: controller.streamUser(),
@@ -54,17 +63,40 @@ class HomeView extends GetView<HomeController> {
             children: [
               Row(
                 children: [
-                  ClipOval(
-                    child: Container(
-                      height: 75,
-                      width: 75,
-                      color: Colors.grey[200],
-                      child: Image.network(user["file_dokumen"] != null ? defaultImageInitial : defaultImageInitial,
-                              fit: BoxFit.cover,
-                              ),
-                      // child: Image.network(src),
-                    ),
-                  ),
+                  Padding(
+                        padding: const EdgeInsets.only(top: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                             Container(
+                                  width: 78.0,
+                                  height: 78.0,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff7c94b6),
+                                    image: DecorationImage(
+                                      image: NetworkImage("http://i.imgur.com/QSev0hg.jpg" 
+                                      ,
+                                    ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.all( Radius.circular(70.0)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 3,
+                                        blurRadius: 7,
+                                        offset: Offset(0,6)
+                                      )
+                                    ],
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                ),
+                          ],
+                        ),
+                      ),
                   SizedBox(
                     width: 10,
                   ),
@@ -119,7 +151,7 @@ class HomeView extends GetView<HomeController> {
                       alignment: Alignment.centerRight,
                     ),
                     Positioned(
-                      top: 10,
+                      top: 14,
                       left: 220,
                       child: SvgPicture.asset(imageSiluet,
                         height: 70,
@@ -247,7 +279,7 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Presensi 5 Hari Terakhir",
+                    "Presensi 4 Hari Terakhir",
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -385,7 +417,7 @@ class HomeView extends GetView<HomeController> {
       ),
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: Color(0xffFFC107),
-        activeColor: Color(0xffFFFFFF),
+        activeColor: Color.fromARGB(255, 255, 255, 255),
         style: TabStyle.fixedCircle,
         elevation: 2,
         cornerRadius: 16,
