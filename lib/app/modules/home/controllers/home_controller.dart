@@ -48,27 +48,4 @@ class HomeController extends GetxController {
 
     yield* firestore.collection("user").doc(uid).collection("presence").doc(todayID).snapshots();
   }
-
-  @override 
-  void onInit() async {
-    super.onInit();
-    final newVersion = 
-        NewVersion(androidId: "com.msaiflanwr.presensi", iOSId: "com.msaiflanwr.presensi");
-        newVersion.showAlertIfNecessary(context: Get.context!);
-
-    final status = await newVersion.getVersionStatus();
-    if (status != null) {
-          newVersion.showUpdateDialog(
-            context: Get.context!, 
-            versionStatus: status,
-            dialogTitle: "Pembaharuan Tersedia!",
-            dialogText: "Silahkan perbaharui versi aplikasi untuk mendapatkan fitur terbaru dari SADASBOR.",
-            allowDismissal: false,
-            updateButtonText: "Perbaharui",
-            dismissAction: () {},
-            dismissButtonText: "Batal"
-
-            );
-    }
-  }
 }

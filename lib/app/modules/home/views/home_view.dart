@@ -147,9 +147,6 @@ class HomeView extends GetView<HomeController> {
                 ),
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                    ),
                     Positioned(
                       top: 14,
                       left: 220,
@@ -158,7 +155,6 @@ class HomeView extends GetView<HomeController> {
                         color: Color.fromARGB(255, 231, 173, 0),
                       ),
                     ),
-                    Spacer(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
