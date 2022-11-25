@@ -1706,7 +1706,7 @@ class PageIndexController extends GetxController {
             var myResponse = await http.post(
                   Uri.parse("censored"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer token-censored',
+                    HttpHeaders.authorizationHeader : 'Bearer token-censored.',
                   },
                   body: {
                     "nip" : nipSession['nip'],
