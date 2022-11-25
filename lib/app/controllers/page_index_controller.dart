@@ -465,9 +465,9 @@ class PageIndexController extends GetxController {
             if (sd != null && sp != null) {
               Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
             var myResponse = await http.post(
-                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  Uri.parse("censored"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                    HttpHeaders.authorizationHeader : 'Bearer token-censored',
                   },
                   body: {
                     "nip" : nipSession['nip'],
@@ -693,9 +693,9 @@ class PageIndexController extends GetxController {
             if (todayDoc.exists == true) {
               Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
             var myResponse = await http.post(
-                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  Uri.parse("censored"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                    HttpHeaders.authorizationHeader : 'Bearer token-censored',
                   },
                   body: {
                     "nip" : nipSession['nip'],
@@ -930,9 +930,9 @@ class PageIndexController extends GetxController {
             if (todayDoc.exists == false) {
               Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
             var myResponse = await http.post(
-                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  Uri.parse("censored"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                    HttpHeaders.authorizationHeader : 'Bearer token-censored',
                   },
                   body: {
                     "nip" : nipSession['nip'],
@@ -1240,9 +1240,9 @@ class PageIndexController extends GetxController {
             if (sd != null && sp != null) {
               Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
             var myResponse = await http.post(
-                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  Uri.parse("censored"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                    HttpHeaders.authorizationHeader : 'Bearer token-censored',
                   },
                   body: {
                     "nip" : nipSession['nip'],
@@ -1467,9 +1467,9 @@ class PageIndexController extends GetxController {
             if (todayDoc.exists == true) {
               Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
             var myResponse = await http.post(
-                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  Uri.parse("censored"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                    HttpHeaders.authorizationHeader : 'Bearer token-censored',
                   },
                   body: {
                     "nip" : nipSession['nip'],
@@ -1704,9 +1704,9 @@ class PageIndexController extends GetxController {
             if (todayDoc.exists == false) {
               Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
             var myResponse = await http.post(
-                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+                  Uri.parse("censored"),
                   headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                    HttpHeaders.authorizationHeader : 'Bearer token-censored.',
                   },
                   body: {
                     "nip" : nipSession['nip'],
