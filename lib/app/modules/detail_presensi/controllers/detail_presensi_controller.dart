@@ -51,7 +51,7 @@ class DetailPresensiController extends GetxController {
               "lat" : data['pulang']!['lat'],
               "long" : data['pulang']!['long'],
               "alamat" : data['pulang']!['alamat'],
-              "status" : data['datang']!['status'],
+              "status" : data['pulang']!['status'],
               "distance" : data['pulang']!['distance'].toString().split(".").first,
             },
 

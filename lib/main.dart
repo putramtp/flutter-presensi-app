@@ -9,33 +9,32 @@ import 'app/routes/app_pages.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   final pageC = Get.put(PageIndexController(), permanent: true);
-  
+
   runApp(
     StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting){
-          return MaterialApp(
-            home: Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return MaterialApp(
+              home: Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
-            ),
+            );
+          }
+          print(snapshot.data);
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: "Application",
+            initialRoute: Routes.ALL_PRESENSI,
+            // snapshot.data != null ? Routes.HOME : Routes.LOGIN,
+            getPages: AppPages.routes,
           );
-        }
-        print(snapshot.data);
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Application",
-          initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
-          // snapshot.data != null ? Routes.HOME : Routes.LOGIN,
-          getPages: AppPages.routes,
-        );
-      }
-    ),
+        }),
   );
 }

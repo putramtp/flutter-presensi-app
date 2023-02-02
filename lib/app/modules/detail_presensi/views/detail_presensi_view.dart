@@ -337,19 +337,26 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
                 child: Icon(Icons.sync_outlined, size: 28),
                 backgroundColor: Color.fromARGB(255, 5, 151, 64),
             ) 
-        : Visibility(
-          visible: false,
-          child: FloatingActionButton(
-                onPressed: (){
-                  print("Cek Visible");
-                },
-                  child: Icon(
-                      Icons.sync_outlined, size: 28,
-                        color: Color.fromARGB(255, 241, 241, 241),
-                    ),
-                  backgroundColor: Color.fromARGB(255, 218, 218, 218),
-              ),
-        ),
+        : FloatingActionButton(
+              onPressed: () async {
+                await controller.postSync();
+              },
+                child: Icon(Icons.sync_outlined, size: 28),
+                backgroundColor: Color.fromARGB(255, 5, 151, 64),
+            ) 
+                // Visibility(
+                //   visible: false,
+                //   child: FloatingActionButton(
+                //         onPressed: (){
+                //           print("Cek Visible");
+                //         },
+                //           child: Icon(
+                //               Icons.sync_outlined, size: 28,
+                //                 color: Color.fromARGB(255, 241, 241, 241),
+                //             ),
+                //           backgroundColor: Color.fromARGB(255, 218, 218, 218),
+                //       ),
+                // ),
       ),
     );
   }
