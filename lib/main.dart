@@ -31,7 +31,7 @@ void main() async {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: "Application",
-            initialRoute: Routes.ALL_PRESENSI,
+            initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
             // snapshot.data != null ? Routes.HOME : Routes.LOGIN,
             getPages: AppPages.routes,
           );

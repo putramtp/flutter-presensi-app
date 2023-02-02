@@ -10,39 +10,36 @@ class AllPresensiController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<QuerySnapshot<Map<String, dynamic>>>getPresence() async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getPresence() async {
     String uid = auth.currentUser!.uid;
 
-    if (start == null){
-    // get seluruh presensi sampai saat ini
+    if (start == null) {
+      // get seluruh presensi sampai saat ini
 
-    return await firestore
-    .collection("pegawai")
-    .doc(uid)
-    .collection("presence")
-    .where("date", isLessThan: end.toIso8601String())
-    .orderBy("date", descending: true)
-    .get();
-
+      return await firestore
+          .collection("user")
+          .doc(uid)
+          .collection("presence")
+          .where("date", isLessThan: end.toIso8601String())
+          .orderBy("date", descending: true)
+          .get();
     } else {
-
-    return await firestore
-    .collection("pegawai")
-    .doc(uid)
-    .collection("presence")
-    .where("date", isGreaterThan: start!.toIso8601String())
-    .where("date", isLessThan: end.add(Duration(days: 1)).toIso8601String())
-    .orderBy("date", descending: true)
-    .get();
-
+      return await firestore
+          .collection("user")
+          .doc(uid)
+          .collection("presence")
+          .where("date", isGreaterThan: start!.toIso8601String())
+          .where("date",
+              isLessThan: end.add(Duration(days: 1)).toIso8601String())
+          .orderBy("date", descending: true)
+          .get();
     }
   }
 
-  void pickDate(DateTime pickStart, DateTime pickEnd){
+  void pickDate(DateTime pickStart, DateTime pickEnd) {
     start = pickStart;
     end = pickEnd;
     update();
     Get.back();
   }
 }
-

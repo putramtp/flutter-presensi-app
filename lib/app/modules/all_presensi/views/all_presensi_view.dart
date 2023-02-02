@@ -13,7 +13,7 @@ class AllPresensiView extends GetView<AllPresensiController> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Routes.HOME,
+          onPressed: () => Get.toNamed(Routes.HOME),
           icon: Icon(
             Icons.arrow_back_ios_new,
             size: 14,
@@ -90,7 +90,7 @@ class AllPresensiView extends GetView<AllPresensiController> {
                                 ),
                                 Text(data['datang']?['date'] == null
                                     ? "-"
-                                    : "${DateFormat.jms().format(DateTime.parse(data['datang']!['date']))}"),
+                                    : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['datang']!['date']))} WIB"),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -100,7 +100,7 @@ class AllPresensiView extends GetView<AllPresensiController> {
                                 ),
                                 Text(data['pulang']?['date'] == null
                                     ? "-"
-                                    : "${DateFormat.jms().format(DateTime.parse(data['pulang']!['date']))}"),
+                                    : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB"),
                               ],
                             ),
                           ),
