@@ -47,6 +47,21 @@ class CheckStatusController extends GetxController {
     print(currentTimeZone);
   }
 
+  Future<void> checkAPINyala() async {
+    try {
+      var response =
+          await http.post(Uri.https("apisadasbor.tasikmalayakab.go.id"));
+      if (response.statusCode == 404) {
+        Get.snackbar("Berhasil", "API Sadasbor Aktif.");
+      } else {
+        Get.snackbar("Gagal", "Error API URL");
+      }
+    } catch (e) {
+      Get.snackbar(
+          "Terjadi Kesalahan", "Server Sadasbor Tidak Dapat Dijangkau.");
+    }
+  }
+
   Future<void> safeDevice() async {
     bool isRealDevice = await SafeDevice.isRealDevice;
     bool canMockLocation = await SafeDevice.canMockLocation;

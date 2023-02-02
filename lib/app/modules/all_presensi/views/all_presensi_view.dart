@@ -78,29 +78,69 @@ class AllPresensiView extends GetView<AllPresensiController> {
                                   children: [
                                     Text(
                                       "Datang",
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       "${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}",
-                                      style: TextStyle(
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
-                                Text(data['datang']?['date'] == null
-                                    ? "-"
-                                    : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['datang']!['date']))} WIB"),
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  data['datang']?['date'] == null
+                                      ? "-"
+                                      : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['datang']!['date']))} WIB",
+                                  style: GoogleFonts.poppins(),
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  "Pulang",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Pulang",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 20),
+                                        child: data["sync"] == "N"
+                                            ? Column(
+                                                children: [
+                                                  Icon(
+                                                    Icons.close_rounded,
+                                                    color: Color.fromARGB(
+                                                        255, 214, 32, 32),
+                                                  ),
+                                                ],
+                                              )
+                                            : Icon(
+                                                Icons.check_rounded,
+                                                color: Color.fromARGB(
+                                                    255, 19, 204, 13),
+                                              ))
+                                  ],
                                 ),
-                                Text(data['pulang']?['date'] == null
-                                    ? "-"
-                                    : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB"),
+                                SizedBox(
+                                  height: 0,
+                                ),
+                                Text(
+                                  data['pulang']?['date'] == null
+                                      ? "-"
+                                      : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB",
+                                  style: GoogleFonts.poppins(),
+                                ),
                               ],
                             ),
                           ),
