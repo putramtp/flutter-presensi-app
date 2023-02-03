@@ -291,7 +291,9 @@ class HomeView extends GetView<HomeController> {
                           child: Text(
                             "Lihat Semua",
                             style: GoogleFonts.poppins(
-                                fontSize: 10, fontWeight: FontWeight.w500),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
                           )),
                     ],
                   ),

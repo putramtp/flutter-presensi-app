@@ -50,130 +50,170 @@ class AllPresensiView extends GetView<AllPresensiController> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(
-                        imageSearch,
-                        width: 200,
+                      Text(
+                        "RIWAYAT PRESENSI",
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
-                      Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Text(
-                                "Gunakan tombol 'Search' dibawah untuk\nmencari riwayat presensi Anda.",
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
+                      SvgPicture.asset(
+                        imageSearch,
+                        width: 210,
                       ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                              text: 'Gunakan tombol ',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
+                                  color: Color(0xff333333)),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Cari',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w800)),
+                                TextSpan(
+                                    text:
+                                        ' dibawah ini untuk\nmencari riwayat presensi Anda.')
+                              ])),
+                      SizedBox(
+                        height: 30,
+                      )
                     ],
                   ),
                 );
               } else {
-                return ListView.builder(
-                    padding: EdgeInsets.all(20),
-                    itemCount: snap.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      Map<String, dynamic> data = snap.data!.docs[index].data();
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Material(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(15),
-                          child: InkWell(
-                            onTap: () => Get.toNamed(Routes.DETAIL_PRESENSI,
-                                arguments: data),
-                            borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              padding: EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Datang",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        "${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    data['datang']?['date'] == null
-                                        ? "-"
-                                        : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['datang']!['date']))} WIB",
-                                    style: GoogleFonts.poppins(),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Pulang",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 20),
-                                          child: data["sync"] == "N"
-                                              ? Column(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.close_rounded,
-                                                      color: Color.fromARGB(
-                                                          255, 214, 32, 32),
-                                                    ),
-                                                  ],
-                                                )
-                                              : Icon(
-                                                  Icons.check_rounded,
-                                                  color: Color.fromARGB(
-                                                      255, 19, 204, 13),
-                                                ))
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 0,
-                                  ),
-                                  Text(
-                                    data['pulang']?['date'] == null
-                                        ? "-"
-                                        : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB",
-                                    style: GoogleFonts.poppins(),
-                                  ),
-                                ],
-                              ),
-                            ),
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 26, left: 20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Riwayat Presensi",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold, fontSize: 12),
                           ),
-                        ),
-                      );
-                    });
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                          padding: EdgeInsets.all(20),
+                          itemCount: snap.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            Map<String, dynamic> data =
+                                snap.data!.docs[index].data();
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Material(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(15),
+                                child: InkWell(
+                                  onTap: () => Get.toNamed(
+                                      Routes.DETAIL_PRESENSI,
+                                      arguments: data),
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                    padding: EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Datang",
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              "${DateFormat.yMMMEd().format(DateTime.parse(data['date']))}",
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text(
+                                          data['datang']?['date'] == null
+                                              ? "-"
+                                              : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['datang']!['date']))} WIB",
+                                          style: GoogleFonts.poppins(),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Pulang",
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 20),
+                                                child: data["sync"] == "N"
+                                                    ? Column(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.close_rounded,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    214,
+                                                                    32,
+                                                                    32),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : Icon(
+                                                        Icons.check_rounded,
+                                                        color: Color.fromARGB(
+                                                            255, 19, 204, 13),
+                                                      ))
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 0,
+                                        ),
+                                        Text(
+                                          data['pulang']?['date'] == null
+                                              ? "-"
+                                              : "${DateFormat("HH:mm:ss").format(DateTime.parse(data['pulang']!['date']))} WIB",
+                                          style: GoogleFonts.poppins(),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ],
+                );
               }
             }),
       ),
