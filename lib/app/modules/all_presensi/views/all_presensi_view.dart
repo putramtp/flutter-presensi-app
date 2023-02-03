@@ -248,7 +248,7 @@ class AllPresensiView extends GetView<AllPresensiController> {
                               textStyle: GoogleFonts.poppins(
                                   color: Color(0xff333333),
                                   fontWeight: FontWeight.w500))),
-                      selectionMode: DateRangePickerSelectionMode.single,
+                      selectionMode: DateRangePickerSelectionMode.range,
                       showActionButtons: true,
                       onCancel: () => Get.back(),
                       onSubmit: (obj) {
