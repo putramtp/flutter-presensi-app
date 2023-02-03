@@ -33,6 +33,7 @@ dependencies:
   new_version: 0.3.1
   flutter_native_splash: ^2.2.16
   rxdart: ^0.27.7
+  syncfusion_localizations: 20.4.48
   flutter: 
     sdk: flutter
 
