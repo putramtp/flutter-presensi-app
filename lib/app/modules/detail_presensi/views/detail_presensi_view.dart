@@ -39,6 +39,9 @@ class DetailPresensiView extends GetView<DetailPresensiController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 6,
+                ),
                 Center(
                   child: Text(
                     "${DateFormat.yMMMMEEEEd().format(DateTime.parse(data['date']))}",

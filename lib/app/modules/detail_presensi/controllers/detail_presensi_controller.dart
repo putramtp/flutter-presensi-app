@@ -46,10 +46,13 @@ class DetailPresensiController extends GetxController {
         print(snapPresence.docs.length);
         print("Check Length");
 
-        DateTime now = DateTime.now();
+        DateTime now = DateTime.parse(data['date']);
         String todayDocID = DateFormat.yMd().format(now).replaceAll("/", "-");
         DocumentSnapshot<Map<String, dynamic>> todayDoc =
             await colPresence.doc(todayDocID).get();
+
+        print(now);
+        print("Tanggal diatas adalah hasil interpolasi dari firestore");
 
         colPresence.doc(todayDocID).set({
           "date": data['date'],
@@ -129,20 +132,14 @@ class DetailPresensiController extends GetxController {
         print(jamd);
         print(jamp);
 
-        DateTime jam = DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 8, 15, 1); // test
-        DateTime PJ1 = DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 7, 45, 0); // Patokan jam masuk //
+        DateTime jam = DateTime(now.year, now.month, now.day, 8, 15, 1); // test
+        DateTime PJ1 = DateTime(
+            now.year, now.month, now.day, 7, 45, 0); // Patokan jam masuk //
 
-        DateTime jam1 = DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, 15, 46, 0); // test
-        DateTime PJ2 = DateTime(
-            DateTime.now().year,
-            DateTime.now().month,
-            DateTime.now().day,
-            int.parse(jam2),
-            int.parse(menit2),
-            0); // Patokan jam pulang //
+        DateTime jam1 =
+            DateTime(now.year, now.month, now.day, 15, 46, 0); // test
+        DateTime PJ2 = DateTime(now.year, now.month, now.day, int.parse(jam2),
+            int.parse(menit2), 0); // Patokan jam pulang //
 
         // strtotime - Convert DateTime to millisecond //
         int jamDatangStr = jamDatangC.millisecondsSinceEpoch;
@@ -158,11 +155,11 @@ class DetailPresensiController extends GetxController {
         double hasil2 = (pulang - jamPulangStr) / 60000;
         int dpul = hasil2.ceil();
 
-        // print(ddat);
+        print(ddat);
         // print(jamd);
         // print(datang);
         // print(hasil);
-        // // print(dpul);
+        print(dpul);
 
         cekStatusDatang(int d) {
           String statusd;
@@ -230,6 +227,7 @@ class DetailPresensiController extends GetxController {
           Map<String, dynamic> data =
               json.decode(myResponse.body) as Map<String, dynamic>;
           print(myResponse.body);
+          print("aaaa");
 
           Get.back();
           Get.back();

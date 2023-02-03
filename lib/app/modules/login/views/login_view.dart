@@ -239,7 +239,7 @@ class LoginView extends GetView<LoginController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Versi Obt 4(1.3) Debug',
+                'Versi 4(1.3) Demo Mode',
                 style: GoogleFonts.poppins(
                   color: Color.fromARGB(255, 192, 192, 192),
                   fontSize: 7,
