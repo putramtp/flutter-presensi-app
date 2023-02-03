@@ -244,6 +244,7 @@ class DetailPresensiController extends GetxController {
               "Sinkronisasi Ulang Presensi Anda Sudah Berhasil.",
               duration: const Duration(seconds: 5),
             );
+            Get.offNamed(Routes.HOME);
             print("Data Pulang Berhasil Masuk ke API");
           } else {
             await colPresence.doc(todayDocID).update({
@@ -267,8 +268,8 @@ class DetailPresensiController extends GetxController {
         }
       }
     } catch (e) {
-      Get.snackbar(
-          "Terjadi Kesalahan", "Server Sadasbor Tidak Dapat Dijangkau.");
+      Get.snackbar("Terjadi Kesalahan",
+          "Server Sadasbor Tidak Dapat Dijangkau. Harap Menunggu Hingga Server Normal Kembali.");
     }
   }
 }

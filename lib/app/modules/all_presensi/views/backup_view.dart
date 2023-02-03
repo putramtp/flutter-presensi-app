@@ -150,43 +150,32 @@ class AllPresensiView extends GetView<AllPresensiController> {
                   });
             }),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FloatingActionButton(
-          onPressed: () {
-            Get.dialog(
-              Dialog(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  height: 400,
-                  child: SfDateRangePicker(
-                      cancelText: 'BATAL',
-                      confirmText: 'OK',
-                      selectionTextStyle:
-                          const TextStyle(color: Color(0xff333333)),
-                      selectionColor: Color(0xffFFC107),
-                      startRangeSelectionColor: Color(0xffFFC107),
-                      endRangeSelectionColor: Color(0xffFFC107),
-                      rangeSelectionColor: Color(0xfff7e8ba),
-                      monthViewSettings:
-                          DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
-                      selectionMode: DateRangePickerSelectionMode.range,
-                      showActionButtons: true,
-                      onCancel: () => Get.back(),
-                      onSubmit: (obj) {
-                        if (obj != null) {
-                          if ((obj as PickerDateRange).endDate != null) {
-                            controller.pickDate(obj.startDate!, obj.endDate!);
-                          }
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.dialog(
+            Dialog(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                height: 400,
+                child: SfDateRangePicker(
+                    monthViewSettings:
+                        DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
+                    selectionMode: DateRangePickerSelectionMode.range,
+                    showActionButtons: true,
+                    onCancel: () => Get.back(),
+                    onSubmit: (obj) {
+                      if (obj != null) {
+                        if ((obj as PickerDateRange).endDate != null) {
+                          controller.pickDate(obj.startDate!, obj.endDate!);
                         }
-                      }),
-                ),
+                      }
+                    }),
               ),
-            );
-          },
-          child: Icon(Icons.search),
-          backgroundColor: Color.fromARGB(255, 5, 151, 64),
-        ),
+            ),
+          );
+        },
+        child: Icon(Icons.search),
+        backgroundColor: Color(0xffFFC107),
       ),
     );
   }
