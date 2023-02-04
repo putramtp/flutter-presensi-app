@@ -238,6 +238,8 @@ class AllPresensiView extends GetView<AllPresensiController> {
                       selectionTextStyle:
                           const TextStyle(color: Color(0xff333333)),
                       selectionColor: Color(0xffFFC107),
+                      selectionShape: DateRangePickerSelectionShape.circle,
+                      selectionRadius: 20,
                       startRangeSelectionColor: Color(0xffFFC107),
                       endRangeSelectionColor: Color(0xffFFC107),
                       rangeSelectionColor: Color(0xfff7e8ba),

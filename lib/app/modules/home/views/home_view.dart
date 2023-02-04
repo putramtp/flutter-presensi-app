@@ -77,7 +77,11 @@ class HomeView extends GetView<HomeController> {
                                 color: const Color(0xff7c94b6),
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                    defaultImage,
+                                    user['foto_profil'] != null
+                                        ? user['foto_profil'] != ""
+                                            ? user['foto_profil']
+                                            : defaultImage
+                                        : defaultImage,
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -92,7 +96,7 @@ class HomeView extends GetView<HomeController> {
                                 ],
                                 border: Border.all(
                                   color: Color.fromARGB(255, 255, 255, 255),
-                                  width: 0,
+                                  width: 3.0,
                                 ),
                               ),
                             ),

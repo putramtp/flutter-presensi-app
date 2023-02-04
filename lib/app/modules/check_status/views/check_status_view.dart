@@ -65,7 +65,7 @@ class CheckStatusView extends GetView<CheckStatusController> {
           ElevatedButton(
               onPressed: () async {
                 if (controller.isLoading.isFalse) {
-                  await controller.checkAPINyala();
+                  await controller.NetworkHandler();
                   ;
                 }
               },

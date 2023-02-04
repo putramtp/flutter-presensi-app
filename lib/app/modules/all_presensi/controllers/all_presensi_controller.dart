@@ -50,4 +50,12 @@ class AllPresensiController extends GetxController {
     update();
     Get.back();
   }
+
+  // function Syncfunction dengan mode range
+  // void pickDate(DateTime pickStart, DateTime pickEnd) {
+  //   start = pickStart;
+  //   end = pickEnd;
+  //   update();
+  //   Get.back();
+  // }
 }
