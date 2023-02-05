@@ -91,7 +91,7 @@ class PageIndexController extends GetxController {
                 await SafeDevice.isDevelopmentModeEnable;
             print(isDevelopmentModeEnable);
 
-            if (isDevelopmentModeEnable == true) {
+            if (isDevelopmentModeEnable == false) {
               //false (asli apk), true (debug)
               await presensi(position, alamat, distance, distance2);
             } else {
@@ -125,7 +125,7 @@ class PageIndexController extends GetxController {
                 await SafeDevice.isDevelopmentModeEnable;
             print(isDevelopmentModeEnable);
 
-            if (isDevelopmentModeEnable == true) {
+            if (isDevelopmentModeEnable == false) {
               //false (asli apk), true (debug)
               await presensi(position, alamat, distance, distance2);
             } else {

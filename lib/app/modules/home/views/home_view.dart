@@ -96,7 +96,7 @@ class HomeView extends GetView<HomeController> {
                                 ],
                                 border: Border.all(
                                   color: Color.fromARGB(255, 255, 255, 255),
-                                  width: 3.0,
+                                  width: 0.0,
                                 ),
                               ),
                             ),

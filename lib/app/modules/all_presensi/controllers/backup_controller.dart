@@ -6,6 +6,14 @@ class AllPresensiController extends GetxController {
   DateTime? start;
   DateTime end = DateTime.now();
 
+  bool _isSearching = false;
+  bool get isSearching => _isSearching;
+
+  void setIsSearching(bool value) {
+    _isSearching = value;
+    update();
+  }
+
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -41,4 +49,12 @@ class AllPresensiController extends GetxController {
     update();
     Get.back();
   }
+
+  // function Syncfunction dengan mode range
+  // void pickDate(DateTime pickStart, DateTime pickEnd) {
+  //   start = pickStart;
+  //   end = pickEnd;
+  //   update();
+  //   Get.back();
+  // }
 }

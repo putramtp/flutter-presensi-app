@@ -257,8 +257,14 @@ class AllPresensiView extends GetView<AllPresensiController> {
                         if (obj != null) {
                           if ((obj as PickerDateRange).endDate != null) {
                             controller.pickDate(obj.startDate!, obj.endDate!);
+                            print("range mode");
+                          } else {
+                            var endDate = obj.startDate;
+                            controller.pickDate(obj.startDate!, endDate!);
+                            print("single mode");
                           }
                         }
+                        print(obj);
                       }),
                 ),
               ),
