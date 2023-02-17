@@ -199,6 +199,18 @@ class DetailPresensiController extends GetxController {
         String? sp = cekStatusPulang(dpul);
         print(sp);
 
+        //Kondisi TL1 menjadi Dispensasi
+        if (sd == "TL1") {
+          double a = (jamPulangStr - jamDatangStr) / 60000;
+          double b = (pulang - datang) / 60000;
+
+          if (a >= b) {
+            sd = "Dispensasi";
+            print(sd);
+            print("dispen");
+          }
+        }
+
         // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI - End //
 
         //// POST DATA PULANG KE API ABSENSI ////

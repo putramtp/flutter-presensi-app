@@ -500,24 +500,18 @@ class PageIndexController extends GetxController {
                       //// POST DATA DATANG KE API ABSENSI ////
                       if (sd != null && sp != null) {
                         Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
-                        var myResponse = await http.post(
-                            Uri.parse(
-                                "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                            headers: {
-                              HttpHeaders.authorizationHeader:
-                                  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                            },
-                            body: {
-                              "nip": nipSession['nip'],
-                              "tanggal": DateFormat("yyyy-MM-dd").format(now),
-                              "sd": sd,
-                              "sp": sp,
-                              "id_th": "1",
-                              "jamd":
-                                  DateFormat.Hms().format(jamDatangFirebase),
-                              "jamp":
-                                  DateFormat.Hms().format(jamPulangFirebase),
-                            });
+                        var myResponse =
+                            await http.post(Uri.parse("https://"), headers: {
+                          HttpHeaders.authorizationHeader: 'Bearer ',
+                        }, body: {
+                          "nip": nipSession['nip'],
+                          "tanggal": DateFormat("yyyy-MM-dd").format(now),
+                          "sd": sd,
+                          "sp": sp,
+                          "id_th": "1",
+                          "jamd": DateFormat.Hms().format(jamDatangFirebase),
+                          "jamp": DateFormat.Hms().format(jamPulangFirebase),
+                        });
 
                         Map<String, dynamic> data = json.decode(myResponse.body)
                             as Map<String, dynamic>;
@@ -758,6 +752,18 @@ class PageIndexController extends GetxController {
                           String? sp = cekStatusPulang(dpul);
                           print(sp);
 
+                          //Kondisi TL1 menjadi Dispensasi
+                          if (sd == "TL1") {
+                            double a = (jamPulangStr - jamDatangStr) / 60000;
+                            double b = (pulang - datang) / 60000;
+
+                            if (a >= b) {
+                              sd = "Dispensasi";
+                              print(sd);
+                              print("dispen");
+                            }
+                          }
+
                           // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI - End //
 
                           //// POST DATA PULANG KE API ABSENSI ////
@@ -765,25 +771,20 @@ class PageIndexController extends GetxController {
                           if (todayDoc.exists == true) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            var myResponse = await http.post(
-                                Uri.parse(
-                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                                headers: {
-                                  HttpHeaders.authorizationHeader:
-                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                                },
-                                body: {
-                                  "nip": nipSession['nip'],
-                                  "tanggal":
-                                      DateFormat("yyyy-MM-dd").format(now),
-                                  "sd": sd,
-                                  "sp": sp,
-                                  "id_th": "1",
-                                  "jamd": DateFormat.Hms()
-                                      .format(jamDatangFirebase),
-                                  "jamp": DateFormat.Hms()
-                                      .format(jamPulangFirebase),
-                                });
+                            var myResponse = await http
+                                .post(Uri.parse("https://"), headers: {
+                              HttpHeaders.authorizationHeader: 'Bearer ',
+                            }, body: {
+                              "nip": nipSession['nip'],
+                              "tanggal": DateFormat("yyyy-MM-dd").format(now),
+                              "sd": sd,
+                              "sp": sp,
+                              "id_th": "1",
+                              "jamd":
+                                  DateFormat.Hms().format(jamDatangFirebase),
+                              "jamp":
+                                  DateFormat.Hms().format(jamPulangFirebase),
+                            });
 
                             if (myResponse.statusCode == 200) {
                               Map<String, dynamic> data =
@@ -1045,25 +1046,20 @@ class PageIndexController extends GetxController {
                           if (todayDoc.exists == false) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            var myResponse = await http.post(
-                                Uri.parse(
-                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                                headers: {
-                                  HttpHeaders.authorizationHeader:
-                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                                },
-                                body: {
-                                  "nip": nipSession['nip'],
-                                  "tanggal":
-                                      DateFormat("yyyy-MM-dd").format(now),
-                                  "sd": sd,
-                                  "sp": sp,
-                                  "id_th": "1",
-                                  "jamd": DateFormat.Hms()
-                                      .format(jamDatangFirebase),
-                                  "jamp": DateFormat.Hms()
-                                      .format(jamPulangFirebase),
-                                });
+                            var myResponse = await http
+                                .post(Uri.parse("https://"), headers: {
+                              HttpHeaders.authorizationHeader: 'Bearer ',
+                            }, body: {
+                              "nip": nipSession['nip'],
+                              "tanggal": DateFormat("yyyy-MM-dd").format(now),
+                              "sd": sd,
+                              "sp": sp,
+                              "id_th": "1",
+                              "jamd":
+                                  DateFormat.Hms().format(jamDatangFirebase),
+                              "jamp":
+                                  DateFormat.Hms().format(jamPulangFirebase),
+                            });
 
                             if (myResponse.statusCode == 200) {
                               Map<String, dynamic> data =
@@ -1385,24 +1381,18 @@ class PageIndexController extends GetxController {
                       //// POST DATA DATANG KE API ABSENSI ////
                       if (sd != null && sp != null) {
                         Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
-                        var myResponse = await http.post(
-                            Uri.parse(
-                                "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                            headers: {
-                              HttpHeaders.authorizationHeader:
-                                  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                            },
-                            body: {
-                              "nip": nipSession['nip'],
-                              "tanggal": DateFormat("yyyy-MM-dd").format(now),
-                              "sd": sd,
-                              "sp": sp,
-                              "id_th": "1",
-                              "jamd":
-                                  DateFormat.Hms().format(jamDatangFirebase),
-                              "jamp":
-                                  DateFormat.Hms().format(jamPulangFirebase),
-                            });
+                        var myResponse =
+                            await http.post(Uri.parse("https://"), headers: {
+                          HttpHeaders.authorizationHeader: 'Bearer ',
+                        }, body: {
+                          "nip": nipSession['nip'],
+                          "tanggal": DateFormat("yyyy-MM-dd").format(now),
+                          "sd": sd,
+                          "sp": sp,
+                          "id_th": "1",
+                          "jamd": DateFormat.Hms().format(jamDatangFirebase),
+                          "jamp": DateFormat.Hms().format(jamPulangFirebase),
+                        });
 
                         Map<String, dynamic> data = json.decode(myResponse.body)
                             as Map<String, dynamic>;
@@ -1640,31 +1630,38 @@ class PageIndexController extends GetxController {
                           String? sp = cekStatusPulang(dpul);
                           print(sp);
 
+                          //Kondisi TL1 menjadi Dispensasi
+                          if (sd == "TL1") {
+                            double a = (jamPulangStr - jamDatangStr) / 60000;
+                            double b = (pulang - datang) / 60000;
+
+                            if (a >= b) {
+                              sd = "Dispensasi";
+                              print(sd);
+                              print("dispen");
+                            }
+                          }
+
                           // LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI -- LOGIC STATUS PRESENSI - End //
 
                           //// POST DATA PULANG KE API ABSENSI ////
                           if (todayDoc.exists == true) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            var myResponse = await http.post(
-                                Uri.parse(
-                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                                headers: {
-                                  HttpHeaders.authorizationHeader:
-                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                                },
-                                body: {
-                                  "nip": nipSession['nip'],
-                                  "tanggal":
-                                      DateFormat("yyyy-MM-dd").format(now),
-                                  "sd": sd,
-                                  "sp": sp,
-                                  "id_th": "1",
-                                  "jamd": DateFormat.Hms()
-                                      .format(jamDatangFirebase),
-                                  "jamp": DateFormat.Hms()
-                                      .format(jamPulangFirebase),
-                                });
+                            var myResponse = await http
+                                .post(Uri.parse("https://"), headers: {
+                              HttpHeaders.authorizationHeader: 'Bearer ',
+                            }, body: {
+                              "nip": nipSession['nip'],
+                              "tanggal": DateFormat("yyyy-MM-dd").format(now),
+                              "sd": sd,
+                              "sp": sp,
+                              "id_th": "1",
+                              "jamd":
+                                  DateFormat.Hms().format(jamDatangFirebase),
+                              "jamp":
+                                  DateFormat.Hms().format(jamPulangFirebase),
+                            });
 
                             if (myResponse.statusCode == 200) {
                               Map<String, dynamic> data =
@@ -1922,25 +1919,20 @@ class PageIndexController extends GetxController {
                           if (todayDoc.exists == false) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            var myResponse = await http.post(
-                                Uri.parse(
-                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                                headers: {
-                                  HttpHeaders.authorizationHeader:
-                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                                },
-                                body: {
-                                  "nip": nipSession['nip'],
-                                  "tanggal":
-                                      DateFormat("yyyy-MM-dd").format(now),
-                                  "sd": sd,
-                                  "sp": sp,
-                                  "id_th": "1",
-                                  "jamd": DateFormat.Hms()
-                                      .format(jamDatangFirebase),
-                                  "jamp": DateFormat.Hms()
-                                      .format(jamPulangFirebase),
-                                });
+                            var myResponse = await http
+                                .post(Uri.parse("https://"), headers: {
+                              HttpHeaders.authorizationHeader: 'Bearer ',
+                            }, body: {
+                              "nip": nipSession['nip'],
+                              "tanggal": DateFormat("yyyy-MM-dd").format(now),
+                              "sd": sd,
+                              "sp": sp,
+                              "id_th": "1",
+                              "jamd":
+                                  DateFormat.Hms().format(jamDatangFirebase),
+                              "jamp":
+                                  DateFormat.Hms().format(jamPulangFirebase),
+                            });
 
                             if (myResponse.statusCode == 200) {
                               Map<String, dynamic> data =
