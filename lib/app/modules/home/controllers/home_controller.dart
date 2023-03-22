@@ -18,34 +18,46 @@ class HomeController extends GetxController {
     yield* firestore.collection("user").doc(uid).snapshots();
   }
 
-   Stream<QuerySnapshot<Map<String, dynamic>>> streamLastPresence() async* {
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamLastPresence() async* {
     String uid = auth.currentUser!.uid;
 
-    yield* firestore.collection("user").doc(uid).collection("presence").orderBy("date", descending: true).limit(3).snapshots();
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("presence")
+        .orderBy("date", descending: true)
+        .limit(3)
+        .snapshots();
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamTodayPresence() async* {
     // API DateTime GMT +07:00
     var myResponse = await http.get(
-                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
-                );
+      Uri.parse(
+          "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+    );
 
-                Map<String, dynamic> data = json.decode(myResponse.body);
+    Map<String, dynamic> data = json.decode(myResponse.body);
 
-                // print(data);
-                // print(myResponse.body);
+    // print(data);
+    // print(myResponse.body);
 
-      var dateTimeAPI = data['dateTime'];
+    var dateTimeAPI = data['dateTime'];
 
-      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+    DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
 
-      print(dateTimeGMT);
-    
+    print(dateTimeGMT);
+
     // API DateTime GMT +07:00 - End
     String uid = auth.currentUser!.uid;
 
     String todayID = DateFormat.yMd().format(dateTimeGMT).replaceAll("/", "-");
 
-    yield* firestore.collection("user").doc(uid).collection("presence").doc(todayID).snapshots();
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("presence")
+        .doc(todayID)
+        .snapshots();
   }
 }

@@ -107,20 +107,28 @@ class LoginController extends GetxController {
         log(e.code);
         if (e.code == 'user-not-found') {
           Get.snackbar("Mohon Tunggu", "Sedang menyinkronkan akun Anda...");
-          var myResponse = await http.post(Uri.parse("https://"), headers: {
-            HttpHeaders.authorizationHeader: 'Bearer ',
-          }, body: {
-            "nip": nipC.text, //199109102019031003
-          });
+          var myResponse = await http.post(
+              Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/mobile"),
+              headers: {
+                HttpHeaders.authorizationHeader:
+                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+              },
+              body: {
+                "nip": nipC.text, //199109102019031003
+              });
 
           Map<String, dynamic> data =
               json.decode(myResponse.body) as Map<String, dynamic>;
 
-          var postHome = await http.post(Uri.parse("https://"), headers: {
-            HttpHeaders.authorizationHeader: 'Bearer ',
-          }, body: {
-            "nip": nipC.text,
-          });
+          var postHome = await http.post(
+              Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/pegawai"),
+              headers: {
+                HttpHeaders.authorizationHeader:
+                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+              },
+              body: {
+                "nip": nipC.text,
+              });
 
           // Tasiksiap2022
 

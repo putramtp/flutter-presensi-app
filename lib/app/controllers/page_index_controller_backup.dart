@@ -225,38 +225,23 @@ class PageIndexController extends GetxController {
     String hariIni = DateFormat("EEE").format(dateTimeGMT);
     print(hariIni);
 
-    String liburId = DateFormat("yMd").format(dateTimeGMT).replaceAll("/", "-");
-
-    String uid5 = "T4OsQQOmPoJRjL9lb3j4";
-    String uid6 = "HWRtoazzwa1qcgTpSDmc"; // 10-30-2022 BHT
+    String liburId = DateFormat("yMd")
+        .format(dateTimeGMT)
+        .replaceAll("/", "-"); // 10-30-2022 BHT
 
     final liburSession = await firestore.collection("libur").doc(liburId).get();
     final nipSession = await firestore.collection("user").doc(uid).get();
-    final nipRule5 = await firestore.collection("rule").doc(uid5).get();
-    final nipRule6 = await firestore.collection("rule").doc(uid6).get();
 
     //interpolasi 5 dan 6 hari kerja
     String j2 = nipSession['j2'];
     String j3 = nipSession['j3'];
 
     // KONDISI 5 HARI KERJA (5HARIKERJA/5HARIKERJA/5HARIKERJA/5HARIKERJA/5HARIKERJA/)
-    // TAMBAHAN BULAN PUASA JAM 14:15:00
-    if (j2 == '15:45:00' || j2 == '14:15:00') {
+    if (j2 == '15:45:00' || j3 == '16:15:00') {
       print("5 Hari Kerja Aktif"); // 5 HARI KERJA
-
-      //interpolasi baru pakai RULE
-      String j1n = nipRule5['j1'];
-      String j2n = nipRule5['j2'];
-      String j3n = nipRule5['j3'];
-
-      print(j1n);
-      print(j2n);
-      print(j3n);
-      print(liburId);
-      print(liburSession.exists);
-
-      if (hariIni == 'Sat' || hariIni == 'Sun' || liburSession.exists == true) {
-        print("Libur Aktif");
+      if (hariIni == 'Sat' ||
+          hariIni == 'Sun' ||
+          liburSession.exists == liburId) {
         Get.defaultDialog(
             titlePadding: EdgeInsets.only(top: 22),
             title: "Hari Ini Hari Libur",
@@ -398,9 +383,9 @@ class PageIndexController extends GetxController {
                       cekHari(String hari) {
                         String b;
                         if (hari == 'Fri') {
-                          return b = j3n;
+                          return b = j3;
                         } else {
-                          return b = j2n;
+                          return b = j2;
                         }
                       }
 
@@ -429,33 +414,13 @@ class PageIndexController extends GetxController {
 
                       DateTime jam = DateTime(dateTimeGMT.year,
                           dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
-
-                      // DateTime PJ1 = DateTime(
-                      //     dateTimeGMT.year,
-                      //     dateTimeGMT.month,
-                      //     dateTimeGMT.day,
-                      //     7,
-                      //     45,
-                      //     0);
-
-                      //PATOKAN JAM MASUK DARI RULE
-                      print("PATOKAN JAM MASUK");
-
-                      DateTime PJ1Tahun = DateTime(
-                          dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day);
-                      print(PJ1Tahun);
-
-                      String j1n0 = j1n + ".000";
-
-                      String PJ1Merge = PJ1Tahun.toIso8601String()
-                              .replaceAll("00:00:00.000", "") +
-                          j1n0;
-                      // print(PJ1Merge);
-
-                      DateTime PJ1 = DateTime.parse(PJ1Merge);
-                      print(PJ1);
-
-                      //PATOKAN JAM MASUK DARI RULE
+                      DateTime PJ1 = DateTime(
+                          dateTimeGMT.year,
+                          dateTimeGMT.month,
+                          dateTimeGMT.day,
+                          7,
+                          45,
+                          0); // Patokan jam masuk //
 
                       DateTime jam1 = DateTime(
                           dateTimeGMT.year,
@@ -595,8 +560,7 @@ class PageIndexController extends GetxController {
                   ),
                 ]);
           } else {
-            //sudah pernah absen, cek hari ini udah absen datang atau pulang udah belum?
-            //ABSEN PULANG
+            //sudah pernah absen, cek hari ini udah absen datang atau keluar udah belum?
             DocumentSnapshot<Map<String, dynamic>> todayDoc =
                 await colPresence.doc(todayDocID).get();
 
@@ -677,9 +641,9 @@ class PageIndexController extends GetxController {
                           cekHari(String hari) {
                             String b;
                             if (hari == 'Fri') {
-                              return b = j3n;
+                              return b = j3;
                             } else {
-                              return b = j2n;
+                              return b = j2;
                             }
                           }
 
@@ -713,28 +677,13 @@ class PageIndexController extends GetxController {
                               8,
                               15,
                               1); // test
-
-                          // DateTime PJ1 = DateTime(dateTimeGMT.year,
-                          //     dateTimeGMT.month, dateTimeGMT.day, 7, 45, 0);
-
-                          //PATOKAN JAM MASUK DARI RULE
-                          print("PATOKAN JAM MASUK");
-
-                          DateTime PJ1Tahun = DateTime(dateTimeGMT.year,
-                              dateTimeGMT.month, dateTimeGMT.day);
-                          print(PJ1Tahun);
-
-                          String j1n0 = j1n + ".000";
-
-                          String PJ1Merge = PJ1Tahun.toIso8601String()
-                                  .replaceAll("00:00:00.000", "") +
-                              j1n0;
-                          // print(PJ1Merge);
-
-                          DateTime PJ1 = DateTime.parse(PJ1Merge);
-                          print(PJ1);
-
-                          //PATOKAN JAM MASUK DARI RULE
+                          DateTime PJ1 = DateTime(
+                              dateTimeGMT.year,
+                              dateTimeGMT.month,
+                              dateTimeGMT.day,
+                              7,
+                              45,
+                              0); // Patokan jam masuk //
 
                           DateTime jam1 = DateTime(
                               dateTimeGMT.year,
@@ -981,9 +930,9 @@ class PageIndexController extends GetxController {
                           cekHari(String hari) {
                             String b;
                             if (hari == 'Fri') {
-                              return b = j3n;
+                              return b = j3;
                             } else {
-                              return b = j2n;
+                              return b = j2;
                             }
                           }
 
@@ -1017,33 +966,13 @@ class PageIndexController extends GetxController {
                               8,
                               15,
                               1); // test
-
-                          // DateTime PJ1 = DateTime(
-                          //     dateTimeGMT.year,
-                          //     dateTimeGMT.month,
-                          //     dateTimeGMT.day,
-                          //     7,
-                          //     45,
-                          //     0); // Patokan jam masuk //
-
-                          //PATOKAN JAM MASUK DARI RULE
-                          print("PATOKAN JAM MASUK");
-
-                          DateTime PJ1Tahun = DateTime(dateTimeGMT.year,
-                              dateTimeGMT.month, dateTimeGMT.day);
-                          print(PJ1Tahun);
-
-                          String j1n0 = j1n + ".000";
-
-                          String PJ1Merge = PJ1Tahun.toIso8601String()
-                                  .replaceAll("00:00:00.000", "") +
-                              j1n0;
-                          // print(PJ1Merge);
-
-                          DateTime PJ1 = DateTime.parse(PJ1Merge);
-                          print(PJ1);
-
-                          //PATOKAN JAM MASUK DARI RULE
+                          DateTime PJ1 = DateTime(
+                              dateTimeGMT.year,
+                              dateTimeGMT.month,
+                              dateTimeGMT.day,
+                              7,
+                              45,
+                              0); // Patokan jam masuk //
 
                           DateTime jam1 = DateTime(
                               dateTimeGMT.year,
@@ -1052,7 +981,6 @@ class PageIndexController extends GetxController {
                               15,
                               46,
                               0); // test
-
                           DateTime PJ2 = DateTime(
                               dateTimeGMT.year,
                               dateTimeGMT.month,
@@ -1208,21 +1136,10 @@ class PageIndexController extends GetxController {
     }
 
     // KONDISI 6 HARI KERJA (6HARIKERJA/6HARIKERJA/6HARIKERJA/6HARIKERJA/6HARIKERJA/)
-    // TAMBAHAN BULAN PUASA JAM 13:15:00
-    else if (j2 == '14:30:00' || j2 == '13:15:00') {
+    else if (j2 == '14:30:00' || j3 == '15:00:00') {
       // 6 HARI KERJA
       print("6 Hari Kerja Aktif");
-
-      //interpolasi baru pakai RULE
-      String j1n = nipRule6['j1'];
-      String j2n = nipRule6['j2'];
-      String j3n = nipRule6['j3'];
-
-      print(j1n);
-      print(j2n);
-      print(j3n);
-
-      if (hariIni == 'Sun' || liburSession.exists == true) {
+      if (hariIni == 'Sun' || liburSession.exists == liburId) {
         Get.defaultDialog(
             titlePadding: EdgeInsets.only(top: 22),
             title: "Hari Ini Hari Libur",
@@ -1363,9 +1280,9 @@ class PageIndexController extends GetxController {
                       cekHari(String hari) {
                         String b;
                         if (hari == 'Fri') {
-                          return b = j3n;
+                          return b = j3;
                         } else {
-                          return b = j2n;
+                          return b = j2;
                         }
                       }
 
@@ -1394,33 +1311,13 @@ class PageIndexController extends GetxController {
 
                       DateTime jam = DateTime(dateTimeGMT.year,
                           dateTimeGMT.month, dateTimeGMT.day, 8, 15, 1); // test
-
-                      // DateTime PJ1 = DateTime(
-                      //     dateTimeGMT.year,
-                      //     dateTimeGMT.month,
-                      //     dateTimeGMT.day,
-                      //     7,
-                      //     45,
-                      //     0); // Patokan jam masuk //
-
-                      //PATOKAN JAM MASUK DARI RULE
-                      print("PATOKAN JAM MASUK");
-
-                      DateTime PJ1Tahun = DateTime(
-                          dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day);
-                      print(PJ1Tahun);
-
-                      String j1n0 = j1n + ".000";
-
-                      String PJ1Merge = PJ1Tahun.toIso8601String()
-                              .replaceAll("00:00:00.000", "") +
-                          j1n0;
-                      // print(PJ1Merge);
-
-                      DateTime PJ1 = DateTime.parse(PJ1Merge);
-                      print(PJ1);
-
-                      //PATOKAN JAM MASUK DARI RULE
+                      DateTime PJ1 = DateTime(
+                          dateTimeGMT.year,
+                          dateTimeGMT.month,
+                          dateTimeGMT.day,
+                          7,
+                          45,
+                          0); // Patokan jam masuk //
 
                       DateTime jam1 = DateTime(
                           dateTimeGMT.year,
@@ -1429,7 +1326,6 @@ class PageIndexController extends GetxController {
                           15,
                           46,
                           0); // test
-
                       DateTime PJ2 = DateTime(
                           dateTimeGMT.year,
                           dateTimeGMT.month,
@@ -1558,8 +1454,7 @@ class PageIndexController extends GetxController {
                   ),
                 ]);
           } else {
-            //sudah pernah absen, cek hari ini udah absen datang atau pulang udah belum?
-            //ABSEN PULANG
+            //sudah pernah absen, cek hari ini udah absen datang atau keluar udah belum?
             DocumentSnapshot<Map<String, dynamic>> todayDoc =
                 await colPresence.doc(todayDocID).get();
 
@@ -1640,9 +1535,9 @@ class PageIndexController extends GetxController {
                           cekHari(String hari) {
                             String b;
                             if (hari == 'Fri') {
-                              return b = j3n;
+                              return b = j3;
                             } else {
-                              return b = j2n;
+                              return b = j2;
                             }
                           }
 
@@ -1676,33 +1571,13 @@ class PageIndexController extends GetxController {
                               8,
                               15,
                               1); // test
-
-                          // DateTime PJ1 = DateTime(
-                          //     dateTimeGMT.year,
-                          //     dateTimeGMT.month,
-                          //     dateTimeGMT.day,
-                          //     7,
-                          //     45,
-                          //     0); // Patokan jam masuk //
-
-                          //PATOKAN JAM MASUK DARI RULE
-                          print("PATOKAN JAM MASUK");
-
-                          DateTime PJ1Tahun = DateTime(dateTimeGMT.year,
-                              dateTimeGMT.month, dateTimeGMT.day);
-                          print(PJ1Tahun);
-
-                          String j1n0 = j1n + ".000";
-
-                          String PJ1Merge = PJ1Tahun.toIso8601String()
-                                  .replaceAll("00:00:00.000", "") +
-                              j1n0;
-                          // print(PJ1Merge);
-
-                          DateTime PJ1 = DateTime.parse(PJ1Merge);
-                          print(PJ1);
-
-                          //PATOKAN JAM MASUK DARI RULE
+                          DateTime PJ1 = DateTime(
+                              dateTimeGMT.year,
+                              dateTimeGMT.month,
+                              dateTimeGMT.day,
+                              7,
+                              45,
+                              0); // Patokan jam masuk //
 
                           DateTime jam1 = DateTime(
                               dateTimeGMT.year,
@@ -1711,7 +1586,6 @@ class PageIndexController extends GetxController {
                               15,
                               46,
                               0); // test
-
                           DateTime PJ2 = DateTime(
                               dateTimeGMT.year,
                               dateTimeGMT.month,
@@ -1946,9 +1820,9 @@ class PageIndexController extends GetxController {
                           cekHari(String hari) {
                             String b;
                             if (hari == 'Fri') {
-                              return b = j3n;
+                              return b = j3;
                             } else {
-                              return b = j2n;
+                              return b = j2;
                             }
                           }
 
@@ -1982,33 +1856,13 @@ class PageIndexController extends GetxController {
                               8,
                               15,
                               1); // test
-
-                          // DateTime PJ1 = DateTime(
-                          //     dateTimeGMT.year,
-                          //     dateTimeGMT.month,
-                          //     dateTimeGMT.day,
-                          //     7,
-                          //     45,
-                          //     0);
-
-                          //PATOKAN JAM MASUK DARI RULE
-                          print("PATOKAN JAM MASUK");
-
-                          DateTime PJ1Tahun = DateTime(dateTimeGMT.year,
-                              dateTimeGMT.month, dateTimeGMT.day);
-                          print(PJ1Tahun);
-
-                          String j1n0 = j1n + ".000";
-
-                          String PJ1Merge = PJ1Tahun.toIso8601String()
-                                  .replaceAll("00:00:00.000", "") +
-                              j1n0;
-                          // print(PJ1Merge);
-
-                          DateTime PJ1 = DateTime.parse(PJ1Merge);
-                          print(PJ1);
-
-                          //PATOKAN JAM MASUK DARI RULE
+                          DateTime PJ1 = DateTime(
+                              dateTimeGMT.year,
+                              dateTimeGMT.month,
+                              dateTimeGMT.day,
+                              7,
+                              45,
+                              0); // Patokan jam masuk //
 
                           DateTime jam1 = DateTime(
                               dateTimeGMT.year,
