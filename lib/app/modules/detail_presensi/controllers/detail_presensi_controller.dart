@@ -33,6 +33,7 @@ class DetailPresensiController extends GetxController {
           await http.post(Uri.https("apisadasbor.tasikmalayakab.go.id"));
       if (response.statusCode == 404) {
         Get.snackbar("Berhasil", "API Sadasbor Aktif.");
+        print("Sync Berjalan...");
 
         final Map<String, dynamic> data = Get.arguments;
         String uid = await auth.currentUser!.uid;
@@ -305,7 +306,7 @@ class DetailPresensiController extends GetxController {
               duration: const Duration(seconds: 5),
             );
             Get.offNamed(Routes.HOME);
-            print("Data Pulang Berhasil Masuk ke API");
+            print("Data Pulang Berhasil Masuk ke API, Sync Berhasil");
           } else {
             await colPresence.doc(todayDocID).update({
               "sync": "N",

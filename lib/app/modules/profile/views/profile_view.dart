@@ -280,7 +280,7 @@ class ProfileView extends GetView<ProfileController> {
                     height: 22,
                   ),
                   SizedBox(
-                    height: 24,
+                    height: 6,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 38.0),
@@ -291,7 +291,7 @@ class ProfileView extends GetView<ProfileController> {
                           'Versi Obt 6(1.5)',
                           style: GoogleFonts.poppins(
                             color: Color.fromARGB(255, 192, 192, 192),
-                            fontSize: 7,
+                            fontSize: 6,
                           ),
                         ),
                       ],
