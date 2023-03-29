@@ -263,7 +263,7 @@ class ProfileView extends GetView<ProfileController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Pemerintah Daerah Kabupaten Tasikmalaya. © 2022',
+                          'Pemerintah Daerah Kabupaten Tasikmalaya. © 2023',
                           style: GoogleFonts.poppins(
                             color: Color(0xff575757),
                             fontSize: 8,
@@ -275,11 +275,26 @@ class ProfileView extends GetView<ProfileController> {
                   SizedBox(
                     height: 10,
                   ),
+                  Image.asset(
+                    "assets/Sadasbor-Logo.png",
+                    height: 22,
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 38.0),
-                    child: Image.asset(
-                      "assets/Sadasbor-Logo.png",
-                      height: 22,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Versi Obt 6(1.5)',
+                          style: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 192, 192, 192),
+                            fontSize: 7,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 

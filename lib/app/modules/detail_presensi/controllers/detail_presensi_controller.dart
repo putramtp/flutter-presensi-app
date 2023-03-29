@@ -36,8 +36,31 @@ class DetailPresensiController extends GetxController {
 
         final Map<String, dynamic> data = Get.arguments;
         String uid = await auth.currentUser!.uid;
+        String uid5 = "T4OsQQOmPoJRjL9lb3j4";
+        String uid6 = "HWRtoazzwa1qcgTpSDmc";
+
+        // API DateTime GMT +07:00
+        var myResponse = await http.get(
+          Uri.parse(
+              "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+        );
+
+        Map<String, dynamic> data2 = json.decode(myResponse.body);
+
+        // print(data);
+        // print(myResponse.body);
+
+        var dateTimeAPI = data2['dateTime'];
+
+        DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+
+        print(dateTimeGMT);
+
+        // API DateTime GMT +07:00 - End
 
         final nipSession = await firestore.collection("user").doc(uid).get();
+        final nipRule5 = await firestore.collection("rule").doc(uid5).get();
+        final nipRule6 = await firestore.collection("rule").doc(uid6).get();
 
         CollectionReference<Map<String, dynamic>> colPresence =
             firestore.collection("user").doc(uid).collection("presence");
@@ -96,6 +119,15 @@ class DetailPresensiController extends GetxController {
         String j3 = nipSession['j3'];
         // Get data (Jenis Jam Pulang) masing - masing NIP dari Firebase - end //
 
+        //interpolasi baru pakai RULE
+        String j1n = nipRule5['j1'];
+        String j2n = nipRule5['j2'];
+        String j3n = nipRule5['j3'];
+
+        print(j1n);
+        print(j2n);
+        print(j3n);
+
         // String sekarang = DateFormat("EEE").format(DateTime(2022, 10, 15));
         String hariSekarang = DateFormat("EEE").format(now);
         print(hariSekarang);
@@ -103,9 +135,9 @@ class DetailPresensiController extends GetxController {
         cekHari(String hari) {
           String b;
           if (hari == 'Fri') {
-            return b = j3;
+            return b = j3n;
           } else {
-            return b = j2;
+            return b = j2n;
           }
         }
 
@@ -133,8 +165,26 @@ class DetailPresensiController extends GetxController {
         print(jamp);
 
         DateTime jam = DateTime(now.year, now.month, now.day, 8, 15, 1); // test
-        DateTime PJ1 = DateTime(
-            now.year, now.month, now.day, 7, 45, 0); // Patokan jam masuk //
+        // DateTime PJ1 = DateTime(
+        //     now.year, now.month, now.day, 7, 45, 0); // Patokan jam masuk //
+
+        //PATOKAN JAM MASUK DARI RULE
+        print("PATOKAN JAM MASUK");
+
+        DateTime PJ1Tahun =
+            DateTime(dateTimeGMT.year, dateTimeGMT.month, dateTimeGMT.day);
+        print(PJ1Tahun);
+
+        String j1n0 = j1n + ".000";
+
+        String PJ1Merge =
+            PJ1Tahun.toIso8601String().replaceAll("00:00:00.000", "") + j1n0;
+        // print(PJ1Merge);
+
+        DateTime PJ1 = DateTime.parse(PJ1Merge);
+        print(PJ1);
+
+        //PATOKAN JAM MASUK DARI RULE
 
         DateTime jam1 =
             DateTime(now.year, now.month, now.day, 15, 46, 0); // test

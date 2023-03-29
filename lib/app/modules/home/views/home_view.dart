@@ -157,7 +157,7 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         Positioned(
                           top: 14,
-                          left: 220,
+                          right: MediaQuery.of(context).size.width * 0.05,
                           child: SvgPicture.asset(
                             imageSiluet,
                             height: 70,
