@@ -20,91 +20,92 @@ class DinasluarController extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    var locationMessage = "";
-    var latitude = "";
-    var longitude = "";
-    // variabel untuk menampung koordinat lokasi
+  var locationMessage = "";
+  var latitude = "";
+  var longitude = "";
+  // variabel untuk menampung koordinat lokasi
 
-    void getCurrentLocation() async {
-      var position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      var lastPosition = await Geolocator.getLastKnownPosition();
-      print(lastPosition);
-      latitude = position.latitude.toString();
-      longitude = position.longitude.toString();  
-      
-      locationMessage = "$position";
-      print(latitude);
-      print(longitude);
-    }
-  
+  void getCurrentLocation() async {
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var lastPosition = await Geolocator.getLastKnownPosition();
+    print(lastPosition);
+    latitude = position.latitude.toString();
+    longitude = position.longitude.toString();
+
+    locationMessage = "$position";
+    print(latitude);
+    print(longitude);
+  }
+
   // var selectedDate = DateTime.now().obs;
 
   chooseDate() async {
     // API DateTime GMT +07:00
     var myResponse = await http.get(
-                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
-                );
+      Uri.parse(
+          "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+    );
 
-                Map<String, dynamic> data = json.decode(myResponse.body);
+    Map<String, dynamic> data = json.decode(myResponse.body);
 
-                // print(data);
-                // print(myResponse.body);
+    // print(data);
+    // print(myResponse.body);
 
-      var dateTimeAPI = data['dateTime'];
+    var dateTimeAPI = data['dateTime'];
 
-      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+    DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
 
-      print(dateTimeGMT);
-    
+    print(dateTimeGMT);
+
     var selectedDate = dateTimeGMT.obs;
-    
+
     // API DateTime GMT +07:00 - End
 
     DateTime? pickedDate = await showDatePicker(
-      context: Get.context!, 
-      initialDate: selectedDate.value, 
-      firstDate: DateTime(1990), 
-      lastDate: DateTime(2030),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light(). copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Color(0xffFFC107)
+        context: Get.context!,
+        initialDate: selectedDate.value,
+        firstDate: DateTime(1990),
+        lastDate: DateTime(2030),
+        builder: (context, child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.light(primary: Color(0xffFFC107)),
             ),
-          ), child: child!,
-        );
-      }
-      );
+            child: child!,
+          );
+        });
 
-      if (pickedDate != null && pickedDate != selectedDate.value){
-        selectedDate.value = pickedDate;
-        dateInput.text = DateFormat('yyyy-MM-dd').format(selectedDate.value).toString();
-      }
-      print(pickedDate);
+    if (pickedDate != null && pickedDate != selectedDate.value) {
+      selectedDate.value = pickedDate;
+      dateInput.text =
+          DateFormat('yyyy-MM-dd').format(selectedDate.value).toString();
+    }
+    print(pickedDate);
   }
-
 
   var selectedDateNow = DateTime.now().obs;
 
-  Future <void> addDinasLuar() async {
+  Future<void> addDinasLuar() async {
     // API DateTime GMT +07:00
     var myResponse = await http.get(
-                  Uri.parse("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
-                );
+      Uri.parse(
+          "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jakarta"),
+    );
 
-                Map<String, dynamic> data = json.decode(myResponse.body);
+    Map<String, dynamic> data = json.decode(myResponse.body);
 
-                // print(data);
-                // print(myResponse.body);
+    // print(data);
+    // print(myResponse.body);
 
-      var dateTimeAPI = data['dateTime'];
+    var dateTimeAPI = data['dateTime'];
 
-      DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
+    DateTime dateTimeGMT = DateTime.parse(dateTimeAPI);
 
-      print(dateTimeGMT);
-    
+    print(dateTimeGMT);
+
     var selectedDate = dateTimeGMT.obs;
-    
+
     // API DateTime GMT +07:00 - End
 
     final User user = auth.currentUser!;
@@ -112,46 +113,69 @@ class DinasluarController extends GetxController {
 
     final nipSession = await firestore.collection("user").doc(uid).get();
 
-    if (suratTugas.text.isNotEmpty && maksudTujuan.text.isNotEmpty && lokasiTujuan.text.isNotEmpty ) {
+    if (suratTugas.text.isNotEmpty &&
+        maksudTujuan.text.isNotEmpty &&
+        lokasiTujuan.text.isNotEmpty) {
       Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
-            var myResponse = await http.post(
-                  Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/dl"),
-                  headers: {
-                    HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                  },
-                  body: {
-                    "nip" : nipSession['nip'],
-                    "no_st" : suratTugas.text, //199109102019031003
-                    "tgl_st" : DateFormat("yyyy-MM-dd").format(selectedDate.value),
-                    "maksud" : maksudTujuan.text,
-                    "tujuan" : lokasiTujuan.text,
-                    "tgl" : DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
-                    "lat" : latitude,
-                    "long" : longitude,
-                    "status" : "menunggu",
-                  }
-                );
+      // var myResponse = await http.post(
+      //       Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/dl"),
+      //       headers: {
+      //         HttpHeaders.authorizationHeader : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+      //       },
+      //       body: {
+      //         "nip" : nipSession['nip'],
+      //         "no_st" : suratTugas.text, //199109102019031003
+      //         "tgl_st" : DateFormat("yyyy-MM-dd").format(selectedDate.value),
+      //         "maksud" : maksudTujuan.text,
+      //         "tujuan" : lokasiTujuan.text,
+      //         "tgl" : DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
+      //         "lat" : latitude,
+      //         "long" : longitude,
+      //         "status" : "menunggu",
+      //       }
+      //     );
 
-                Map<String, dynamic> data = json.decode(myResponse.body) as Map<String, dynamic>;
-                print(myResponse.body);
+      var myResponse = await http.post(
+          Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/dl"),
+          headers: {
+            HttpHeaders.authorizationHeader:
+                'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+          },
+          body: {
+            "nip": nipSession['nip'],
+            "no_st": suratTugas.text, //199109102019031003
+            "tgl_st": DateFormat("yyyy-MM-dd").format(selectedDate.value),
+            "maksud": maksudTujuan.text,
+            "tujuan": lokasiTujuan.text,
+            "tgl": DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
+            "lat": latitude,
+            "long": longitude,
+            "status": "menunggu",
+          });
 
-                Get.back();
-                Get.back();
-                Get.snackbar("Berhasil", "Data Dinas Luar Anda sudah diproses!",
-                  duration: const Duration(seconds: 6),
-                );
-                Get.offAllNamed(Routes.DINASLUAR);
-                isLoading.value = false;
+      Map<String, dynamic> data =
+          json.decode(myResponse.body) as Map<String, dynamic>;
+      print(myResponse.body);
+
+      Get.back();
+      Get.back();
+      Get.snackbar(
+        "Berhasil",
+        "Data Dinas Luar Anda sudah diproses!",
+        duration: const Duration(seconds: 6),
+      );
+      print("Data Dinas Luar Berhasil Masuk");
+      Get.offAllNamed(Routes.DINASLUAR);
+      isLoading.value = false;
     } else {
-      Get.snackbar("Terjadi Kesalahan", "Gagal memproses data. Silahkan coba kembali.");
+      Get.snackbar(
+          "Terjadi Kesalahan", "Gagal memproses data. Silahkan coba kembali.");
       Get.offAllNamed(Routes.DINASLUAR);
       isLoading.value = false;
     }
-
   }
 
   backDeviceButton() {
     Get.offAllNamed(Routes.HOME);
   }
-
 }

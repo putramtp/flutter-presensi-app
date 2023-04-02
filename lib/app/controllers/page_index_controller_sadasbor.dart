@@ -535,30 +535,12 @@ class PageIndexController extends GetxController {
                       //// POST DATA DATANG KE API ABSENSI ////
                       if (sd != null && sp != null) {
                         Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
-                        // var myResponse = await http.post(
-                        //     Uri.parse(
-                        //         "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                        //     headers: {
-                        //       HttpHeaders.authorizationHeader:
-                        //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                        //     },
-                        //     body: {
-                        //       "nip": nipSession['nip'],
-                        //       "tanggal": DateFormat("yyyy-MM-dd").format(now),
-                        //       "sd": sd,
-                        //       "sp": sp,
-                        //       "id_th": "1",
-                        //       "jamd":
-                        //           DateFormat.Hms().format(jamDatangFirebase),
-                        //       "jamp":
-                        //           DateFormat.Hms().format(jamPulangFirebase),
-                        //     });
                         var myResponse = await http.post(
                             Uri.parse(
-                                "https://kinerja.tasikmalayakab.go.id/api/presensi"),
+                                "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
                             headers: {
                               HttpHeaders.authorizationHeader:
-                                  'Bearer 1|trk7epBLLpZSb95Hv8ZvUkFEqUIO0BR5b9MRJyyP',
+                                  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                             },
                             body: {
                               "nip": nipSession['nip'],
@@ -846,32 +828,12 @@ class PageIndexController extends GetxController {
                           if (todayDoc.exists == true) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            // var myResponse = await http.post(
-                            //     Uri.parse(
-                            //         "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                            //     headers: {
-                            //       HttpHeaders.authorizationHeader:
-                            //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                            //     },
-                            //     body: {
-                            //       "nip": nipSession['nip'],
-                            //       "tanggal":
-                            //           DateFormat("yyyy-MM-dd").format(now),
-                            //       "sd": sd,
-                            //       "sp": sp,
-                            //       "id_th": "1",
-                            //       "jamd": DateFormat.Hms()
-                            //           .format(jamDatangFirebase),
-                            //       "jamp": DateFormat.Hms()
-                            //           .format(jamPulangFirebase),
-                            //     });
-
                             var myResponse = await http.post(
                                 Uri.parse(
-                                    "https://kinerja.tasikmalayakab.go.id/api/presensi"),
+                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
                                 headers: {
                                   HttpHeaders.authorizationHeader:
-                                      'Bearer 1|trk7epBLLpZSb95Hv8ZvUkFEqUIO0BR5b9MRJyyP',
+                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                                 },
                                 body: {
                                   "nip": nipSession['nip'],
@@ -1167,31 +1129,12 @@ class PageIndexController extends GetxController {
                           if (todayDoc.exists == false) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            // var myResponse = await http.post(
-                            //     Uri.parse(
-                            //         "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                            //     headers: {
-                            //       HttpHeaders.authorizationHeader:
-                            //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                            //     },
-                            //     body: {
-                            //       "nip": nipSession['nip'],
-                            //       "tanggal":
-                            //           DateFormat("yyyy-MM-dd").format(now),
-                            //       "sd": sd,
-                            //       "sp": sp,
-                            //       "id_th": "1",
-                            //       "jamd": DateFormat.Hms()
-                            //           .format(jamDatangFirebase),
-                            //       "jamp": DateFormat.Hms()
-                            //           .format(jamPulangFirebase),
-                            //     });
                             var myResponse = await http.post(
                                 Uri.parse(
-                                    "https://kinerja.tasikmalayakab.go.id/api/presensi"),
+                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
                                 headers: {
                                   HttpHeaders.authorizationHeader:
-                                      'Bearer 1|trk7epBLLpZSb95Hv8ZvUkFEqUIO0BR5b9MRJyyP',
+                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                                 },
                                 body: {
                                   "nip": nipSession['nip'],
@@ -1558,31 +1501,12 @@ class PageIndexController extends GetxController {
                       //// POST DATA DATANG KE API ABSENSI ////
                       if (sd != null && sp != null) {
                         Get.snackbar("Mohon Tunggu", "Data sedang diproses...");
-                        // var myResponse = await http.post(
-                        //     Uri.parse(
-                        //         "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                        //     headers: {
-                        //       HttpHeaders.authorizationHeader:
-                        //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                        //     },
-                        //     body: {
-                        //       "nip": nipSession['nip'],
-                        //       "tanggal": DateFormat("yyyy-MM-dd").format(now),
-                        //       "sd": sd,
-                        //       "sp": sp,
-                        //       "id_th": "1",
-                        //       "jamd":
-                        //           DateFormat.Hms().format(jamDatangFirebase),
-                        //       "jamp":
-                        //           DateFormat.Hms().format(jamPulangFirebase),
-                        //     });
-
                         var myResponse = await http.post(
                             Uri.parse(
-                                "https://kinerja.tasikmalayakab.go.id/api/presensi"),
+                                "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
                             headers: {
                               HttpHeaders.authorizationHeader:
-                                  'Bearer 1|trk7epBLLpZSb95Hv8ZvUkFEqUIO0BR5b9MRJyyP',
+                                  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                             },
                             body: {
                               "nip": nipSession['nip'],
@@ -1872,32 +1796,12 @@ class PageIndexController extends GetxController {
                           if (todayDoc.exists == true) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            // var myResponse = await http.post(
-                            //     Uri.parse(
-                            //         "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                            //     headers: {
-                            //       HttpHeaders.authorizationHeader:
-                            //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                            //     },
-                            //     body: {
-                            //       "nip": nipSession['nip'],
-                            //       "tanggal":
-                            //           DateFormat("yyyy-MM-dd").format(now),
-                            //       "sd": sd,
-                            //       "sp": sp,
-                            //       "id_th": "1",
-                            //       "jamd": DateFormat.Hms()
-                            //           .format(jamDatangFirebase),
-                            //       "jamp": DateFormat.Hms()
-                            //           .format(jamPulangFirebase),
-                            //     });
-
                             var myResponse = await http.post(
                                 Uri.parse(
-                                    "https://kinerja.tasikmalayakab.go.id/api/presensi"),
+                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
                                 headers: {
                                   HttpHeaders.authorizationHeader:
-                                      'Bearer 1|trk7epBLLpZSb95Hv8ZvUkFEqUIO0BR5b9MRJyyP',
+                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                                 },
                                 body: {
                                   "nip": nipSession['nip'],
@@ -2188,32 +2092,12 @@ class PageIndexController extends GetxController {
                           if (todayDoc.exists == false) {
                             Get.snackbar(
                                 "Mohon Tunggu", "Data sedang diproses...");
-                            // var myResponse = await http.post(
-                            //     Uri.parse(
-                            //         "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
-                            //     headers: {
-                            //       HttpHeaders.authorizationHeader:
-                            //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
-                            //     },
-                            //     body: {
-                            //       "nip": nipSession['nip'],
-                            //       "tanggal":
-                            //           DateFormat("yyyy-MM-dd").format(now),
-                            //       "sd": sd,
-                            //       "sp": sp,
-                            //       "id_th": "1",
-                            //       "jamd": DateFormat.Hms()
-                            //           .format(jamDatangFirebase),
-                            //       "jamp": DateFormat.Hms()
-                            //           .format(jamPulangFirebase),
-                            //     });
-
                             var myResponse = await http.post(
                                 Uri.parse(
-                                    "https://kinerja.tasikmalayakab.go.id/api/presensi"),
+                                    "https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
                                 headers: {
                                   HttpHeaders.authorizationHeader:
-                                      'Bearer 1|trk7epBLLpZSb95Hv8ZvUkFEqUIO0BR5b9MRJyyP',
+                                      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
                                 },
                                 body: {
                                   "nip": nipSession['nip'],
