@@ -220,38 +220,38 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ),
                   // LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 28, right: 28),
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //         color: Color(0xffFFF1F1),
-                  //         borderRadius: BorderRadius.all(Radius.circular(10)),
-                  //         boxShadow: [
-                  //           BoxShadow(
-                  //               color: Colors.grey.withOpacity(0.2),
-                  //               spreadRadius: 5,
-                  //               blurRadius: 7,
-                  //               offset: Offset(0, 6))
-                  //         ]),
-                  //     child: ListTile(
-                  //       onTap: () => controller.logout(),
-                  //       leading: Icon(
-                  //         Icons.logout,
-                  //         color: Color(0xffEB5757),
-                  //       ),
-                  //       title: Text(
-                  //         "Logout",
-                  //         style: GoogleFonts.poppins(
-                  //             color: Color(0xffEB5757),
-                  //             fontSize: 12,
-                  //             fontWeight: FontWeight.w600),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 28, right: 28),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xffFFF1F1),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: Offset(0, 6))
+                          ]),
+                      child: ListTile(
+                        onTap: () => controller.logout(),
+                        leading: Icon(
+                          Icons.logout,
+                          color: Color(0xffEB5757),
+                        ),
+                        title: Text(
+                          "Logout",
+                          style: GoogleFonts.poppins(
+                              color: Color(0xffEB5757),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  ),
                   // LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-LOGOUT-
                   SizedBox(
                     height: 40,

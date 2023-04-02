@@ -459,7 +459,7 @@ class HomeView extends GetView<HomeController> {
             TabItem(icon: Icons.local_hospital_outlined, title: 'Sakit'),
             TabItem(icon: Icons.fingerprint, title: 'Add'),
             TabItem(icon: Icons.flight_class_outlined, title: 'Dns. Luar'),
-            TabItem(icon: Icons.people_outline, title: 'Profil'),
+            TabItem(icon: Icons.person_outline, title: 'Profil'),
           ],
           // initialActiveIndex: pageC.pageIndex.value,//optional, default as 0
           onTap: (int i) => pageC.changePage(i),

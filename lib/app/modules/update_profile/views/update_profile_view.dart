@@ -426,7 +426,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Pemerintah Daerah Kabupaten Tasikmalaya. © 2022',
+                          'Pemerintah Daerah Kabupaten Tasikmalaya. © 2023',
                           style: GoogleFonts.poppins(
                             color: Color(0xff575757),
                             fontSize: 8,
