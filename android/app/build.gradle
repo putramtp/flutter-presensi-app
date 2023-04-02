@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '6'
+    flutterVersionCode = '7'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.5'
+    flutterVersionName = '1.6'
 }
 
 apply plugin: 'com.android.application'
@@ -53,8 +53,8 @@ android {
         minSdkVersion 24
         compileSdkVersion 33
         targetSdkVersion 33
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
         multiDexEnabled true
     }
 

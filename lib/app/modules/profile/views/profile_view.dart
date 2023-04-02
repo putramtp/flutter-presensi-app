@@ -192,7 +192,7 @@ class ProfileView extends GetView<ProfileController> {
                                 offset: Offset(0, 6)),
                           ]),
                       child: ListTile(
-                        onTap: () => Get.toNamed(Routes.NEW_PASSWORD),
+                        onTap: () => Get.toNamed(Routes.UPDATE_PASSWORD),
                         leading: Icon(
                           Icons.lock_outline,
                           color: Color(0xff333333),
