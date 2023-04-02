@@ -288,7 +288,7 @@ class ProfileView extends GetView<ProfileController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Versi Obt 6(1.5)',
+                          'Versi Obt 7(1.6)',
                           style: GoogleFonts.poppins(
                             color: Color.fromARGB(255, 192, 192, 192),
                             fontSize: 6,
