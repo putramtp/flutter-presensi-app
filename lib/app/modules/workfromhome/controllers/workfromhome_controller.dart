@@ -151,14 +151,22 @@ class WorkfromhomeController extends GetxController {
 
       Get.back();
       Get.back();
-      Get.snackbar(
-        "Berhasil",
-        "Pengajuan Sakit Anda sudah diproses!",
-        duration: const Duration(seconds: 6),
-      );
-      Get.offAllNamed(Routes.WORKFROMHOME);
-      print("Pengajuan Sakit Berhasil Masuk");
-      isLoading.value = false;
+
+      var response = await http.post(Uri.https("kinerja.tasikmalayakab.go.id"));
+      if (data['status'] == "success" || response.statusCode == 404) {
+        Get.snackbar(
+          "Berhasil",
+          "Pengajuan Sakit Anda sudah diproses!",
+          duration: const Duration(seconds: 6),
+        );
+        Get.offAllNamed(Routes.WORKFROMHOME);
+        print("Pengajuan Sakit Berhasil Masuk");
+        isLoading.value = false;
+      } else if (response.statusCode == 504) {
+        Get.snackbar("Terjadi Kesalahan",
+            "API Server Sedang Gangguan, Mohon Tunggu Hingga Normal Kembali (504)");
+        print("error 504");
+      }
     } else {
       Get.snackbar(
           "Terjadi Kesalahan", "Gagal memproses data. Silahkan coba kembali.");

@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-import 'package:new_version/new_version.dart';
 
 class HomeController extends GetxController {
   RxBool isLoading = false.obs;

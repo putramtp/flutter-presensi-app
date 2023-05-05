@@ -30,10 +30,11 @@ dependencies:
   cool_alert: 1.1.0
   timezone: ^0.9.1
   flutter_native_timezone: 2.0.0
-  new_version: 0.3.1
   flutter_native_splash: ^2.2.16
   rxdart: ^0.27.7
   syncfusion_localizations: 20.4.48
+  package_info_plus: 3.1.2
+  url_launcher: 6.1.10
   flutter: 
     sdk: flutter
 

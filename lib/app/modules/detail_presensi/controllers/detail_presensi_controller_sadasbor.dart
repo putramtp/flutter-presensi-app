@@ -272,10 +272,10 @@ class DetailPresensiController extends GetxController {
             duration: const Duration(seconds: 10),
           );
           var myResponse = await http.post(
-              Uri.parse("https://apisadasbor.tasikmalayakab.go.id/api/absensi"),
+              Uri.parse("https://kinerja.tasikmalayakab.go.id/api/sakit"),
               headers: {
                 HttpHeaders.authorizationHeader:
-                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJZFVzZXIiOiI2IiwiVXNlcm5hbWUiOiJlcHVsIn0.kpMrrLuf-go9Qg0ZQnEw3jVPLuSSnEBXkCq-DvhxJzw',
+                    'Bearer 1|trk7epBLLpZSb95Hv8ZvUkFEqUIO0BR5b9MRJyyP',
               },
               body: {
                 "nip": nipSession['nip'],

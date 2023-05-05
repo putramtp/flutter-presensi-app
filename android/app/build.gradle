@@ -8,17 +8,17 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '7'
+    flutterVersionCode = '8'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.6'
+    flutterVersionName = '1.7'
 }
 
 apply plugin: 'com.android.application'
@@ -53,8 +53,8 @@ android {
         minSdkVersion 24
         compileSdkVersion 33
         targetSdkVersion 33
-        versionCode 7
-        versionName "1.6"
+        versionCode 8
+        versionName "1.7"
         multiDexEnabled true
     }
 

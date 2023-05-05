@@ -29,9 +29,9 @@ class DetailPresensiController extends GetxController {
 
   Future<void> postSync() async {
     try {
-      var response =
-          await http.post(Uri.https("apisadasbor.tasikmalayakab.go.id"));
-      if (response.statusCode == 404) {
+      var response = await http.get(Uri.https("kinerja.tasikmalayakab.go.id"));
+      print(response.statusCode);
+      if (response.statusCode == 200) {
         Get.snackbar("Berhasil", "API Sadasbor Aktif.");
         print("Sync Berjalan...");
 
