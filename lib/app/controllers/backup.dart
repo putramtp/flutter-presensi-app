@@ -151,11 +151,10 @@ class PageIndexController extends GetxController {
       print(hariSekarang);
 
         cekHari(String hari) {
-          String b;
           if (hari == 'Fri') {
-            return b = j3;
+            return j3;
           } else {
-            return b = j2;
+            return j2;
           }
         }
             String jp =  cekHari(hariSekarang);

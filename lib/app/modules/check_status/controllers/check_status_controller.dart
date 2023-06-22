@@ -6,19 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presensi/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:safe_device/safe_device.dart';
-import 'package:trust_location/trust_location.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+// import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:intl/intl.dart';
-import 'package:geolocator/geolocator.dart';
 
 class CheckStatusController extends GetxController {
   RxBool isLoading = false.obs;
@@ -40,12 +35,12 @@ class CheckStatusController extends GetxController {
     print(locations.keys.last); // => "US/Pacific"
   }
 
-  Future<void> nativeTimeZone() async {
-    final String currentTimeZone =
-        await FlutterNativeTimezone.getLocalTimezone();
+  // Future<void> nativeTimeZone() async {
+  //   final String currentTimeZone =
+  //       await FlutterNativeTimezone.getLocalTimezone();
 
-    print(currentTimeZone);
-  }
+  //   print(currentTimeZone);
+  // }
 
   Future<void> checkAPINyala() async {
     try {

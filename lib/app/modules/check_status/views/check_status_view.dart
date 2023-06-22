@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../controllers/check_status_controller.dart';
 import 'package:timezone/data/latest.dart' as tz;
 // import 'package:timezone/standalone.dart' as tz;
